@@ -10,14 +10,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.wangning.MainActivity">
 
-    <com.example.wangning.PullToRefresh
+    <com.example.wangning.pulltorefresh.BGARefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rl_modulename_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="22222" />
-    </com.example.wangning.PullToRefresh>
+            android:text="111111111" />
+
+    </com.example.wangning.pulltorefresh.BGARefreshLayout>
 </LinearLayout>
