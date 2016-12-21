@@ -31,7 +31,7 @@ public class RefreshLayout extends ViewGroup {
 
     // scroller duration
     private static final int SCROLL_TO_TOP_DURATION = 250;
-    private static final int SCROLL_TO_REFRESH_DURATION = 5000;
+    private static final int SCROLL_TO_REFRESH_DURATION = 250;
     private static final long SHOW_COMPLETED_TIME = 500;
     private static final int START_POSITION = 0;
     private View refreshHeader;
@@ -369,6 +369,7 @@ public class RefreshLayout extends ViewGroup {
     }
 
     private void finishSpinner() {
+        Log.e(TAG,"finishSpinner,currentTargetOffsetTop="+currentTargetOffsetTop);
         if (state == State.LOADING) {
             if (currentTargetOffsetTop > totalDragDistance) {
                 autoScroll.scrollTo(totalDragDistance, SCROLL_TO_REFRESH_DURATION);
