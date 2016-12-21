@@ -10,16 +10,34 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.wangning.MainActivity">
 
-    <com.example.wangning.pulltorefresh.BGARefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.example.wangning.pulltorefresh.PullToRefresh xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/rl_modulename_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="111111111" />
+            android:text="111111111">
 
-    </com.example.wangning.pulltorefresh.BGARefreshLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="500dp"
+                    android:text="111111" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="500dp"
+                    android:text="222222" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </com.example.wangning.pulltorefresh.PullToRefresh>
 </LinearLayout>

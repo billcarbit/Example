@@ -2,10 +2,6 @@ package com.example.wangning;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,36 +11,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TextView textView    = (TextView)findViewById(R.id.tv);
-        textView.setOnTouchListener(new View.OnTouchListener() {
+
+        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.rl_modulename_refresh);
+        refreshLayout.setRefreshListener(new RefreshLayout.OnRefreshListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent ev) {
-                switch (ev.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        Log.e("textView,onTouchEvent", "ACTION_DOWN");
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        float y = ev.getY();
-                        Log.e("textView,onTouchEvent", "ACTION_MOVE,y=" + y);
-                        break;
-                    case MotionEvent.ACTION_CANCEL:
-                        Log.e("textView,onTouchEvent", "ACTION_CANCEL");
-                    case MotionEvent.ACTION_UP:
-                        Log.e("textView,onTouchEvent", "ACTION_UP");
-                        break;
-                    default:
-                        break;
-                }
-                return false;
+            public void onRefresh() {
+                // 延迟3秒后刷新成功
+                refreshLayout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshLayout.refreshComplete();
+                    }
+                }, 2000);
             }
         });
+        // startActivity(new Intent(this, PullToRefreshActivity.class));
 
-/*        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("textView,onClick", "onClick");
-            }
-        });*/
     }
 
 
