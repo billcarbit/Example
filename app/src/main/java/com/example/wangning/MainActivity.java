@@ -13,18 +13,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.rl_modulename_refresh);
-        refreshLayout.setRefreshListener(new RefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // 延迟3秒后刷新成功
-                refreshLayout.postDelayed(new Runnable() {
+        refreshLayout
+                .setRefreshListener(new RefreshLayout.OnRefreshListener() {
                     @Override
-                    public void run() {
-                        refreshLayout.refreshComplete();
+                    public void onRefresh() {
+                        refreshLayout.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                refreshLayout.refreshComplete();
+                            }
+                        }, 2000);
                     }
-                }, 2000);
-            }
-        });
+                });
         // startActivity(new Intent(this, PullToRefreshActivity.class));
 
     }

@@ -31,7 +31,7 @@ public class RefreshLayout extends ViewGroup {
 
     // scroller duration
     private static final int SCROLL_TO_TOP_DURATION = 250;
-    private static final int SCROLL_TO_REFRESH_DURATION = 250;
+    private static final int SCROLL_TO_REFRESH_DURATION = 5000;
     private static final long SHOW_COMPLETED_TIME = 500;
     private static final int START_POSITION = 0;
     private View refreshHeader;
@@ -55,7 +55,6 @@ public class RefreshLayout extends ViewGroup {
     private AutoScroll autoScroll;
     private State state = State.RESET;
     private OnRefreshListener refreshListener;
-    private boolean isAutoRefresh;
     private TextView headText;
 
     // 刷新成功，显示500ms成功状态再滚动回顶部
@@ -66,16 +65,7 @@ public class RefreshLayout extends ViewGroup {
         }
     };
 
-    private Runnable autoRefreshRunnable = new Runnable() {
-        @Override
-        public void run() {
-            // 标记当前是自动刷新状态，finishScroll调用时需要判断
-            // 在actionDown事件中重新标记为false
-            isAutoRefresh = true;
-            changeState(State.PULL);
-            autoScroll.scrollTo(totalDragDistance, SCROLL_TO_REFRESH_DURATION);
-        }
-    };
+
     private View headView;
 
     public RefreshLayout(Context context) {
@@ -111,11 +101,14 @@ public class RefreshLayout extends ViewGroup {
         }
     }
 
+
     public void setRefreshListener(OnRefreshListener refreshListener) {
         this.refreshListener = refreshListener;
     }
 
+
     public void refreshComplete() {
+        Log.e(TAG,"refreshComplete,currentTargetOffsetTop="+currentTargetOffsetTop);
         changeState(State.COMPLETE);
         // if refresh completed and the target at top, change state to reset.
         if (currentTargetOffsetTop == START_POSITION) {
@@ -130,21 +123,8 @@ public class RefreshLayout extends ViewGroup {
         }
     }
 
-    public void autoRefresh() {
-        autoRefresh(500);
-    }
 
-    /**
-     * 在onCreate中调用autoRefresh，此时View可能还没有初始化好，需要延长一段时间执行。
-     *
-     * @param duration 延时执行的毫秒值
-     */
-    public void autoRefresh(long duration) {
-        if (state != State.RESET) {
-            return;
-        }
-        postDelayed(autoRefreshRunnable, duration);
-    }
+
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -233,10 +213,7 @@ public class RefreshLayout extends ViewGroup {
         final int actionMasked = ev.getActionMasked(); // support Multi-touch
         switch (actionMasked) {
             case MotionEvent.ACTION_DOWN:
-                Log.e(TAG, "ACTION_DOWN");
-
                 activePointerId = ev.getPointerId(0);
-                isAutoRefresh = false;
                 isTouch = true;
                 hasSendCancelEvent = false;
                 mIsBeginDragged = false;
@@ -246,7 +223,6 @@ public class RefreshLayout extends ViewGroup {
                 initDownY = lastMotionY = ev.getY(0);
                 autoScroll.stop();
                 removeCallbacks(delayToScrollTopRunnable);
-                removeCallbacks(autoRefreshRunnable);
                 super.dispatchTouchEvent(ev);
                 return true;    // return true，否则可能接受不到move和up事件
 
@@ -256,8 +232,9 @@ public class RefreshLayout extends ViewGroup {
                     return super.dispatchTouchEvent(ev);
                 }
                 lastEvent = ev;
-                float x = ev.getX(MotionEventCompat.findPointerIndex(ev, activePointerId));
-                float y = ev.getY(MotionEventCompat.findPointerIndex(ev, activePointerId));
+
+                float x = ev.getX(ev.findPointerIndex(activePointerId));
+                float y = ev.getY(ev.findPointerIndex(activePointerId));
                 float yDiff = y - lastMotionY;
                 float offsetY = yDiff * DRAG_RATE;
                 lastMotionX = x;
@@ -302,7 +279,7 @@ public class RefreshLayout extends ViewGroup {
                 lastMotionX = ev.getX(pointerIndex);
                 lastMotionY = ev.getY(pointerIndex);
                 lastEvent = ev;
-                activePointerId = MotionEventCompat.getPointerId(ev, pointerIndex);
+                activePointerId = ev.getPointerId(pointerIndex);
                 break;
 
             case MotionEvent.ACTION_POINTER_UP:
@@ -321,9 +298,9 @@ public class RefreshLayout extends ViewGroup {
         if (offset == 0) {
             return;
         }
-        if (state == State.LOADING && offset < 0) {//LOADING状态不允许上滑
+  /*      if (state == State.LOADING ) {//LOADING状态不允许滑动
             return;
-        }
+        }*/
 
         // 发送cancel事件给child
         if (!hasSendCancelEvent && isTouch && currentTargetOffsetTop > START_POSITION) {
@@ -394,7 +371,6 @@ public class RefreshLayout extends ViewGroup {
     private void finishSpinner() {
         if (state == State.LOADING) {
             if (currentTargetOffsetTop > totalDragDistance) {
-
                 autoScroll.scrollTo(totalDragDistance, SCROLL_TO_REFRESH_DURATION);
             }
         } else {
@@ -437,9 +413,12 @@ public class RefreshLayout extends ViewGroup {
         refreshHeader.offsetTopAndBottom(offset);
         lastTargetOffsetTop = currentTargetOffsetTop;
         currentTargetOffsetTop = target.getTop();
+        Log.e(TAG,"setTargetOffsetTopAndBottom,currentTargetOffsetTop="+currentTargetOffsetTop);
         if (currentTargetOffsetTop < 0) {
             target.offsetTopAndBottom(-currentTargetOffsetTop);
             refreshHeader.offsetTopAndBottom(-currentTargetOffsetTop);
+            lastTargetOffsetTop = currentTargetOffsetTop;
+            currentTargetOffsetTop = target.getTop();
         }
         //Log.e(TAG, "moveSpinner: currentTargetOffsetTop = " + currentTargetOffsetTop);
         invalidate();
@@ -482,22 +461,7 @@ public class RefreshLayout extends ViewGroup {
         }
     }
 
-    /**
-     * 在scroll结束的时候会回调这个方法
-     *
-     * @param isForceFinish 是否是强制结束的
-     */
-    private void onScrollFinish(boolean isForceFinish) {
-        if (isAutoRefresh && !isForceFinish) {
-            isAutoRefresh = false;
-            changeState(State.LOADING);
-            if (refreshListener != null) {
-                headText.setText("正在刷新...");
-                refreshListener.onRefresh();
-            }
-            finishSpinner();
-        }
-    }
+
 
     public enum State {
         RESET, PULL, LOADING, COMPLETE
@@ -518,16 +482,14 @@ public class RefreshLayout extends ViewGroup {
         @Override
         public void run() {
             boolean finished = !scroller.computeScrollOffset() || scroller.isFinished();
-            if (!finished) {
+            if (finished) {
+                stop();
+            } else {
                 int currY = scroller.getCurrY();
                 int offset = currY - lastY;
                 lastY = currY;
                 moveSpinner(offset);
                 post(this);
-                onScrollFinish(false);
-            } else {
-                stop();
-                onScrollFinish(true);
             }
         }
 
@@ -551,5 +513,40 @@ public class RefreshLayout extends ViewGroup {
             lastY = 0;
         }
     }
+
+    interface RefreshHeader {
+
+        /**
+         * 松手，头部隐藏后会回调这个方法
+         */
+        void reset();
+
+        /**
+         * 下拉出头部的一瞬间调用
+         */
+        void pull();
+
+        /**
+         * 正在刷新的时候调用
+         */
+        void refreshing();
+
+        /**
+         * 头部滚动的时候持续调用
+         *
+         * @param currentPos target当前偏移高度
+         * @param lastPos    target上一次的偏移高度
+         * @param refreshPos 可以松手刷新的高度
+         * @param isTouch    手指是否按下状态（通过scroll自动滚动时需要判断）
+         * @param state      当前状态
+         */
+        void onPositionChange(float currentPos, float lastPos, float refreshPos, boolean isTouch, RefreshLayout.State state);
+
+        /**
+         * 刷新成功的时候调用
+         */
+        void complete();
+    }
+
 
 }
