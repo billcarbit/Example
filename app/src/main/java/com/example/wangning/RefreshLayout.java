@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.ImageView;
 import android.widget.Scroller;
 import android.widget.TextView;
 
@@ -56,7 +57,7 @@ public class RefreshLayout extends ViewGroup {
     private State state = State.RESET;
     private OnRefreshListener refreshListener;
     private TextView headText;
-
+    private ImageView mIvRefreshPic;
     // 刷新成功，显示500ms成功状态再滚动回顶部
     private Runnable delayToScrollTopRunnable = new Runnable() {
         @Override
@@ -81,6 +82,8 @@ public class RefreshLayout extends ViewGroup {
         // 添加默认的头部，先简单的用一个ImageView代替头部
         headView = LayoutInflater.from(context).inflate(R.layout.header_view, null);
         headText = (TextView) headView.findViewById(R.id.tv_head);
+        mIvRefreshPic = (ImageView) headView.findViewById(R.id.iv_refresh_pic);
+
         setRefreshHeader(headView);
     }
 
@@ -108,7 +111,7 @@ public class RefreshLayout extends ViewGroup {
 
 
     public void refreshComplete() {
-        Log.e(TAG,"refreshComplete,currentTargetOffsetTop="+currentTargetOffsetTop);
+        Log.e(TAG, "refreshComplete,currentTargetOffsetTop=" + currentTargetOffsetTop);
         changeState(State.COMPLETE);
         // if refresh completed and the target at top, change state to reset.
         if (currentTargetOffsetTop == START_POSITION) {
@@ -117,13 +120,12 @@ public class RefreshLayout extends ViewGroup {
             // waiting for a time to show refreshView completed state.
             // at next touch event, remove this runnable
             if (!isTouch) {
-                postDelayed(delayToScrollTopRunnable, SHOW_COMPLETED_TIME);
+                //postDelayed(delayToScrollTopRunnable, SHOW_COMPLETED_TIME);
+                post(delayToScrollTopRunnable);
             }
-            headText.setText("刷新成功");
+            //headText.setText("刷新成功");
         }
     }
-
-
 
 
     @Override
@@ -326,7 +328,8 @@ public class RefreshLayout extends ViewGroup {
         if ((state == State.RESET) && targetY > 0) {
             changeState(State.PULL);
             Log.e(TAG, "changeState  PULL");
-            headText.setText("下拉刷新");
+            headText.setText("下拉可以刷新");
+            mIvRefreshPic.setVisibility(INVISIBLE);
         }
         Log.e(TAG, "moveSpinner,currentTargetOffsetTop=" + currentTargetOffsetTop + ",offset=" + offset
                 + ",totalDragDistance=" + totalDragDistance
@@ -334,8 +337,6 @@ public class RefreshLayout extends ViewGroup {
         // 2. 在PULL或者COMPLETE状态时，header回到顶部的时候，状态变回RESET
         if (currentTargetOffsetTop > START_POSITION && targetY <= START_POSITION) {
             if (state == State.PULL || state == State.COMPLETE) {
-                Log.e(TAG, "changeState  RESET");
-                headText.setText("下拉刷新");
                 changeState(State.RESET);
             }
         }
@@ -345,14 +346,15 @@ public class RefreshLayout extends ViewGroup {
             autoScroll.stop();
             changeState(State.LOADING);
             if (refreshListener != null) {
-                headText.setText("正在刷新...");
+                mIvRefreshPic.setVisibility(VISIBLE);
+                headText.setText("正在刷新数据中...");
                 refreshListener.onRefresh();
             }
             // 因为判断条件targetY <= totalDragDistance，会导致不能回到正确的刷新高度（有那么一丁点偏差），调整change
             int adjustOffset = totalDragDistance - targetY;
             offset += adjustOffset;
         } else if (state == State.PULL && isTouch && targetY > totalDragDistance) {
-            headText.setText("释放立即刷新");
+            headText.setText("松开立即刷新");
         }
 
 
@@ -369,7 +371,7 @@ public class RefreshLayout extends ViewGroup {
     }
 
     private void finishSpinner() {
-        Log.e(TAG,"finishSpinner,currentTargetOffsetTop="+currentTargetOffsetTop);
+        Log.e(TAG, "finishSpinner,currentTargetOffsetTop=" + currentTargetOffsetTop);
         if (state == State.LOADING) {
             if (currentTargetOffsetTop > totalDragDistance) {
                 autoScroll.scrollTo(totalDragDistance, SCROLL_TO_REFRESH_DURATION);
@@ -414,7 +416,7 @@ public class RefreshLayout extends ViewGroup {
         refreshHeader.offsetTopAndBottom(offset);
         lastTargetOffsetTop = currentTargetOffsetTop;
         currentTargetOffsetTop = target.getTop();
-        Log.e(TAG,"setTargetOffsetTopAndBottom,currentTargetOffsetTop="+currentTargetOffsetTop);
+        Log.e(TAG, "setTargetOffsetTopAndBottom,currentTargetOffsetTop=" + currentTargetOffsetTop);
         if (currentTargetOffsetTop < 0) {
             target.offsetTopAndBottom(-currentTargetOffsetTop);
             refreshHeader.offsetTopAndBottom(-currentTargetOffsetTop);
@@ -463,13 +465,46 @@ public class RefreshLayout extends ViewGroup {
     }
 
 
-
     public enum State {
         RESET, PULL, LOADING, COMPLETE
     }
 
     public interface OnRefreshListener {
         void onRefresh();
+    }
+
+    interface RefreshHeader {
+
+        /**
+         * 松手，头部隐藏后会回调这个方法
+         */
+        void reset();
+
+        /**
+         * 下拉出头部的一瞬间调用
+         */
+        void pull();
+
+        /**
+         * 正在刷新的时候调用
+         */
+        void refreshing();
+
+        /**
+         * 头部滚动的时候持续调用
+         *
+         * @param currentPos target当前偏移高度
+         * @param lastPos    target上一次的偏移高度
+         * @param refreshPos 可以松手刷新的高度
+         * @param isTouch    手指是否按下状态（通过scroll自动滚动时需要判断）
+         * @param state      当前状态
+         */
+        void onPositionChange(float currentPos, float lastPos, float refreshPos, boolean isTouch, RefreshLayout.State state);
+
+        /**
+         * 刷新成功的时候调用
+         */
+        void complete();
     }
 
     private class AutoScroll implements Runnable {
@@ -513,40 +548,6 @@ public class RefreshLayout extends ViewGroup {
             }
             lastY = 0;
         }
-    }
-
-    interface RefreshHeader {
-
-        /**
-         * 松手，头部隐藏后会回调这个方法
-         */
-        void reset();
-
-        /**
-         * 下拉出头部的一瞬间调用
-         */
-        void pull();
-
-        /**
-         * 正在刷新的时候调用
-         */
-        void refreshing();
-
-        /**
-         * 头部滚动的时候持续调用
-         *
-         * @param currentPos target当前偏移高度
-         * @param lastPos    target上一次的偏移高度
-         * @param refreshPos 可以松手刷新的高度
-         * @param isTouch    手指是否按下状态（通过scroll自动滚动时需要判断）
-         * @param state      当前状态
-         */
-        void onPositionChange(float currentPos, float lastPos, float refreshPos, boolean isTouch, RefreshLayout.State state);
-
-        /**
-         * 刷新成功的时候调用
-         */
-        void complete();
     }
 
 
