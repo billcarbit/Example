@@ -9,6 +9,7 @@ package com.example.wangning;
  */
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
@@ -22,7 +23,6 @@ import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.Scroller;
 import android.widget.TextView;
-
 
 public class RefreshLayout extends ViewGroup {
 
@@ -68,22 +68,20 @@ public class RefreshLayout extends ViewGroup {
 
 
     private View headView;
-
+    private AnimationDrawable mIvRefreshPicAnimate;
     public RefreshLayout(Context context) {
         this(context, null);
     }
 
     public RefreshLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-
         touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         autoScroll = new AutoScroll();
-
         // 添加默认的头部，先简单的用一个ImageView代替头部
-        headView = LayoutInflater.from(context).inflate(R.layout.header_view, null);
+        headView = LayoutInflater.from(context).inflate(R.layout.home_refresh_head, null);
         headText = (TextView) headView.findViewById(R.id.tv_head);
         mIvRefreshPic = (ImageView) headView.findViewById(R.id.iv_refresh_pic);
-
+        mIvRefreshPicAnimate = (AnimationDrawable)mIvRefreshPic.getDrawable();
         setRefreshHeader(headView);
     }
 
@@ -111,7 +109,6 @@ public class RefreshLayout extends ViewGroup {
 
 
     public void refreshComplete() {
-        Log.e(TAG, "refreshComplete,currentTargetOffsetTop=" + currentTargetOffsetTop);
         changeState(State.COMPLETE);
         // if refresh completed and the target at top, change state to reset.
         if (currentTargetOffsetTop == START_POSITION) {
@@ -254,16 +251,14 @@ public class RefreshLayout extends ViewGroup {
 
                     // 判断是否拦截事件
                     if ((moveDown && !canMoveDown) || (moveUp && canMoveUp)) {
-                        Log.e("ACTION_MOVE", "currentTargetOffsetTop=" + currentTargetOffsetTop);
                         moveSpinner(offsetY);
                         return true;
                     }
                 }
                 break;
             case MotionEvent.ACTION_CANCEL:
-                Log.e(TAG, "ACTION_CANCEL");
+                break;
             case MotionEvent.ACTION_UP:
-                Log.e(TAG, "ACTION_UP");
                 isTouch = false;
                 if (currentTargetOffsetTop > START_POSITION) {
                     finishSpinner();
@@ -272,7 +267,6 @@ public class RefreshLayout extends ViewGroup {
                 break;
 
             case MotionEvent.ACTION_POINTER_DOWN:
-                Log.e(TAG, "ACTION_POINTER_DOWN");
                 int pointerIndex = MotionEventCompat.getActionIndex(ev);
                 if (pointerIndex < 0) {
                     Log.e(TAG, "Got ACTION_POINTER_DOWN event but have an invalid action index.");
@@ -285,7 +279,6 @@ public class RefreshLayout extends ViewGroup {
                 break;
 
             case MotionEvent.ACTION_POINTER_UP:
-                Log.e(TAG, "ACTION_POINTER_UP");
                 onSecondaryPointerUp(ev);
                 lastMotionY = ev.getY(ev.findPointerIndex(activePointerId));
                 lastMotionX = ev.getX(ev.findPointerIndex(activePointerId));
@@ -327,13 +320,10 @@ public class RefreshLayout extends ViewGroup {
         // 1. 在RESET状态时，第一次下拉出现header的时候，设置状态变成PULL
         if ((state == State.RESET) && targetY > 0) {
             changeState(State.PULL);
-            Log.e(TAG, "changeState  PULL");
             headText.setText("下拉可以刷新");
+            mIvRefreshPicAnimate.start();
             mIvRefreshPic.setVisibility(INVISIBLE);
         }
-        Log.e(TAG, "moveSpinner,currentTargetOffsetTop=" + currentTargetOffsetTop + ",offset=" + offset
-                + ",totalDragDistance=" + totalDragDistance
-                + ",targetY=" + targetY + ",state=" + state + ",isTouch=" + isTouch);
         // 2. 在PULL或者COMPLETE状态时，header回到顶部的时候，状态变回RESET
         if (currentTargetOffsetTop > START_POSITION && targetY <= START_POSITION) {
             if (state == State.PULL || state == State.COMPLETE) {
@@ -346,6 +336,7 @@ public class RefreshLayout extends ViewGroup {
             autoScroll.stop();
             changeState(State.LOADING);
             if (refreshListener != null) {
+
                 mIvRefreshPic.setVisibility(VISIBLE);
                 headText.setText("正在刷新数据中...");
                 refreshListener.onRefresh();
@@ -371,7 +362,6 @@ public class RefreshLayout extends ViewGroup {
     }
 
     private void finishSpinner() {
-        Log.e(TAG, "finishSpinner,currentTargetOffsetTop=" + currentTargetOffsetTop);
         if (state == State.LOADING) {
             if (currentTargetOffsetTop > totalDragDistance) {
                 autoScroll.scrollTo(totalDragDistance, SCROLL_TO_REFRESH_DURATION);
@@ -390,17 +380,17 @@ public class RefreshLayout extends ViewGroup {
         if (refreshHeader != null) {
             switch (state) {
                 case RESET:
+                    mIvRefreshPicAnimate.stop();
                     refreshHeader.reset();
                     break;
                 case PULL:
                     refreshHeader.pull();
                     break;
                 case LOADING:
-
                     refreshHeader.refreshing();
                     break;
                 case COMPLETE:
-
+                    mIvRefreshPicAnimate.stop();
                     refreshHeader.complete();
                     break;
             }
@@ -411,12 +401,10 @@ public class RefreshLayout extends ViewGroup {
         if (offset == 0) {
             return;
         }
-        Log.e("setTargetOffsetTop", "offset=" + offset);
         target.offsetTopAndBottom(offset);
         refreshHeader.offsetTopAndBottom(offset);
         lastTargetOffsetTop = currentTargetOffsetTop;
         currentTargetOffsetTop = target.getTop();
-        Log.e(TAG, "setTargetOffsetTopAndBottom,currentTargetOffsetTop=" + currentTargetOffsetTop);
         if (currentTargetOffsetTop < 0) {
             target.offsetTopAndBottom(-currentTargetOffsetTop);
             refreshHeader.offsetTopAndBottom(-currentTargetOffsetTop);

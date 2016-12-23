@@ -36,7 +36,7 @@ public class PullToRefresh extends LinearLayout {
     }
 
     private void initHead() {
-        mHeadView = LayoutInflater.from(mContext).inflate(R.layout.header_view, null);
+        mHeadView = LayoutInflater.from(mContext).inflate(R.layout.home_refresh_head, null);
         mTouchSlop = ViewConfiguration.get(mContext).getScaledTouchSlop();
         mTvHead = (TextView) mHeadView.findViewById(R.id.tv_head);
         addView(mHeadView,0);
