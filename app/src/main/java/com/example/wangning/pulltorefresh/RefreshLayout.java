@@ -19,7 +19,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.Scroller;
 import android.widget.TextView;
@@ -38,6 +37,8 @@ public class RefreshLayout extends ViewGroup {
     private static final long SHOW_COMPLETED_TIME = 500;
     private static final int START_POSITION = 0;
     private View refreshHeader;
+    private View refreshFooter;
+    private final static int HFHeight = 150;
     private View target;
     private int currentTargetOffsetTop; // target/header偏移距离
     private int lastTargetOffsetTop;
@@ -97,11 +98,28 @@ public class RefreshLayout extends ViewGroup {
             // 为header添加默认的layoutParams
             LayoutParams layoutParams = view.getLayoutParams();
             if (layoutParams == null) {
-                layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, 150);
+                layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, HFHeight);
                 view.setLayoutParams(layoutParams);
             }
             refreshHeader = view;
             addView(refreshHeader);
+        }
+    }
+
+    /**
+     * 设置自定义footer
+     */
+    public void setRefreshFooter(View view){
+        if (view != null && view != refreshFooter) {
+            removeView(refreshFooter);
+            // 为header添加默认的layoutParams
+            LayoutParams layoutParams = view.getLayoutParams();
+            if (layoutParams == null) {
+                layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, HFHeight);
+                view.setLayoutParams(layoutParams);
+            }
+            refreshFooter = view;
+            addView(refreshFooter);
         }
     }
 
@@ -253,13 +271,15 @@ public class RefreshLayout extends ViewGroup {
 
                 if (mIsBeginDragged) {
                     boolean moveDown = offsetY > 0; // ↓
-                    boolean canMoveDown = canChildScrollUp();
                     boolean moveUp = !moveDown;     // ↑
                     boolean canMoveUp = currentTargetOffsetTop > START_POSITION;
 
                     // 判断是否拦截事件
-                    if ((moveDown && !canMoveDown) || (moveUp && canMoveUp)) {
-                        moveSpinner(offsetY);
+                    if ((moveDown && !canChildScrollUp()) || (moveUp && canMoveUp)) {
+                        moveSpinner(offsetY);//下拉
+                        return true;
+                    } else if (moveUp && !canChildScrollDown()) {//上拉
+                        pullUp(offsetY);
                         return true;
                     }
                 }
@@ -295,6 +315,14 @@ public class RefreshLayout extends ViewGroup {
         return super.dispatchTouchEvent(ev);
     }
 
+    private void pullUp(float diff) {
+        int offset = Math.round(diff);
+        if (offset == 0) {
+            return;
+        }
+
+        Log.e(TAG, "pullUp: diff=" + diff);
+    }
 
     private void moveSpinner(float diff) {
         int offset = Math.round(diff);
@@ -302,10 +330,10 @@ public class RefreshLayout extends ViewGroup {
             return;
         }
         // 发送cancel事件给child
-        if (!hasSendCancelEvent && isTouch && currentTargetOffsetTop > START_POSITION) {
+      /*  if (!hasSendCancelEvent && isTouch && currentTargetOffsetTop > START_POSITION) {
             sendCancelEvent();
             hasSendCancelEvent = true;
-        }
+        }*/
 
         int targetY = Math.max(0, currentTargetOffsetTop + offset); // target不能移动到小于0的位置……
 
@@ -340,7 +368,6 @@ public class RefreshLayout extends ViewGroup {
             autoScroll.stop();
             changeState(State.LOADING);
             if (mPullDownListener != null) {
-
                 mIvRefreshPic.setVisibility(VISIBLE);
                 mHeadText.setText("正在刷新数据中...");
                 mPullDownListener.onRefresh();
@@ -352,9 +379,7 @@ public class RefreshLayout extends ViewGroup {
             mHeadText.setText("松开立即刷新");
         }
 
-
-        setTargetOffsetTopAndBottom(offset);
-
+        setTargetOffsetTopAndBottom(offset,true);
 
         // 别忘了回调header的位置改变方法。
         if (refreshHeader instanceof RefreshHeader) {
@@ -399,21 +424,30 @@ public class RefreshLayout extends ViewGroup {
         }
     }
 
-    private void setTargetOffsetTopAndBottom(int offset) {
+    private void setTargetOffsetTopAndBottom(int offset,boolean pullDown) {
         if (offset == 0) {
             return;
         }
-        target.offsetTopAndBottom(offset);
-        refreshHeader.offsetTopAndBottom(offset);
-        lastTargetOffsetTop = currentTargetOffsetTop;
-        currentTargetOffsetTop = target.getTop();
-        Log.e(TAG, "moveSpinner: currentTargetOffsetTop = " + currentTargetOffsetTop);
-        if (currentTargetOffsetTop < 0) {
-            target.offsetTopAndBottom(-currentTargetOffsetTop);
-            refreshHeader.offsetTopAndBottom(-currentTargetOffsetTop);
+        if(pullDown){
+            target.offsetTopAndBottom(offset);
+            refreshHeader.offsetTopAndBottom(offset);
             lastTargetOffsetTop = currentTargetOffsetTop;
             currentTargetOffsetTop = target.getTop();
+            Log.e(TAG, "moveSpinner: currentTargetOffsetTop = " + currentTargetOffsetTop);
+            if (currentTargetOffsetTop < 0) {
+                target.offsetTopAndBottom(-currentTargetOffsetTop);
+                refreshHeader.offsetTopAndBottom(-currentTargetOffsetTop);
+                lastTargetOffsetTop = currentTargetOffsetTop;
+                currentTargetOffsetTop = target.getTop();
+            }
+        }else{
+            target.offsetTopAndBottom(offset);
+            refreshHeader.offsetTopAndBottom(offset);
+            lastTargetOffsetTop = currentTargetOffsetTop;
+            currentTargetOffsetTop = target.getTop();
+            Log.e(TAG, "pullUp: currentTargetOffsetTop = " + currentTargetOffsetTop);
         }
+
         invalidate();
     }
 
@@ -440,18 +474,11 @@ public class RefreshLayout extends ViewGroup {
     }
 
     public boolean canChildScrollUp() {
-        if (android.os.Build.VERSION.SDK_INT < 14) {
-            if (target instanceof AbsListView) {
-                final AbsListView absListView = (AbsListView) target;
-                return absListView.getChildCount() > 0
-                        && (absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0)
-                        .getTop() < absListView.getPaddingTop());
-            } else {
-                return ViewCompat.canScrollVertically(target, -1) || target.getScrollY() > 0;
-            }
-        } else {
-            return ViewCompat.canScrollVertically(target, -1);
-        }
+        return ViewCompat.canScrollVertically(target, -1);
+    }
+
+    public boolean canChildScrollDown() {
+        return ViewCompat.canScrollVertically(target, 1);
     }
 
 
