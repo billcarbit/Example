@@ -57,9 +57,12 @@ public class RefreshLayout extends ViewGroup {
     private boolean mIsBeginDragged;
     private AutoScroll autoScroll;
     private State state = State.RESET;
-    private OnRefreshListener refreshListener;
-    private TextView headText;
+    private OnPullDownListener mPullDownListener;//下拉监听
+    private OnPullUpListener mPullUpListener;//上拉监听
+    private View mHeadView;
+    private TextView mHeadText;
     private ImageView mIvRefreshPic;
+    private AnimationDrawable mIvRefreshPicAnimate;
     // 刷新成功，显示500ms成功状态再滚动回顶部
     private Runnable delayToScrollTopRunnable = new Runnable() {
         @Override
@@ -69,8 +72,6 @@ public class RefreshLayout extends ViewGroup {
     };
 
 
-    private View headView;
-    private AnimationDrawable mIvRefreshPicAnimate;
     public RefreshLayout(Context context) {
         this(context, null);
     }
@@ -80,11 +81,11 @@ public class RefreshLayout extends ViewGroup {
         touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         autoScroll = new AutoScroll();
         // 添加默认的头部，先简单的用一个ImageView代替头部
-        headView = LayoutInflater.from(context).inflate(R.layout.home_refresh_head, null);
-        headText = (TextView) headView.findViewById(R.id.tv_head);
-        mIvRefreshPic = (ImageView) headView.findViewById(R.id.iv_refresh_pic);
-        mIvRefreshPicAnimate = (AnimationDrawable)mIvRefreshPic.getDrawable();
-        setRefreshHeader(headView);
+        mHeadView = LayoutInflater.from(context).inflate(R.layout.home_refresh_head, null);
+        mHeadText = (TextView) mHeadView.findViewById(R.id.tv_head);
+        mIvRefreshPic = (ImageView) mHeadView.findViewById(R.id.iv_refresh_pic);
+        mIvRefreshPicAnimate = (AnimationDrawable) mIvRefreshPic.getDrawable();
+        setRefreshHeader(mHeadView);
     }
 
     /**
@@ -105,10 +106,15 @@ public class RefreshLayout extends ViewGroup {
     }
 
 
-    public void setRefreshListener(OnRefreshListener refreshListener) {
-        this.refreshListener = refreshListener;
+    public RefreshLayout setPullDownListener(OnPullDownListener pullDownListener) {
+        mPullDownListener = pullDownListener;
+        return this;
     }
 
+    public RefreshLayout setPullUpListener(OnPullUpListener pullUpListener) {
+        mPullUpListener = pullUpListener;
+        return this;
+    }
 
     public void refreshComplete() {
         changeState(State.COMPLETE);
@@ -122,7 +128,7 @@ public class RefreshLayout extends ViewGroup {
                 //postDelayed(delayToScrollTopRunnable, SHOW_COMPLETED_TIME);
                 post(delayToScrollTopRunnable);
             }
-            //headText.setText("刷新成功");
+            //mHeadText.setText("刷新成功");
         }
     }
 
@@ -295,10 +301,6 @@ public class RefreshLayout extends ViewGroup {
         if (offset == 0) {
             return;
         }
-  /*      if (state == State.LOADING ) {//LOADING状态不允许滑动
-            return;
-        }*/
-
         // 发送cancel事件给child
         if (!hasSendCancelEvent && isTouch && currentTargetOffsetTop > START_POSITION) {
             sendCancelEvent();
@@ -322,7 +324,7 @@ public class RefreshLayout extends ViewGroup {
         // 1. 在RESET状态时，第一次下拉出现header的时候，设置状态变成PULL
         if ((state == State.RESET) && targetY > 0) {
             changeState(State.PULL);
-            headText.setText("下拉可以刷新");
+            mHeadText.setText("下拉可以刷新");
             mIvRefreshPicAnimate.start();
             mIvRefreshPic.setVisibility(INVISIBLE);
         }
@@ -337,17 +339,17 @@ public class RefreshLayout extends ViewGroup {
         if (state == State.PULL && !isTouch && currentTargetOffsetTop > totalDragDistance && targetY <= totalDragDistance) {
             autoScroll.stop();
             changeState(State.LOADING);
-            if (refreshListener != null) {
+            if (mPullDownListener != null) {
 
                 mIvRefreshPic.setVisibility(VISIBLE);
-                headText.setText("正在刷新数据中...");
-                refreshListener.onRefresh();
+                mHeadText.setText("正在刷新数据中...");
+                mPullDownListener.onRefresh();
             }
             // 因为判断条件targetY <= totalDragDistance，会导致不能回到正确的刷新高度（有那么一丁点偏差），调整change
             int adjustOffset = totalDragDistance - targetY;
             offset += adjustOffset;
         } else if (state == State.PULL && isTouch && targetY > totalDragDistance) {
-            headText.setText("松开立即刷新");
+            mHeadText.setText("松开立即刷新");
         }
 
 
@@ -376,8 +378,6 @@ public class RefreshLayout extends ViewGroup {
 
     private void changeState(State state) {
         this.state = state;
-
-//        Toast.makeText(getContext(), state.toString(), Toast.LENGTH_SHORT).show();
         RefreshHeader refreshHeader = this.refreshHeader instanceof RefreshHeader ? ((RefreshHeader) this.refreshHeader) : null;
         if (refreshHeader != null) {
             switch (state) {
@@ -407,13 +407,13 @@ public class RefreshLayout extends ViewGroup {
         refreshHeader.offsetTopAndBottom(offset);
         lastTargetOffsetTop = currentTargetOffsetTop;
         currentTargetOffsetTop = target.getTop();
+        Log.e(TAG, "moveSpinner: currentTargetOffsetTop = " + currentTargetOffsetTop);
         if (currentTargetOffsetTop < 0) {
             target.offsetTopAndBottom(-currentTargetOffsetTop);
             refreshHeader.offsetTopAndBottom(-currentTargetOffsetTop);
             lastTargetOffsetTop = currentTargetOffsetTop;
             currentTargetOffsetTop = target.getTop();
         }
-        //Log.e(TAG, "moveSpinner: currentTargetOffsetTop = " + currentTargetOffsetTop);
         invalidate();
     }
 
@@ -459,7 +459,11 @@ public class RefreshLayout extends ViewGroup {
         RESET, PULL, LOADING, COMPLETE
     }
 
-    public interface OnRefreshListener {
+    public interface OnPullDownListener {
+        void onRefresh();
+    }
+
+    public interface OnPullUpListener {
         void onRefresh();
     }
 

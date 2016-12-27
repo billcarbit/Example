@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.wangning.MainActivity">
 
-    <com.example.wangning.pulltorefresh.PullToRefresh xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.example.wangning.pulltorefresh.RefreshLayout
         android:id="@+id/rl_modulename_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -39,5 +39,5 @@
 
         </ScrollView>
 
-    </com.example.wangning.pulltorefresh.PullToRefresh>
+    </com.example.wangning.pulltorefresh.RefreshLayout>
 </LinearLayout>

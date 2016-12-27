@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.example.wangning.launchmode.SecondActivity;
 import com.example.wangning.loading.LoadingDataDialog;
+import com.example.wangning.viewinvalidate.ViewInvalidateActivity;
 
 public class MainActivity extends AppCompatActivity {
     public final static String TAG = MainActivity.class.getSimpleName();
@@ -22,10 +23,8 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, SecondActivity.class));
-                Intent intent = new Intent(MainActivity.this.getApplicationContext(), SecondActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                startActivity(new Intent(MainActivity.this, ViewInvalidateActivity.class));
+
             }
         });
     }
