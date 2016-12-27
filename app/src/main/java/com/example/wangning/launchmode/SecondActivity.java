@@ -1,8 +1,7 @@
-package com.example.wangning.pulltorefresh;
+package com.example.wangning.launchmode;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
 
 import com.example.wangning.R;
 
@@ -10,15 +9,14 @@ import com.example.wangning.R;
  * file explain
  *
  * @author wangning
- * @version 1.0 2016-12-20
+ * @version 1.0 2016-12-26
  * @since JDK 1.8
  */
-public class PullToRefreshActivity extends Activity{
-
+public class SecondActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pull_resresh);
+        setContentView(R.layout.activity_second);
     }
 
     @Override

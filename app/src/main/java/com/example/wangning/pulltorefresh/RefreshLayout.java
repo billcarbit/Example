@@ -1,4 +1,4 @@
-package com.example.wangning;
+package com.example.wangning.pulltorefresh;
 
 /**
  * 下拉刷新
@@ -23,6 +23,8 @@ import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.Scroller;
 import android.widget.TextView;
+
+import com.example.wangning.R;
 
 public class RefreshLayout extends ViewGroup {
 
