@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 背景  gradient是渐变,corners定义的是圆角 -->
+    <item android:id="@android:id/background">
+        <shape>
+            <corners android:radius="7dp" />
+
+            <solid android:color="#fdc696" />
+            <stroke android:color="#ff7e00" android:width="1px"/>
+        </shape>
+       <!-- <bitmap android:src="@drawable/bg_progress_special_beneath"/>-->
+
+    </item>
+    <!-- 第二条进度条颜色 -->
+<!--    <item android:id="@android:id/secondaryProgress">
+        <clip>
+            <shape>
+                <corners android:radius="10dip" />
+
+                <gradient
+                    android:angle="90.0"
+                    android:centerColor="#ac6079"
+                    android:centerY="0.45"
+                    android:endColor="#6c213a"
+                    android:startColor="#e71a5e" />
+            </shape>
+        </clip>
+    </item>-->
+    <!-- 进度条 -->
+    <item android:id="@android:id/progress">
+        <!--<scale android:scaleWidth="100%" android:scaleGravity="left" android:drawable="@drawable/bg_progress_special_layer"/>-->
+
+
+        <scale android:scaleWidth="100%">
+            <shape>
+                <corners android:radius="7dp" />
+                <gradient
+                    android:startColor="#ff7e00"
+                    android:centerColor="#ff7e00"
+                    android:centerY="0.75"
+                    android:endColor="#ff7e00"
+                    android:angle="270"
+                    />
+            </shape>
+        </scale>
+       <!-- <clip>
+            <shape>
+                <corners android:radius="5dip" />
+                <gradient
+                    android:startColor="#ffffd300"
+                    android:centerColor="#ffffb600"
+                    android:centerY="0.75"
+                    android:endColor="#ffffcb00"
+                    android:angle="270"
+                    />
+            </shape>
+        </clip>-->
+
+    </item>
+
+
+</layer-list>
