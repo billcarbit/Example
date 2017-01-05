@@ -18,24 +18,38 @@ import java.util.List;
  * @version 1.0 2016-12-28
  * @since JDK 1.8
  */
-public class RecyclerViewActivity extends Activity {
+public class RecyclerViewActivity extends Activity implements RecyclerViewOnScrollListener.OnLoadMoreListener{
+    private RecyclerViewAdapter mRecyclerViewAdapter;
+    private RecyclerView mRecyclerView;
+    private List<String> mList = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recyclerview);
-        List<String> list = new ArrayList<String>();
-        for (int i = 0; i < 10; i++) {
-            list.add("i="+i);
-        }
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        addData();
+        mRecyclerViewAdapter = new RecyclerViewAdapter(this,mList);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView.addOnScrollListener(new RecyclerViewOnScrollListener(this));
         // 绑定recyclerView
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(new RecyclerViewAdapter(this,list));
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mRecyclerView.setAdapter(mRecyclerViewAdapter);
         //设置Item增加、移除动画
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecoration(this,
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL_LIST));
+    }
+
+    private void addData(){
+        for (int i = 0; i < 10; i++) {
+            mList.add("i="+i);
+        }
+    }
+
+    @Override
+    public void loadMore() {
+        addData();
+        mRecyclerViewAdapter.notifyDataSetChanged();
     }
 }

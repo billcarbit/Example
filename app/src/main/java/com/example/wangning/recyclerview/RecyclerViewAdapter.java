@@ -15,6 +15,10 @@ import java.util.List;
  * Created by Administrator on 2017/1/4.
  */
 public class RecyclerViewAdapter extends RecyclerView.Adapter {
+
+    private static final int TYPE_ITEM = 0;
+    private static final int TYPE_FOOTER = 1;
+
     private Activity mActivity;
     private List<String> mList;
 
@@ -37,8 +41,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
     }
 
     @Override
+    public int getItemViewType(int position) {
+        // 最后一个item设置为footerView
+        if (position + 1 == getItemCount()) {
+            return TYPE_FOOTER;
+        } else {
+            return TYPE_ITEM;
+        }
+    }
+
+    @Override
     public int getItemCount() {
-        return mList.size();
+        return mList.size()+1;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
