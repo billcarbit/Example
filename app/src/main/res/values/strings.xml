@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Example</string>
+        <string name="wfc_text_payment">
+        <Data><![CDATA[货物已送达，请出示二维码<br>
+        向收货人收取本单运费<font color="#ff6600"><b>￥%s</b></font>
+        ]]></Data>
+    </string>
 </resources>
