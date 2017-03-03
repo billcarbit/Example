@@ -13,38 +13,51 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srl"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent" android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="108dp"
-                android:layout_marginBottom="10dp">
-
-                <TextView
-                    android:id="@+id/tv_banner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:text="AAA" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:text="BBB"/>
-            </LinearLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_blue_bright" />
+                android:orientation="vertical"
+                android:weightSum="2">
 
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="108dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/colorAccent">
+
+                    <TextView
+                        android:id="@+id/tv_banner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:text="AAA" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:text="BBB" />
+
+
+                </LinearLayout>
+                      <android.support.v7.widget.RecyclerView
+                          android:id="@+id/recycler_view"
+                          android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+                          android:layout_weight="1"
+                          android:background="@android:color/holo_blue_bright" />
+
+
+
+
+            </LinearLayout>
+        </ScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

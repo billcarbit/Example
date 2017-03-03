@@ -1,25 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
-    android:layout_height="300dp"
-    android:background="@color/colorAccent"
+    android:layout_width="290dp"
+    android:layout_height="193dp"
+    android:layout_gravity="center"
+    android:background="@color/white"
     android:gravity="center"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:gravity="center"
-        android:orientation="vertical">
+    <TextView
+        android:id="@+id/tv_all"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/selector_btn_click_bg2"
+        android:gravity="center_vertical"
+        android:paddingLeft="30dp"
+        android:text="全部"
+        android:textColor="@color/text_dark"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="POPWINDOW"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.33dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/divider_ddd" />
+
+    <TextView
+        android:id="@+id/tv_income"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/selector_btn_click_bg2"
+        android:gravity="center_vertical"
+        android:paddingLeft="30dp"
+        android:text="收入"
+        android:textColor="@color/text_dark"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.33dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/divider_ddd" />
+
+    <TextView
+        android:id="@+id/tv_outcome"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/selector_btn_click_bg2"
+        android:gravity="center_vertical"
+        android:paddingLeft="30dp"
+        android:text="消费"
+        android:textColor="@color/text_dark"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
 
-    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.33dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/divider_ddd" />
+
+    <TextView
+        android:id="@+id/tv_outdate"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/selector_btn_click_bg2"
+        android:gravity="center_vertical"
+        android:paddingLeft="30dp"
+        android:text="过期"
+        android:textColor="@color/text_dark"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
 
 </LinearLayout>
