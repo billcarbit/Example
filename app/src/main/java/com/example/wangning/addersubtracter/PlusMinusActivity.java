@@ -2,6 +2,7 @@ package com.example.wangning.addersubtracter;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.wangning.R;
 
@@ -24,6 +25,7 @@ public class PlusMinusActivity extends Activity {
                 .setValue("1")
                 .setMinValue("0")
                 .setMaxValue("3");
+
 
     }
 }

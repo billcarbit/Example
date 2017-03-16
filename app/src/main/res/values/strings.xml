@@ -5,5 +5,10 @@
         向收货人收取本单运费<font color="#ff6600"><b>￥%s</b></font>
         ]]></Data>
     </string>
+
+     <string name="html_text">
+        <Data><![CDATA[%s]]></Data>
+    </string>
+
     <string name="load_finish">没有更多数据了</string>
 </resources>

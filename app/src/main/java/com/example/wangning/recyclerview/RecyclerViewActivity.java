@@ -1,6 +1,8 @@
 package com.example.wangning.recyclerview;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,8 +37,12 @@ public class RecyclerViewActivity extends Activity implements RecyclerViewOnScro
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
         //设置Item增加、移除动画
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this,
-                DividerItemDecoration.VERTICAL_LIST));
+        DividerItemDecoration2  ddd= new DividerItemDecoration2(this,
+                DividerItemDecoration.VERTICAL_LIST,new ColorDrawable(Color.parseColor("#dddddd")));
+        ddd.setHeight(10);
+        ddd.setWidth(10);
+        ddd.setDividerRight(30);
+        mRecyclerView.addItemDecoration(ddd);
     }
 
     private void addData(){
