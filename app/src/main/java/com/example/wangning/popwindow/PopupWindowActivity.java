@@ -13,7 +13,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.wangning.R;
-import com.example.wangning.launchmode.SecondActivity;
 
 /**
  * file explain
@@ -35,7 +34,7 @@ public class PopupWindowActivity extends Activity {
         mBtnStartActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(PopupWindowActivity.this, SecondActivity.class));
+                startActivity(new Intent(PopupWindowActivity.this, SecondPopWindowActivity.class));
             }
         });
         mButton.setOnClickListener(new View.OnClickListener() {

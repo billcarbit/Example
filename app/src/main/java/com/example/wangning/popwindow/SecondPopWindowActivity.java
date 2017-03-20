@@ -19,7 +19,7 @@ import com.example.wangning.R;
  * @version 1.0 2016-12-26
  * @since JDK 1.8
  */
-public class SecondActivity extends Activity {
+public class SecondPopWindowActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +37,7 @@ public class SecondActivity extends Activity {
 
                 mPopupWindow.showAtLocation(view, Gravity.CENTER,0,0);
                 WindowManager.LayoutParams  windowLp = getWindow().getAttributes();
-                windowLp.alpha=0.5f;
+                windowLp.alpha=0.0f;
                 getWindow().setAttributes(windowLp);
 
                 mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
