@@ -12,7 +12,6 @@ import com.example.wangning.loading.LoadingDataDialog;
 public class MainActivity extends AppCompatActivity {
     public final static String TAG = MainActivity.class.getSimpleName();
 
-    private LoadingDataDialog mDataDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

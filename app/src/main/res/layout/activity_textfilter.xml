@@ -10,11 +10,32 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.wangning.MainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="输入银行卡号:" />
+
+        <com.example.wangning.edittext.NumSpaceEditText
+            android:id="@+id/bankCardNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="请输入银行卡号"
+            android:inputType="number"
+            android:maxLength="22" />
+
+    </LinearLayout>
+
     <EditText
         android:id="@+id/et"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:digits="0123456789 "
-        android:text="A"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="aaaaaa"
+        android:inputType="textVisiblePassword"
+        android:textSize="30sp" />
+
 </LinearLayout>
