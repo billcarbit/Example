@@ -21,10 +21,10 @@ public class PlusMinusActivity extends Activity {
         setContentView(R.layout.activity_plus_minus);
         AdderSubtracterView  mAdderSubtracter = (AdderSubtracterView) findViewById(R.id.adder_subtracter);
         mAdderSubtracter
-                .setBetweenWidth(54)
-                .setValue("1")
-                .setMinValue("0")
-                .setMaxValue("3");
+                .setBetweenWidth(540)
+                .setValue(4)
+                .setMinValue(1)
+                .setMaxValue(3);
 
 
     }

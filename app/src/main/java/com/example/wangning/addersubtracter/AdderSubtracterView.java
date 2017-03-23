@@ -1,6 +1,7 @@
 package com.example.wangning.addersubtracter;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.wangning.R;
+import com.example.wangning.utils.AppUtil;
 
 
 /**
@@ -21,11 +23,10 @@ import com.example.wangning.R;
 public class AdderSubtracterView extends LinearLayout implements View.OnClickListener {
 
     private static final String TAG = "AdderSubtracterView";
-    private int baseAmount = 1; //  钱/数量的基数
-    private int minValue = 1; //最低份额
-    private int maxValue = 1; // 最高份额
-    private int defaultValue = 1; // 默认份额
-    private OnAmountChangeListener mListener;
+    private int baseAmount = 1; //  步长
+    private int minValue = 0;
+    private int maxValue = 0;
+    private OnValueChangeListener mListener;
 
     private TextView tvAmount;
     private ImageView ivMinus;
@@ -33,13 +34,8 @@ public class AdderSubtracterView extends LinearLayout implements View.OnClickLis
 
     private int totalAmount;
 
-    //private int count;
-    // private int minAmount;
-    // private int maxAmount;
 
     private Context mContext;
-
-    private String mUnit="";//单位
 
     public AdderSubtracterView(Context context) {
         this(context, null);
@@ -57,10 +53,18 @@ public class AdderSubtracterView extends LinearLayout implements View.OnClickLis
         ivPlus.setOnClickListener(this);
         ivPlus.setEnabled(true);
         ivMinus.setEnabled(true);
+
+        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.AdderSubtracterView);
+        int max = typedArray.getInt(R.styleable.AdderSubtracterView_max, 0);
+        int min = typedArray.getInt(R.styleable.AdderSubtracterView_min, 0);
+        int value = typedArray.getInt(R.styleable.AdderSubtracterView_value, 0);
+        int textWidth = typedArray.getInt(R.styleable.AdderSubtracterView_textWidth, 0);
+        setMaxValue(max).setMinValue(min).setValue(value).setBetweenWidth(textWidth);
+
     }
 
-    public void setOnAmountChangeListener(OnAmountChangeListener onAmountChangeListener) {
-        this.mListener = onAmountChangeListener;
+    public void setOnPlusListener(OnValueChangeListener listener) {
+        this.mListener = listener;
     }
 
     public AdderSubtracterView setPlusEnable(boolean bool) {
@@ -78,22 +82,33 @@ public class AdderSubtracterView extends LinearLayout implements View.OnClickLis
         return this;
     }
 
-    public AdderSubtracterView setUnit(String unit) {
-        mUnit = unit;
+
+    public int getValue() {
+        return Integer.valueOf(tvAmount.getText().toString());
+    }
+
+    public AdderSubtracterView setValue(int value) {
+        totalAmount = value;
+        tvAmount.setText(String.valueOf(value));
+        if (totalAmount <= minValue) {
+            setMinusEnable(false);
+        } else {
+            setMinusEnable(true);
+        }
         return this;
     }
 
-    public AdderSubtracterView setValue(String value) {
-        tvAmount.setText(value + mUnit);
+    public AdderSubtracterView setMaxValue(int value) {
+        maxValue = value;
+        if (totalAmount >= maxValue) {
+            setPlusEnable(false);
+        } else {
+            setPlusEnable(true);
+        }
         return this;
     }
 
-    public AdderSubtracterView setMaxValue(String value) {
-        maxValue = Integer.valueOf(value);
-        return this;
-    }
-
-    public AdderSubtracterView setMinValue(String value) {
+    public AdderSubtracterView setMinValue(int value) {
         minValue = Integer.valueOf(value);
         return this;
     }
@@ -104,13 +119,17 @@ public class AdderSubtracterView extends LinearLayout implements View.OnClickLis
         switch (v.getId()) {
             case R.id.iv_minus:
                 if (totalAmount > minValue) {
-                    totalAmount = totalAmount - baseAmount;//ParseUtil.sub(totalAmount, baseAmount);
+                    totalAmount = totalAmount - baseAmount;
                 }
                 if (totalAmount <= minValue) {
                     ivMinus.setEnabled(false);
                 }
                 ivPlus.setEnabled(true);
-                tvAmount.setText(totalAmount + mUnit);
+                tvAmount.setText(String.valueOf(totalAmount));
+
+                if (mListener != null) {
+                    mListener.onMinus(totalAmount);
+                }
                 break;
             case R.id.iv_plus:
                 if (totalAmount < maxValue) {
@@ -122,18 +141,22 @@ public class AdderSubtracterView extends LinearLayout implements View.OnClickLis
                 }
 
                 ivMinus.setEnabled(true);
-                tvAmount.setText(totalAmount + mUnit);
+                tvAmount.setText(String.valueOf(totalAmount));
+
+                if (mListener != null) {
+                    mListener.onPlus(totalAmount);
+                }
                 break;
         }
 
-        if (mListener != null) {
-            //  mListener.onAmountChange(this, totalAmount, count);
-        }
+
     }
 
 
-    public interface OnAmountChangeListener {
-        void onAmountChange(View view, int oldValue, int newValue);
+    public interface OnValueChangeListener {
+        void onPlus(int newValue);
+
+        void onMinus(int newValue);
     }
 
 }
