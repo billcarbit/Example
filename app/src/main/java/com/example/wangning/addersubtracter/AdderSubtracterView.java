@@ -23,7 +23,7 @@ import com.example.wangning.utils.AppUtil;
 public class AdderSubtracterView extends LinearLayout implements View.OnClickListener {
 
     private static final String TAG = "AdderSubtracterView";
-    private int baseAmount = 1; //  步长
+    private int mStepValue = 1; //  步长
     private int minValue = 0;
     private int maxValue = 0;
     private OnValueChangeListener mListener;
@@ -32,7 +32,7 @@ public class AdderSubtracterView extends LinearLayout implements View.OnClickLis
     private ImageView ivMinus;
     private ImageView ivPlus;
 
-    private int totalAmount;
+    private int mCurrValue;
 
 
     private Context mContext;
@@ -88,9 +88,9 @@ public class AdderSubtracterView extends LinearLayout implements View.OnClickLis
     }
 
     public AdderSubtracterView setValue(int value) {
-        totalAmount = value;
+        mCurrValue = value;
         tvAmount.setText(String.valueOf(value));
-        if (totalAmount <= minValue) {
+        if (mCurrValue <= minValue) {
             setMinusEnable(false);
         } else {
             setMinusEnable(true);
@@ -100,16 +100,13 @@ public class AdderSubtracterView extends LinearLayout implements View.OnClickLis
 
     public AdderSubtracterView setMaxValue(int value) {
         maxValue = value;
-        if (totalAmount >= maxValue) {
-            setPlusEnable(false);
-        } else {
-            setPlusEnable(true);
-        }
+        ivPlus.setEnabled(mCurrValue < maxValue);
         return this;
     }
 
     public AdderSubtracterView setMinValue(int value) {
-        minValue = Integer.valueOf(value);
+        minValue = value;
+        ivMinus.setEnabled(mCurrValue > minValue);
         return this;
     }
 
@@ -118,33 +115,26 @@ public class AdderSubtracterView extends LinearLayout implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_minus:
-                if (totalAmount > minValue) {
-                    totalAmount = totalAmount - baseAmount;
+                if (mCurrValue > minValue) {
+                    mCurrValue = mCurrValue - mStepValue;
                 }
-                if (totalAmount <= minValue) {
-                    ivMinus.setEnabled(false);
-                }
-                ivPlus.setEnabled(true);
-                tvAmount.setText(String.valueOf(totalAmount));
-
+                ivMinus.setEnabled(mCurrValue > minValue);
+                ivPlus.setEnabled(mCurrValue < maxValue);
+                tvAmount.setText(String.valueOf(mCurrValue));
                 if (mListener != null) {
-                    mListener.onMinus(totalAmount);
+                    mListener.onMinus(mCurrValue);
                 }
                 break;
             case R.id.iv_plus:
-                if (totalAmount < maxValue) {
-                    totalAmount = totalAmount + baseAmount;
+                if (mCurrValue < maxValue) {
+                    mCurrValue = mCurrValue + mStepValue;
                 }
-
-                if (totalAmount >= maxValue) {
-                    ivPlus.setEnabled(false);
-                }
-
-                ivMinus.setEnabled(true);
-                tvAmount.setText(String.valueOf(totalAmount));
+                ivPlus.setEnabled(mCurrValue < maxValue);
+                ivMinus.setEnabled(mCurrValue > minValue);
+                tvAmount.setText(String.valueOf(mCurrValue));
 
                 if (mListener != null) {
-                    mListener.onPlus(totalAmount);
+                    mListener.onPlus(mCurrValue);
                 }
                 break;
         }

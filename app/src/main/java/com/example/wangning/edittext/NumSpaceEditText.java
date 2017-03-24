@@ -2,6 +2,7 @@ package com.example.wangning.edittext;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
@@ -36,6 +37,7 @@ public class NumSpaceEditText extends EditText {
     }
 
 
+
     @Override
     public void setInputType(int type) {
         super.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
@@ -66,7 +68,7 @@ public class NumSpaceEditText extends EditText {
              * 最多只能输入mMax位
              */
             if (inputString.length() <= mMax + mMax / mNum) {
-                boolean isMatch = inputString.matches("^(\\d{4,}\\s){1,5}(\\d{1,4}){1}$");
+                boolean isMatch = inputString.matches("^(\\d{4}\\s){1,5}(\\d{1,4}){1}$");
                 //如果符合规定的正则表达式的话,就不去格式化文本
                 if (!isMatch) {
                     formatCardNum(text);
@@ -88,11 +90,11 @@ public class NumSpaceEditText extends EditText {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < len; i++) {
             builder.append(originCardNum.charAt(i));
-            if (i == mNum - 1 ||
-                    i == mNum - 1 + mNum ||
-                    i == mNum - 1 + mNum * 2 ||
-                    i == mNum - 1 + mNum * 3 ||
-                    i == mNum - 1 + mNum * 4) {
+            if (i == mNum - 1 ||//3
+                    i == mNum - 1 + mNum ||//7
+                    i == mNum - 1 + mNum * 2 ||//11
+                    i == mNum - 1 + mNum * 3 ||//15
+                    i == mNum - 1 + mNum * 4) {//19
                 //判断是不是最后一位,最后一位不加空格" "
                 if (i != len - 1)
                     builder.append(" ");
@@ -100,9 +102,11 @@ public class NumSpaceEditText extends EditText {
         }
         courPos = builder.length();
         setText(builder.toString());
-        if (courPos > mMax + mMax / mNum) {
-            setSelection(mMax + mMax / mNum);
-        } else {
+        if (courPos > mMax + mMax/mNum) {//防止粘贴进来的数字
+            Log.e(TAG, "formatCardNum1: courPos="+courPos );
+            setSelection(mMax + mMax/mNum);
+        }else{
+            Log.e(TAG, "formatCardNum2: courPos="+courPos );
             setSelection(courPos);
         }
     }

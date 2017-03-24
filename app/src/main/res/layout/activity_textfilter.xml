@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:hint="请输入银行卡号"
             android:inputType="number"
-            android:maxLength="22" />
+            android:maxLength="27" />
 
     </LinearLayout>
 
@@ -35,7 +35,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="aaaaaa"
-        android:inputType="textVisiblePassword"
+        android:inputType="number"
+        android:digits="123abc"
         android:textSize="30sp" />
 
 </LinearLayout>
