@@ -1,11 +1,8 @@
 package com.example.wangning.edittext;
 
 import android.content.Context;
-import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
@@ -16,7 +13,7 @@ import android.widget.EditText;
  * @version 1.0 2017-03-21
  * @since JDK 1.8
  */
-public class NumSpaceEditText extends EditText{
+public class NumSpaceEditText extends EditText {
     private static final String TAG = "NumSpaceEditText";
     private final Context mContext;
     private int mNum = 4;
@@ -58,6 +55,8 @@ public class NumSpaceEditText extends EditText{
         mSpace = space;
     }
 
+
+
     @Override
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
         if (mNum <= 0) {
@@ -72,12 +71,12 @@ public class NumSpaceEditText extends EditText{
             if (inputString.length() <= mMax + mMax / mNum) {
 
 
+                if (start - 1 > 0) {
+                    Log.e(TAG, "getSelectionStart=" + start + ",bb=" + text.charAt(start - 1));
+                    if(lengthBefore - lengthAfter == 1){//退格刪除
 
-if(start-1>0){
-    Log.e(TAG, "getSelectionStart="+start+",bb="+text.charAt(start-1));
-}
-
-
+                    }
+                }
 
                 Log.e(TAG, "onTextChanged: inputString=" + inputString + ",start=" + start + ",lengthBefore=" + lengthBefore + ",lengthAfter=" + lengthAfter);
                 boolean isMatch = inputString.matches("^(\\d{1,4}\\s){1,5}(\\d{1,4}){1}$");
@@ -115,25 +114,15 @@ if(start-1>0){
         courPos = builder.length();
         setText(builder.toString());
 
-        int start = getSelectionStart();
-
-
-        char aa = (char)text.charAt(start);
-
-
-        Log.e(TAG, "getSelectionStart="+start+",aa="+aa);
 
         if (courPos > mMax + mMax / mNum) {//防止粘贴进来的数字
             Log.e(TAG, "formatCardNum1: courPos=" + courPos);
-           setSelection(mMax + mMax / mNum);
+            setSelection(mMax + mMax / mNum);
         } else {
             Log.e(TAG, "formatCardNum2: courPos=" + courPos);
             setSelection(courPos);
         }
     }
-
-
-
 
 
 }

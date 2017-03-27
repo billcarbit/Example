@@ -34,7 +34,8 @@ public class TextFilterActivity extends Activity {
         editText.setHint(s);
 
 
-        NumSpaceEditText bankNumEditText = (NumSpaceEditText) findViewById(R.id.bankCardNum);
+        EditText bankNumEditText = (EditText) findViewById(R.id.bankCardNum);
+        bankNumEditText.addTextChangedListener(new NumSpaceTextWatcher(bankNumEditText));
        // bankNumEditText.setMyFilters(new InputFilter[]{new MaxInputLengthFilter(22)});
 /*        bankNumEditText.setBankNameListener(new BankNumEditText.BankNameListener() {
             @Override
