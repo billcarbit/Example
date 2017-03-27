@@ -1,8 +1,11 @@
 package com.example.wangning.edittext;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
@@ -13,7 +16,7 @@ import android.widget.EditText;
  * @version 1.0 2017-03-21
  * @since JDK 1.8
  */
-public class NumSpaceEditText extends EditText {
+public class NumSpaceEditText extends EditText{
     private static final String TAG = "NumSpaceEditText";
     private final Context mContext;
     private int mNum = 4;
@@ -35,7 +38,6 @@ public class NumSpaceEditText extends EditText {
         setEnabled(true);
         setFocusableInTouchMode(true);
     }
-
 
 
     @Override
@@ -68,7 +70,17 @@ public class NumSpaceEditText extends EditText {
              * 最多只能输入mMax位
              */
             if (inputString.length() <= mMax + mMax / mNum) {
-                boolean isMatch = inputString.matches("^(\\d{4}\\s){1,5}(\\d{1,4}){1}$");
+
+
+
+if(start-1>0){
+    Log.e(TAG, "getSelectionStart="+start+",bb="+text.charAt(start-1));
+}
+
+
+
+                Log.e(TAG, "onTextChanged: inputString=" + inputString + ",start=" + start + ",lengthBefore=" + lengthBefore + ",lengthAfter=" + lengthAfter);
+                boolean isMatch = inputString.matches("^(\\d{1,4}\\s){1,5}(\\d{1,4}){1}$");
                 //如果符合规定的正则表达式的话,就不去格式化文本
                 if (!isMatch) {
                     formatCardNum(text);
@@ -102,12 +114,26 @@ public class NumSpaceEditText extends EditText {
         }
         courPos = builder.length();
         setText(builder.toString());
-        if (courPos > mMax + mMax/mNum) {//防止粘贴进来的数字
-            Log.e(TAG, "formatCardNum1: courPos="+courPos );
-            setSelection(mMax + mMax/mNum);
-        }else{
-            Log.e(TAG, "formatCardNum2: courPos="+courPos );
+
+        int start = getSelectionStart();
+
+
+        char aa = (char)text.charAt(start);
+
+
+        Log.e(TAG, "getSelectionStart="+start+",aa="+aa);
+
+        if (courPos > mMax + mMax / mNum) {//防止粘贴进来的数字
+            Log.e(TAG, "formatCardNum1: courPos=" + courPos);
+           setSelection(mMax + mMax / mNum);
+        } else {
+            Log.e(TAG, "formatCardNum2: courPos=" + courPos);
             setSelection(courPos);
         }
     }
+
+
+
+
+
 }
