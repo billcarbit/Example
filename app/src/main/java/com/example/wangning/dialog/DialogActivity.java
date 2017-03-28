@@ -35,8 +35,8 @@ public class DialogActivity extends Activity {
                 });
             }
         });
-        deleteDialog = new DeleteDialog(this);
 
+        deleteDialog = new DeleteDialog(this);
 
     }
 }
