@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.example.wangning.R;
 
+
 /**
  * file explain
  *
@@ -21,11 +22,12 @@ public class TextActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text);
-        TextView tv = (TextView)findViewById(R.id.tv);
-
+        TextView tv_html_format = (TextView)findViewById(R.id.tv_html_format);
         String html_text = getString(R.string.html_text);
-        tv.setText(Html.fromHtml(String.format(html_text, "123<br/>456")));
+        tv_html_format.setText(Html.fromHtml(String.format(html_text, "123<br/>456")));
 
-
+        TextView tv_format = (TextView)findViewById(R.id.tv_format);
+        String text_format = getString(R.string.text_format);
+        tv_format.setText(String.format(text_format, "123","456"));
     }
 }
