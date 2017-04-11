@@ -22,12 +22,15 @@ public class TextActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text);
-        TextView tv_html_format = (TextView)findViewById(R.id.tv_html_format);
+        TextView tv_html_format = (TextView) findViewById(R.id.tv_html_format);
         String html_text = getString(R.string.html_text);
         tv_html_format.setText(Html.fromHtml(String.format(html_text, "123<br/>456")));
 
-        TextView tv_format = (TextView)findViewById(R.id.tv_format);
+        TextView tv_format = (TextView) findViewById(R.id.tv_format);
         String text_format = getString(R.string.text_format);
-        tv_format.setText(String.format(text_format, "123","456"));
+        tv_format.setText(String.format(text_format, "123", "456"));
+
+
+        tv_format.setText(String.format(getString(R.string.text_double), 1.12));
     }
 }

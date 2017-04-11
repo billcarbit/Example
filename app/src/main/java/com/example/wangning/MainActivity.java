@@ -1,48 +1,29 @@
 package com.example.wangning;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
-import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import com.example.wangning.launchmode.SecondActivity;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.example.wangning.edittext.DecimalInputFilter;
 import com.example.wangning.loading.LoadingDataDialog;
-import com.example.wangning.viewinvalidate.ViewInvalidateActivity;
 
 public class MainActivity extends AppCompatActivity {
     public final static String TAG = MainActivity.class.getSimpleName();
-
-    private LoadingDataDialog mDataDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        double aa = 0;
+        double bb = Double.valueOf(0);
+        Log.e(TAG, "onCreate: aa="+aa+",bb="+bb );
 
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Log.e(TAG, "onBackPressed: " );
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-
-        Log.e(TAG, "onSaveInstanceState: " );
-        onBackPressed();
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        Log.e(TAG, "onKeyUp: ");
-        return super.onKeyUp(keyCode, event);
     }
 }
