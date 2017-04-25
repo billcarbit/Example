@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.wangning.retrofit;
+package com.example.wangning.retrofit.examples;
 
 import java.io.IOException;
 import java.util.List;

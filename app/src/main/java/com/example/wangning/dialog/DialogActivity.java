@@ -2,7 +2,6 @@ package com.example.wangning.dialog;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -17,26 +16,23 @@ import com.example.wangning.R;
  */
 public class DialogActivity extends Activity {
 
-    private DeleteDialog deleteDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dialog_del);
         Button btn = (Button) findViewById(R.id.btn);
+        final int[] location = new  int[2] ;
+        //btn.getLocationInWindow(location); //获取在当前窗口内的绝对坐标
+        btn.getLocationOnScreen(location);//获取在整个屏幕内的绝对坐标
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteDialog.showDialog("您是否要解绑该银行卡", new DeleteDialog.OnConfirmListener() {
-                    @Override
-                    public void onConfirm() {
-                        Log.d("aa", "onConfirm: ");
-                    }
-                });
+                PositionDialog dialog = new PositionDialog(DialogActivity.this,location[0],location[1]);
+                dialog.show();
             }
         });
 
-        deleteDialog = new DeleteDialog(this);
 
     }
 }

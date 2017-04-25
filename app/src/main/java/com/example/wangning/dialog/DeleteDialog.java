@@ -37,8 +37,8 @@ public class DeleteDialog implements View.OnClickListener {
     public void showDialog(String str, OnConfirmListener listener) {
         mOnConfirmListener = listener;
         if(!((Activity)mContext).isFinishing()){
-            mDialog = new Dialog(mContext, R.style.add_dialog);
-        }
+
+        }  mDialog = new Dialog(mContext, R.style.add_dialog);
 
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         View view = LayoutInflater.from(mContext).inflate(

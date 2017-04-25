@@ -2,15 +2,10 @@ package com.example.wangning.popwindow;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 
 import com.example.wangning.R;
 
@@ -24,12 +19,13 @@ import com.example.wangning.R;
 public class PopupWindowActivity extends Activity {
     private PopupWindow mPopupWindow;
     private Button mButton, mBtnStartActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popwindow);
 
-        mButton = (Button) findViewById(R.id.btn);
+        mButton = (Button) findViewById(R.id.btn_popupwin);
         mBtnStartActivity = (Button) findViewById(R.id.btn_start_activity);
         mBtnStartActivity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,7 +37,7 @@ public class PopupWindowActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-
+                new MyPopupWindow(PopupWindowActivity.this).show(v);
             }
         });
     }
