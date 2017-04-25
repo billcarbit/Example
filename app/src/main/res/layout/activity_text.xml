@@ -7,10 +7,15 @@
 
 
     <TextView
-        android:id="@+id/tv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:lineSpacingExtra="100dp"
+        android:id="@+id/tv_html_format"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="AA" />
+
+    <TextView
+        android:id="@+id/tv_format"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="bb" />
 
 </LinearLayout>

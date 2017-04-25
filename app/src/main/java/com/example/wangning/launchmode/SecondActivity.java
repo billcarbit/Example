@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -12,6 +13,9 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.wangning.R;
+import com.example.wangning.glide.GlideActivity;
+
+import java.io.Serializable;
 
 /**
  * file explain
@@ -21,10 +25,17 @@ import com.example.wangning.R;
  * @since JDK 1.8
  */
 public class SecondActivity extends Activity {
+    private static final String TAG = "SecondActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
+
+        String param  =  getIntent().getStringExtra("param");
+        if(param.equals(GlideActivity.class.toString())){
+            Log.e(TAG, "onCreate: aa.getClass() == GlideActivity.class");
+        }
+
         TextView tv= (TextView)findViewById(R.id.tv_second);
         tv.setOnClickListener(new View.OnClickListener() {
             @Override

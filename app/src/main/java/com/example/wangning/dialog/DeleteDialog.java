@@ -1,5 +1,6 @@
 package com.example.wangning.dialog;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.util.DisplayMetrics;
@@ -35,7 +36,10 @@ public class DeleteDialog implements View.OnClickListener {
 
     public void showDialog(String str, OnConfirmListener listener) {
         mOnConfirmListener = listener;
-        mDialog = new Dialog(mContext, R.style.add_dialog);
+        if(!((Activity)mContext).isFinishing()){
+
+        }  mDialog = new Dialog(mContext, R.style.add_dialog);
+
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         View view = LayoutInflater.from(mContext).inflate(
                 R.layout.view_dialog, null);
@@ -62,7 +66,6 @@ public class DeleteDialog implements View.OnClickListener {
     public void dismiss() {
         if (mDialog != null) {
             mDialog.dismiss();
-            mDialog = null;
         }
     }
 

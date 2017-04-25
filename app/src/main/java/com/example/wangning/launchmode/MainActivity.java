@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.wangning.R;
+import com.example.wangning.glide.GlideActivity;
 import com.example.wangning.loading.LoadingDataDialog;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                intent.putExtra("param", String.valueOf(GlideActivity.class));
                 startActivity(intent);
             }
         });
