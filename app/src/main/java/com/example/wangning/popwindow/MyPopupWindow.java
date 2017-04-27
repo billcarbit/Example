@@ -58,8 +58,6 @@ public class MyPopupWindow {
             mPopupWindow.showAtLocation(view, Gravity.NO_GRAVITY , location[0]+ view.getWidth()/2, location[1]- mPopupWindow.getHeight()+ view.getHeight()/2);
 
         }
-
-
     }
 
 }
