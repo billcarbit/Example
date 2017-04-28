@@ -22,7 +22,8 @@ public class ItemView extends RelativeLayout {
 
     public ItemView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
-        mLayout = LayoutInflater.from(context).inflate(R.layout.item_gridview, this);
+        //mLayout = LayoutInflater.from(context).inflate(R.layout.item_gridview, this);
+        mLayout = LayoutInflater.from(context).inflate(R.layout.item_sign_in_gift, this);
         tv_name = (TextView)findViewById(R.id.tv_name);
     }
 

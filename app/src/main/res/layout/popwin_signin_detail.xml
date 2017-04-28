@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.8"
+        android:background="@drawable/shape_sign_in_detail_bg">
+
+        <ListView
+            android:id="@+id/ls_item_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:dividerHeight="5dp"
+            android:paddingLeft="11dp"
+            android:paddingRight="7dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="5dp"/>
+    </LinearLayout>
+</RelativeLayout>
