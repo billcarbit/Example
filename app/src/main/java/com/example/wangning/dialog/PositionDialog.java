@@ -1,7 +1,7 @@
 package com.example.wangning.dialog;
 
+import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -9,9 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.example.wangning.R;
 
@@ -24,44 +22,46 @@ import com.example.wangning.R;
  */
 public class PositionDialog {
     private Dialog mDialog;
-    private Context mContext;
+    private Activity mActivity;
+    private View mDialogView;
 
-    public PositionDialog(Context mContext,float x,float y) {
+    public PositionDialog(Activity context) {
         super();
-        this.mContext = mContext;
-
-        mDialog = new Dialog(mContext, R.style.add_dialog);
-
+        mActivity = context;
+        mDialog = new Dialog(mActivity, R.style.add_dialog);
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        View view = LayoutInflater.from(mContext).inflate(
+        mDialogView = LayoutInflater.from(mActivity).inflate(
                 R.layout.dialog_main, null);
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams( ViewGroup.LayoutParams.WRAP_CONTENT,
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        mDialog.setContentView(view, params);
+        mDialog.setContentView(mDialogView, params);
         mDialog.setCancelable(true);
 
 
+    }
 
+    public void show(View anchorView) {
+        final int[] location = new int[2];
+        anchorView.getLocationOnScreen(location);//获取在整个屏幕内的绝对坐标
         Window dialogWindow = mDialog.getWindow();
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
         dialogWindow.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-        dialogWindow.setGravity(Gravity.LEFT | Gravity.TOP);
-//显示的坐标
-        lp.x = (int)x;
-        lp.y = (int)y;
-    /*    int width =100;// getResources().getDimensionPixelOffset(R.dimen.d_width);
-        int height = 400;//getResources().getDimensionPixelOffset(R.dimen.d_height);*/
-//dialog的大小
-
-
-
+        dialogWindow.setGravity(Gravity.NO_GRAVITY);
+        DisplayMetrics metric = new DisplayMetrics();
+        mActivity.getWindowManager().getDefaultDisplay().getMetrics(metric);
+/*        int width = metric.widthPixels; // 屏幕宽度（像素）
+        if (location[0] + anchorView.getWidth() / 2 + mDialogView.getWidth() > width) {
+            lp.x = location[0] + anchorView.getWidth() / 2 - mDialogView.getWidth();
+            lp.y = location[1] - mDialogView.getHeight() + anchorView.getHeight() / 2;
+            dialogWindow.setAttributes(lp);
+        } else {
+            lp.x = location[0] + anchorView.getWidth() / 2;
+            lp.y = location[1] - mDialogView.getHeight() + anchorView.getHeight() / 2;
+            dialogWindow.setAttributes(lp);
+        }*/
+        lp.x = location[0];
+        lp.y = location[1];
         dialogWindow.setAttributes(lp);
-
-    }
-
-    public void show() {
         mDialog.show();
     }
 
