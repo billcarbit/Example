@@ -1,6 +1,7 @@
 package com.example.wangning.dialog;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,8 +29,7 @@ public class DialogActivity extends Activity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PositionDialog dialog = new PositionDialog(DialogActivity.this,location[0],location[1]);
-                dialog.show();
+             startActivity(new Intent(DialogActivity.this,DialogStyleActivity.class));
             }
         });
 

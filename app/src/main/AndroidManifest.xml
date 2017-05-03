@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.wangning">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:name=".application.MyApplication"
@@ -10,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".popwindow.PopupWindowActivity"
+            android:name=".dialog.DialogActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,6 +24,9 @@
             android:screenOrientation="portrait" />
 
         <activity android:name=".launchmode.ThirdActivity" />
+        <activity
+            android:name=".dialog.DialogStyleActivity"
+            android:theme="@style/Translucent" />
 
     </application>
 
