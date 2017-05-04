@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".gridview.GridViewActivity"
+            android:name=".dialog.DialogActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,6 +23,13 @@
             android:screenOrientation="portrait" />
 
         <activity android:name=".launchmode.ThirdActivity" />
+
+
+        <activity
+            android:name=".dialog.SignInSuccessActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/sign_in_detail_dialog" />
+
 
     </application>
 
