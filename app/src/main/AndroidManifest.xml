@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.wangning">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:name=".application.MyApplication"
@@ -23,12 +24,15 @@
             android:screenOrientation="portrait" />
 
         <activity android:name=".launchmode.ThirdActivity" />
+        <activity
+            android:name=".dialog.DialogStyleActivity"
+            android:theme="@style/Translucent" />
 
 
         <activity
             android:name=".dialog.SignInSuccessActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/sign_in_detail_dialog" />
+            android:theme="@style/Translucent" />
 
 
     </application>

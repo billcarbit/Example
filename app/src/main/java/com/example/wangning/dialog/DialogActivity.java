@@ -32,6 +32,7 @@ public class DialogActivity extends Activity {
             public void onClick(View view) {
 
                 startActivity(new Intent(DialogActivity.this,SignInSuccessActivity.class));
+            // startActivity(new Intent(DialogActivity.this,DialogStyleActivity.class));
             }
         });
 
