@@ -15,4 +15,11 @@
 
     <color name="sign_in_item_detail_bg">#40200A</color>
     <color name="sign_in_item_stroke">#FEFF6E</color>
+
+    <!--文字颜色-->
+    <color name="text_ff6600">#ff6600</color>
+    <color name="text_222222">#222222</color>
+    <color name="text_666666">#666666</color>
+    <color name="text_999999">#999999</color>
+    <color name="bg_white_middle">#fafafb</color>
 </resources>

@@ -16,6 +16,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <EditText
+            android:layout_width="match_parent"
+            android:hint="AAAA"
+            android:inputType="textPersonName"
+            android:maxLength="5"
+            android:layout_height="50dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
