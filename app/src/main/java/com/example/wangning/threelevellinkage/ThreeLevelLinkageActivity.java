@@ -1,7 +1,6 @@
 package com.example.wangning.threelevellinkage;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +15,8 @@ import java.util.List;
  * Created by Administrator on 2017/5/9.
  */
 public class ThreeLevelLinkageActivity extends Activity {
-    Province province;
+    List<Province> mProvinceList = new ArrayList<>();
+    PCASelectorDialog mPCADialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +27,14 @@ public class ThreeLevelLinkageActivity extends Activity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PCASelectorDialog dialog = new PCASelectorDialog(ThreeLevelLinkageActivity.this, R.style.add_dialog);
-                dialog.show();
-                dialog.setData(province);
-                dialog.setOnDismissListener(new PCASelectorDialog.OnDismissListener() {
+                if (mPCADialog == null) {
+                    mPCADialog = new PCASelectorDialog(ThreeLevelLinkageActivity.this, R.style.add_dialog);
+                    mPCADialog.setData(mProvinceList);
+                }
+                mPCADialog.show();
+                mPCADialog.setOnAreaClickListener(new PCASelectorDialog.OnAreaClickListener() {
                     @Override
-                    public void onDismiss(String pro, String city, String area) {
+                    public void onAreaClick(String pro, String city, String area) {
                         Log.e("AAA", "onAreaClick: provin=" + pro
                                 + ",city=" + city +
                                 ",area=" + area);
@@ -61,17 +63,17 @@ public class ThreeLevelLinkageActivity extends Activity {
 
 
     public void initData() {
-        List<Province.ProvinceEntity> provinceList = new ArrayList<Province.ProvinceEntity>();
+        List<Province> provinceList = new ArrayList<Province>();
         for (int i = 0; i < 100; i++) {
-            Province.ProvinceEntity provinceEntity = new Province.ProvinceEntity();
+            Province provinceEntity = new Province();
             provinceEntity.setName("省" + i);
-            List<Province.ProvinceEntity.CityEntity> cityList = new ArrayList<Province.ProvinceEntity.CityEntity>();
+            List<Province.City> cityList = new ArrayList<Province.City>();
             for (int j = 0; j < 100; j++) {
-                Province.ProvinceEntity.CityEntity cityEntity = new Province.ProvinceEntity.CityEntity();
+                Province.City cityEntity = new Province.City();
                 cityEntity.setName(i + "市" + j);
-                List<Province.ProvinceEntity.CityEntity.AreaEntity> areaList = new ArrayList<Province.ProvinceEntity.CityEntity.AreaEntity>();
+                List<Province.City.Area> areaList = new ArrayList<Province.City.Area>();
                 for (int k = 0; k < 100; k++) {
-                    Province.ProvinceEntity.CityEntity.AreaEntity areaEntity = new Province.ProvinceEntity.CityEntity.AreaEntity();
+                    Province.City.Area areaEntity = new Province.City.Area();
                     areaEntity.setName(i + "-" + j + "区" + k);
                     areaList.add(areaEntity);
                 }
@@ -81,8 +83,8 @@ public class ThreeLevelLinkageActivity extends Activity {
             provinceEntity.setCity(cityList);
             provinceList.add(provinceEntity);
         }
-        province = new Province();
-        province.setAreaVersion(1);
-        province.setProvince(provinceList);
+
+
+        mProvinceList.addAll(provinceList);
     }
 }

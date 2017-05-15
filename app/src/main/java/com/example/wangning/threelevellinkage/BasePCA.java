@@ -10,4 +10,8 @@ package com.example.wangning.threelevellinkage;
 public interface BasePCA {
     String getName();
     boolean isCity();
+    boolean isProvince();
+    boolean isArea();
+    boolean isChecked();
+    void setChecked(boolean checked);
 }
