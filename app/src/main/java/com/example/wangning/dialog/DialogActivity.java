@@ -1,9 +1,7 @@
 package com.example.wangning.dialog;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -25,14 +23,21 @@ public class DialogActivity extends Activity {
         setContentView(R.layout.activity_dialog_del);
         Button btn = (Button) findViewById(R.id.btn);
 
-        Log.e("AAA", "onCreate: " + 4 % 3);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                BaseConfirmDialog dialog = new BaseConfirmDialog(DialogActivity.this);
+                dialog.setContent("AAAAAAAA");
+                dialog.setConfirmText("拨打");
+                dialog.setOnConfirmListener(new BaseConfirmDialog.OnConfirmListener() {
+                    @Override
+                    public void onConfirm() {
 
-                startActivity(new Intent(DialogActivity.this,SignInSuccessActivity.class));
-            // startActivity(new Intent(DialogActivity.this,DialogStyleActivity.class));
+                    }
+                });
+                dialog.show();
+
             }
         });
 

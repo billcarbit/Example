@@ -39,9 +39,9 @@ public class PCASelectorDialog extends Dialog implements AdapterView.OnItemClick
     String mProvince;
     String mCity;
     String mArea;
-    List<Province> list1 = new ArrayList<Province>();
-    List<Province.City> list2 = new ArrayList<Province.City>();
-    List<Province.City.Area> list3 = new ArrayList<Province.City.Area>();
+    List<ProvinceResp.Province> list1 = new ArrayList<ProvinceResp.Province>();
+    List<ProvinceResp.Province.City> list2 = new ArrayList<ProvinceResp.Province.City>();
+    List<ProvinceResp.Province.City.Area> list3 = new ArrayList<ProvinceResp.Province.City.Area>();
     LinearLayout mLlClose;
     OnAreaClickListener mOnAreaClickListener;
 
@@ -59,9 +59,9 @@ public class PCASelectorDialog extends Dialog implements AdapterView.OnItemClick
         getWindow().setGravity(Gravity.BOTTOM);
         setContentView(R.layout.view_pca_3level);
         initView();
-        mAdapter1 = new Adapter1<Province>(list1);
-        mAdapter2 = new Adapter2<Province.City>(list2);
-        mAdapter3 = new Adapter3<Province.City.Area>(list3);
+        mAdapter1 = new Adapter1<ProvinceResp.Province>(list1);
+        mAdapter2 = new Adapter2<ProvinceResp.Province.City>(list2);
+        mAdapter3 = new Adapter3<ProvinceResp.Province.City.Area>(list3);
         mLv1.setAdapter(mAdapter1);
         mLv2.setAdapter(mAdapter2);
         mLv3.setAdapter(mAdapter3);
@@ -71,20 +71,22 @@ public class PCASelectorDialog extends Dialog implements AdapterView.OnItemClick
         mLlClose.setOnClickListener(this);
     }
 
-    public void setData(List<Province> prList) {
-        Province pro = prList.get(0);
-        List<Province.City> cityList = pro.getCity();
-        Province.City city = cityList.get(0);
-        List<Province.City.Area> areaList = city.getArea();
-        Province.City.Area area = areaList.get(0);
-        mProvince = pro.getName();
+    public void setData(ProvinceResp provinceResp) {
+        List<ProvinceResp.Province> proList = provinceResp.getProvince();
+        ProvinceResp.Province province = proList.get(0);
+        List<ProvinceResp.Province.City> cityList = province.getCity();
+        ProvinceResp.Province.City city = cityList.get(0);
+        List<ProvinceResp.Province.City.Area> areaList = city.getRegionList();
+        ProvinceResp.Province.City.Area area = areaList.get(0);
+
+        mProvince = province.getName();
         mCity = city.getName();
         mArea = area.getName();
 
-        pro.setChecked(true);
+        province.setChecked(true);
         city.setChecked(true);
 
-        list1.addAll(prList);
+        list1.addAll(proList);
         list2.addAll(cityList);
         list3.addAll(areaList);
 
@@ -120,11 +122,11 @@ public class PCASelectorDialog extends Dialog implements AdapterView.OnItemClick
         switch (parent.getId()) {
             case R.id.lv1:
                 list2.clear();
-                Province province = list1.get(position);
-                List<Province.City> cityList = province.getCity();
-                Province.City city = cityList.get(0);
-                List<Province.City.Area> areaList = cityList.get(0).getArea();
-                Province.City.Area area = areaList.get(0);
+                ProvinceResp.Province province = list1.get(position);
+                List<ProvinceResp.Province.City> cityList = province.getCity();
+                ProvinceResp.Province.City city = cityList.get(0);
+                List<ProvinceResp.Province.City.Area> areaList = cityList.get(0).getRegionList();
+                ProvinceResp.Province.City.Area area = areaList.get(0);
                 list2.addAll(cityList);
                 mAdapter2.notifyDataSetChanged();
 
@@ -145,11 +147,11 @@ public class PCASelectorDialog extends Dialog implements AdapterView.OnItemClick
                 mArea = area.getName();
                 break;
             case R.id.lv2:
-                Province.City city2 = list2.get(position);
-                List<Province.City.Area> areaList2 = city2.getArea();
-                Province.City.Area area2 = areaList2.get(0);
+                ProvinceResp.Province.City city2 = list2.get(position);
+                List<ProvinceResp.Province.City.Area> areaList2 = city2.getRegionList();
+                ProvinceResp.Province.City.Area area2 = areaList2.get(0);
                 list3.clear();
-                list3.addAll(city2.getArea());
+                list3.addAll(city2.getRegionList());
                 mAdapter3.notifyDataSetChanged();
 
                 clearList2CheckStatus();
@@ -162,7 +164,7 @@ public class PCASelectorDialog extends Dialog implements AdapterView.OnItemClick
 
                 break;
             case R.id.lv3:
-                Province.City.Area area3 = list3.get(position);
+                ProvinceResp.Province.City.Area area3 = list3.get(position);
                 mArea = area3.getName();
                 clearList3CheckStatus();
                 area3.setChecked(true);

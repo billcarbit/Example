@@ -11,7 +11,6 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 
 import com.example.wangning.R;
-import com.example.wangning.dialog.DeleteDialog;
 
 /**
  * file explain

@@ -15,7 +15,7 @@ import java.util.List;
  * Created by Administrator on 2017/5/9.
  */
 public class ThreeLevelLinkageActivity extends Activity {
-    List<Province> mProvinceList = new ArrayList<>();
+    ProvinceResp mProvinceResp = new ProvinceResp();
     PCASelectorDialog mPCADialog;
 
     @Override
@@ -29,7 +29,7 @@ public class ThreeLevelLinkageActivity extends Activity {
             public void onClick(View view) {
                 if (mPCADialog == null) {
                     mPCADialog = new PCASelectorDialog(ThreeLevelLinkageActivity.this, R.style.add_dialog);
-                    mPCADialog.setData(mProvinceList);
+                    mPCADialog.setData(mProvinceResp);
                 }
                 mPCADialog.show();
                 mPCADialog.setOnAreaClickListener(new PCASelectorDialog.OnAreaClickListener() {
@@ -63,28 +63,27 @@ public class ThreeLevelLinkageActivity extends Activity {
 
 
     public void initData() {
-        List<Province> provinceList = new ArrayList<Province>();
+        List<ProvinceResp.Province> provinceList = new ArrayList<ProvinceResp.Province>();
         for (int i = 0; i < 100; i++) {
-            Province provinceEntity = new Province();
+            ProvinceResp.Province provinceEntity = new ProvinceResp.Province();
             provinceEntity.setName("省" + i);
-            List<Province.City> cityList = new ArrayList<Province.City>();
+            List<ProvinceResp.Province.City> cityList = new ArrayList<ProvinceResp.Province.City>();
             for (int j = 0; j < 100; j++) {
-                Province.City cityEntity = new Province.City();
+                ProvinceResp.Province.City cityEntity = new ProvinceResp.Province.City();
                 cityEntity.setName(i + "市" + j);
-                List<Province.City.Area> areaList = new ArrayList<Province.City.Area>();
+                List<ProvinceResp.Province.City.Area> areaList = new ArrayList<ProvinceResp.Province.City.Area>();
                 for (int k = 0; k < 100; k++) {
-                    Province.City.Area areaEntity = new Province.City.Area();
+                    ProvinceResp.Province.City.Area areaEntity = new ProvinceResp.Province.City.Area();
                     areaEntity.setName(i + "-" + j + "区" + k);
                     areaList.add(areaEntity);
                 }
-                cityEntity.setArea(areaList);
+                cityEntity.setRegionList(areaList);
                 cityList.add(cityEntity);
             }
             provinceEntity.setCity(cityList);
             provinceList.add(provinceEntity);
         }
 
-
-        mProvinceList.addAll(provinceList);
+        mProvinceResp.setProvince(provinceList);
     }
 }
