@@ -15,4 +15,5 @@
   <!--活着这样写  <string name="text_format" formatted="false">%s到%s</string>-->
 
     <string name="load_finish">没有更多数据了</string>
+
 </resources>

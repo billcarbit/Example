@@ -24,10 +24,13 @@ public class BaseConfirmDialog extends Dialog implements View.OnClickListener {
     private String mContent;
     private String mConfirmText = "确定";
     private String mCancelText = "取消";
+    private View mVSplit;//分隔线
+    private int mBtnNums;
 
     public BaseConfirmDialog(Context context) {
         super(context, R.style.add_dialog);
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,8 @@ public class BaseConfirmDialog extends Dialog implements View.OnClickListener {
         mTvCancel = (TextView) findViewById(R.id.tv_cancel);
         mTvConfirm = (TextView) findViewById(R.id.tv_confirm);
         mTvContent = (TextView) findViewById(R.id.tv_content);
+        mVSplit = findViewById(R.id.v_split);
+
 
     }
 
@@ -50,6 +55,16 @@ public class BaseConfirmDialog extends Dialog implements View.OnClickListener {
         mTvContent.setText(mContent);
         mTvConfirm.setText(mConfirmText);
         mTvCancel.setText(mCancelText);
+
+        if (mBtnNums == 1) {
+            mVSplit.setVisibility(View.GONE);
+            mTvCancel.setVisibility(View.GONE);
+            mTvConfirm.setVisibility(View.VISIBLE);
+        } else if (mBtnNums == 2) {
+            mVSplit.setVisibility(View.VISIBLE);
+            mTvCancel.setVisibility(View.VISIBLE);
+            mTvConfirm.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setListener() {
@@ -71,20 +86,28 @@ public class BaseConfirmDialog extends Dialog implements View.OnClickListener {
         }
     }
 
+    public BaseConfirmDialog setBtnNum(int btnNum) {
+        mBtnNums = btnNum;
+        return this;
+    }
+
     public void setOnConfirmListener(OnConfirmListener listener) {
         mOnConfirmListener = listener;
     }
 
-    public void setContent(String content) {
+    public BaseConfirmDialog setContent(String content) {
         mContent = content;
+        return this;
     }
 
-    public void setConfirmText(String confirmText) {
+    public BaseConfirmDialog setConfirmText(String confirmText) {
         mConfirmText = confirmText;
+        return this;
     }
 
-    public void setCancelText(String cancelText) {
+    public BaseConfirmDialog setCancelText(String cancelText) {
         mCancelText = cancelText;
+        return this;
     }
 
     public interface OnConfirmListener {

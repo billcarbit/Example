@@ -36,10 +36,12 @@
             android:background="@drawable/selector_btn_click_bg2"
             android:gravity="center"
             android:text="取消"
+            android:visibility="visible"
             android:textColor="@color/text_666666"
             android:textSize="16dp" />
 
         <View
+            android:id="@+id/v_split"
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:background="@color/divider_ccc" />

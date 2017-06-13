@@ -2,7 +2,6 @@ package com.example.wangning.dialog;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import com.example.wangning.R;
@@ -24,22 +23,25 @@ public class DialogActivity extends Activity {
         Button btn = (Button) findViewById(R.id.btn);
 
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                BaseConfirmDialog dialog = new BaseConfirmDialog(DialogActivity.this);
-                dialog.setContent("AAAAAAAA");
-                dialog.setConfirmText("拨打");
-                dialog.setOnConfirmListener(new BaseConfirmDialog.OnConfirmListener() {
+        final BaseConfirmDialog dialog = new BaseConfirmDialog(this);
+        dialog.setContent("AADDDD")
+                .setConfirmText("我知道了")
+                .setBtnNum(2)
+                .setOnConfirmListener(new BaseConfirmDialog.OnConfirmListener() {
                     @Override
                     public void onConfirm() {
-
+                        dialog.dismiss();
                     }
                 });
-                dialog.show();
+        dialog.show();
 
+  /*      btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LoadingDialog loadingDialog = new LoadingDialog(DialogActivity.this);
+                loadingDialog.show();
             }
-        });
+        });*/
 
 
     }

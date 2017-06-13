@@ -17,6 +17,8 @@ import com.example.wangning.edittext.DecimalInputFilter;
 import com.example.wangning.launchmode.SecondActivity;
 import com.example.wangning.loading.LoadingDataDialog;
 
+import java.text.DecimalFormat;
+
 public class MainActivity extends Activity {
     public final static String TAG = MainActivity.class.getSimpleName();
 
@@ -25,9 +27,14 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startActivityForResult(new Intent(this, SecondActivity.class), 3);
+        Log.e(TAG, "onCreate: "+formatTosepara(0.32f) );
 
 
+    }
+
+    public static String formatTosepara(float data) {
+        DecimalFormat df = new DecimalFormat("#,##0.00");
+        return df.format(data);
     }
 
     @Override
