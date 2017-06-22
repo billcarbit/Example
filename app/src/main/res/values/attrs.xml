@@ -25,4 +25,10 @@
         <attr name="placeHolder" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="LastRowCenterGridView">
+        <attr name="numColumns" format="integer"/>
+        <attr name="verticalSpacing" format="integer"/>
+        <attr name="horizontalSpacing" format="integer"/>
+    </declare-styleable>
+
 </resources>

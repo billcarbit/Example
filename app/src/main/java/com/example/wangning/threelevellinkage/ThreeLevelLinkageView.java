@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -39,17 +40,41 @@ public class ThreeLevelLinkageView extends LinearLayout {
         lv1.setAdapter(new Adapter1(list1));
         lv2.setAdapter(new Adapter1(list2));
         lv3.setAdapter(new Adapter1(list3));
+
+        lv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
+        lv2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
+        lv3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
     }
 
     public void setLevel1(List<String> list) {
+        list1.clear();
         list1.addAll(list);
     }
 
     public void setLevel2(List<String> list) {
+        list2.clear();
         list2.addAll(list);
     }
 
     public void setLevel3(List<String> list) {
+        list3.clear();
         list3.addAll(list);
     }
 
@@ -85,7 +110,7 @@ public class ThreeLevelLinkageView extends LinearLayout {
 
         @Override
         public long getItemId(int position) {
-            return 0;
+            return position;
         }
 
         @Override

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:lrcgv="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -8,23 +10,15 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
 
-    <GridView
+    <com.example.wangning.gridview.LastRowCenterGridView
         android:id="@+id/gv"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:background="@color/black"
-        android:numColumns="3"
-        android:horizontalSpacing="0dp"
-        android:stretchMode="spacingWidthUniform"
-        android:columnWidth="40dp"
-        android:verticalSpacing="10dp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:verticalSpacing="20"
+        app:horizontalSpacing="20"
+        app:numColumns="2">
 
+    </com.example.wangning.gridview.LastRowCenterGridView>
 
-    </GridView>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="AAAA" />
 
 </LinearLayout>
