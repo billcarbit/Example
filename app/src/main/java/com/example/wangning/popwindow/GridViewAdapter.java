@@ -1,6 +1,7 @@
 package com.example.wangning.popwindow;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +19,10 @@ import java.util.List;
 public class GridViewAdapter extends BaseAdapter {
 
     private List<String> mList;
-    private Activity mActivity;
+    private Context mContext;
 
-    public GridViewAdapter(Activity activity, List<String> list) {
-        mActivity = activity;
+    public GridViewAdapter(Context context, List<String> list) {
+        mContext = context;
         mList = list;
     }
 
@@ -45,7 +46,7 @@ public class GridViewAdapter extends BaseAdapter {
         ViewHolder vh;
         if (convertView == null) {
             vh = new ViewHolder();
-            convertView = new ItemView(mActivity).getLayout();
+            convertView = new ItemView(mContext).getLayout();
             vh.mTvName = (TextView) convertView.findViewById(R.id.tv_name);
             convertView.setTag(vh);
         } else {

@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="other_shallow_grey">#e5e5e5</color>
+    <color name="white_f2f2f2">#f2f2f2</color>
     <color name="white">#ffffff</color>
     <color name="text_dark">#222222</color>
     <color name="divider_ddd">#ddd</color>
@@ -11,4 +12,19 @@
     <color name="text_aaa">#aaa</color>
     <color name="black">#000000</color>
     <color name="transparent_background">#50000000</color>
+    <color name="sign_in_item_coupon">#C2520A</color><!--优惠券面值-->
+
+    <color name="sign_in_item_detail_bg">#40200A</color>
+    <color name="sign_in_item_stroke">#FEFF6E</color>
+
+    <!--文字颜色-->
+    <color name="text_ff6600">#ff6600</color>
+    <color name="text_222222">#222222</color>
+    <color name="text_666666">#666666</color>
+    <color name="text_999999">#999999</color>
+    <color name="bg_white_middle">#fafafb</color>
+    <color name="orange">#ff6600</color>
+    <color name="divider_ccc">#ccc</color>
+
+    <color name="bg_light_middle">#b2000000</color> <!--黑色70%透明度-->
 </resources>

@@ -1,9 +1,7 @@
 package com.example.wangning.dialog;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import com.example.wangning.R;
@@ -23,15 +21,27 @@ public class DialogActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dialog_del);
         Button btn = (Button) findViewById(R.id.btn);
-        final int[] location = new  int[2] ;
-        //btn.getLocationInWindow(location); //获取在当前窗口内的绝对坐标
-        btn.getLocationOnScreen(location);//获取在整个屏幕内的绝对坐标
-        btn.setOnClickListener(new View.OnClickListener() {
+
+
+        final BaseConfirmDialog dialog = new BaseConfirmDialog(this);
+        dialog.setContent("AADDDD")
+                .setConfirmText("我知道了")
+                .setBtnNum(2)
+                .setOnConfirmListener(new BaseConfirmDialog.OnConfirmListener() {
+                    @Override
+                    public void onConfirm() {
+                        dialog.dismiss();
+                    }
+                });
+        dialog.show();
+
+  /*      btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             startActivity(new Intent(DialogActivity.this,DialogStyleActivity.class));
+                LoadingDialog loadingDialog = new LoadingDialog(DialogActivity.this);
+                loadingDialog.show();
             }
-        });
+        });*/
 
 
     }

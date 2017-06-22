@@ -22,8 +22,20 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:backgroundDimAmount">0.5</item>
         <item name="android:backgroundDimEnabled">true</item>
-        <!-- 模糊 -->
 
+
+
+    </style>
+
+    <style name="transparent_dialog" parent="@android:style/Theme.Dialog">
+        <!--背景颜色及透明程度-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--是否有标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否模糊-->
+        <item name="android:backgroundDimEnabled">false</item>
     </style>
 
     <style name="loading_dialog" parent="@android:style/Theme.Dialog">
@@ -46,6 +58,16 @@
         //进入时的动画
         <item name="@android:windowExitAnimation">@anim/dialog_exit</item>
         //退出时的动画
+    </style>
+
+    <style name="sign_in_detail_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:backgroundDimAmount">0.5</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
     </style>
 
     <style name="dialog_style_activity" parent="@android:style/Theme.Dialog">
@@ -75,9 +97,15 @@
         <item name="android:textAppearanceLarge">@android:style/TextAppearance.Large</item>
         <item name="android:textAppearanceMedium">@android:style/TextAppearance.Medium</item>
         <item name="android:textAppearanceSmall">@android:style/TextAppearance.Small</item>
-        <item name="android:textAppearanceLargeInverse">@android:style/TextAppearance.Large.Inverse</item>
-        <item name="android:textAppearanceMediumInverse">@android:style/TextAppearance.Medium.Inverse</item>
-        <item name="android:textAppearanceSmallInverse">@android:style/TextAppearance.Small.Inverse</item>
+        <item name="android:textAppearanceLargeInverse">
+            @android:style/TextAppearance.Large.Inverse
+        </item>
+        <item name="android:textAppearanceMediumInverse">
+            @android:style/TextAppearance.Medium.Inverse
+        </item>
+        <item name="android:textAppearanceSmallInverse">
+            @android:style/TextAppearance.Small.Inverse
+        </item>
 
         <item name="android:listPreferredItemPaddingLeft">10dip</item>
         <item name="android:listPreferredItemPaddingRight">10dip</item>

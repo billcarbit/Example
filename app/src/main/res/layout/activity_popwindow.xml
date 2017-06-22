@@ -10,22 +10,10 @@
         android:layout_height="wrap_content"
         android:text="弹出popWindow" />
 
-    <GridView
-        android:id="@+id/gv"
+    <com.example.wangning.popwindow.LastRowCenterGridView
+        android:id="@+id/lastRowCenterGridView"
+        android:layout_marginTop="100dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:horizontalSpacing="5dp"
-        android:verticalSpacing="10dp"
-        android:numColumns="4" />
-
-    <LinearLayout
-        android:id="@+id/ll_bottom_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-
-        android:gravity="center_horizontal"></LinearLayout>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="77dp"
+        android:layout_height="97dp"
+        android:id="@+id/rl_item"
+        android:layout_centerInParent="true">
+        <!--中间背景-->
+        <ImageView
+            android:id="@+id/iv_center_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/qiandao_middle" />
+
+        <!--商品图-->
+        <ImageView
+            android:id="@+id/iv_gift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            tools:src="@drawable/icon_youhuiquan" />
+
+        <LinearLayout
+            android:id="@+id/ll_coupon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="34dp"
+            android:visibility="visible"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_centerHorizontal="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¥"
+                android:textSize="10sp" />
+            <TextView
+                android:id="@+id/tv_coupon_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="999" />
+
+        </LinearLayout>
+        <!--已领取遮罩-->
+        <ImageView
+            android:id="@+id/iv_cover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            android:src="@drawable/qiandao_middle_yiqiandao" />
+
+        <!--顶部图-->
+        <ImageView
+            android:id="@+id/iv_top_bg"
+            android:layout_width="match_parent"
+            android:layout_height="19dp"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/qiandao_jidou_2" />
+
+        <!--底部图-->
+        <ImageView
+            android:id="@+id/iv_bottom_bg"
+            android:layout_width="match_parent"
+            android:layout_height="19dp"
+            android:layout_alignParentBottom="true"
+            tools:src="@drawable/qiandao_jidou_4" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="19dp"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:text="第一天" />
+
+        <TextView
+            android:id="@+id/tv_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="19dp"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:text="集豆x2" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_stroke"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:visibility="gone" />
+
+</RelativeLayout>

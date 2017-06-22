@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".gridview.GridViewActivity"
+            android:name=".annimate.ValueAnimActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,13 +20,11 @@
         </activity>
         <activity
             android:name=".launchmode.SecondActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity android:name=".launchmode.ThirdActivity" />
-        <activity
-            android:name=".dialog.DialogStyleActivity"
-            android:theme="@style/Translucent" />
+
+
 
     </application>
 

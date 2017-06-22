@@ -1,17 +1,13 @@
 package com.example.wangning.annimate;
 
 import android.app.Activity;
-import android.content.DialogInterface;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.wangning.R;
-import com.example.wangning.dialog.DeleteDialog;
 
 /**
  * file explain
@@ -22,7 +18,8 @@ import com.example.wangning.dialog.DeleteDialog;
  */
 public class AnimateActivity extends Activity implements View.OnClickListener {
     private Button mBtn;
-
+    private ImageView iv_bell;
+    private AnimationDrawable animationDrawable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,10 +30,16 @@ public class AnimateActivity extends Activity implements View.OnClickListener {
 
     private void initView() {
         mBtn = (Button) findViewById(R.id.btn);
+        iv_bell = (ImageView) findViewById(R.id.iv_bell);
+
     }
 
     private void initData() {
         mBtn.setOnClickListener(this);
+
+        iv_bell.setImageResource(R.drawable.bell_anim);
+        animationDrawable = (AnimationDrawable) iv_bell.getDrawable();
+        animationDrawable.start();
     }
 
     @Override

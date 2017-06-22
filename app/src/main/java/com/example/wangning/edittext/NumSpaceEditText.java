@@ -10,7 +10,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 /**
- * 数字空格输入框
+ * 银行卡数字空格输入框
  *
  * @author wangning
  * @version 1.0 2017-03-21
