@@ -1,73 +1,120 @@
 package com.example.wangning.gridview;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.wangning.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * file explain
- *
- * @author wangning
- * @version 1.0 2017-05-02
- * @since JDK 1.8
+ * Created by Administrator on 2017/5/21.
  */
 public class LastRowCenterGridView extends LinearLayout {
+    LinearLayout ll_root;
+    private List<String> mDataList = new ArrayList<String>();
+    private int mNumColumns;
+    private int mHorizontalSpacing, mVerticalSpacing;
 
-    private Context mContext;
-    private LinearLayout ll_main;
-
-    public LastRowCenterGridView(Context context) {
+    LastRowCenterGridView(Context context) {
         this(context, null);
     }
 
-    public LastRowCenterGridView(Context context, AttributeSet attributeSet) {
+    LastRowCenterGridView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
-        mContext = context;
-        LayoutInflater.from(context).inflate(R.layout.gridview_lastrowcenter2, this);
-        ll_main = (LinearLayout) findViewById(R.id.ll_main);
-        ll_main.removeAllViews();
+        LayoutInflater.from(context).inflate(R.layout.last_row_center_gridview, this);
+        ll_root = (LinearLayout) findViewById(R.id.ll_root);
+
+        TypedArray lrcgvTypedArray = context.obtainStyledAttributes(attributeSet, R.styleable.LastRowCenterGridView);
+        mNumColumns = lrcgvTypedArray.getInt(R.styleable.LastRowCenterGridView_numColumns, 5);
+        mHorizontalSpacing = lrcgvTypedArray.getInt(R.styleable.LastRowCenterGridView_horizontalSpacing, 5);
+        mVerticalSpacing = lrcgvTypedArray.getInt(R.styleable.LastRowCenterGridView_verticalSpacing, 5);
     }
 
-    public void initData(List<String> list, int columnNum) {
-        for (int i = 0; list != null && i < list.size(); i++) {
-            if (i % columnNum == 0) {
-                LinearLayout rowLayout = new LinearLayout(mContext);
-                LayoutParams layoutParams = new LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                if (i != 0) {
-                    layoutParams.setMargins(0, 150, 0, 0);//行间距
-                }
+    public void setDataSource(List<String> list) {
+        mDataList.clear();
+        mDataList.addAll(list);
+    }
 
-                rowLayout.setGravity(Gravity.CENTER);
-                rowLayout.setLayoutParams(layoutParams);
-                ll_main.addView(rowLayout);
+    public void createView() {
+        int rowsNum = rowsOf(mDataList.size(), mNumColumns);
+        if (mNumColumns >= mDataList.size()) {//一行
+            LinearLayout linearLayout = new LinearLayout(getContext());
+            linearLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+            linearLayout.setGravity(Gravity.CENTER_HORIZONTAL);
 
-                int nextColumnNum;
-                if(list.size() - i-1 > columnNum){
-                    nextColumnNum = columnNum;
-                }else{
-                    nextColumnNum = list.size() - i;
-                }
-                for (int j = 0; j <  nextColumnNum; j++) {
-                    LinearLayout itemLayout = new LinearLayout(mContext);
-                    ImageView imageView = new ImageView(mContext);
-                    imageView.setImageResource(R.mipmap.ic_launcher);
-                    itemLayout.addView(imageView);
-                    LayoutParams lp = new LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    if (j != 0) {
-                        lp.setMargins(100, 0, 0, 0);//列间距
-                    }
+            for (int i = 0; i < mDataList.size(); i++) {
+                TextView textView = new TextView(getContext());
+                textView.setBackgroundColor(R.color.white);
+                textView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+                textView.setText("A"+i);
+                textView.setTextColor(R.color.black);
 
-                    itemLayout.setLayoutParams(lp);
-                    rowLayout.addView(itemLayout);
+                linearLayout.addView(textView);
+            }
+            ll_root.addView(linearLayout);
+
+        } else {//多行
+            for (int j = 0; j < rowsNum - 1; j++) {//先把满行的加入
+                LinearLayout linearLayout = new LinearLayout(getContext());
+                linearLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                linearLayout.setGravity(Gravity.CENTER_HORIZONTAL);
+                for (int k = 0; k < mNumColumns; k++) {//满行
+                    TextView textView = new TextView(getContext());
+                    textView.setBackgroundColor(R.color.white);
+                    textView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+                    textView.setText(j + "B" + k);
+                    textView.setTextColor(R.color.black);
+                    linearLayout.addView(textView);
                 }
+                ll_root.addView(linearLayout);
+            }
+
+            //最后加入不足一行的，也就是最后一行
+            for (int j = 0; j < mDataList.size() % mNumColumns; j++) {
+                LinearLayout linearLayout = new LinearLayout(getContext());
+                linearLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                linearLayout.setGravity(Gravity.CENTER_HORIZONTAL);
+
+                TextView textView = new TextView(getContext());
+                textView.setBackgroundColor(R.color.white);
+                textView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+                textView.setText("C" + j);
+                textView.setTextColor(R.color.black);
+
+                linearLayout.addView(textView);
+                ll_root.addView(linearLayout);
             }
         }
+
     }
+
+
+    /**
+     * 已知总数量和列数求行数
+     *
+     * @param size    总数量
+     * @param columns 列数
+     * @return 计算得到的行数
+     */
+    private int rowsOf(int size, int columns) {
+        if (size < 1 || columns < 1)
+            return 0;
+        // 整除
+        boolean isDivisible = (size % columns) == 0;
+        if (isDivisible) {
+            return size / columns;
+        } else {
+            return size / columns + 1;
+        }
+
+    }
+
+
 }

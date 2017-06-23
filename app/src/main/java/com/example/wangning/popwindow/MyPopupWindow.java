@@ -8,11 +8,16 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+<<<<<<< HEAD
+=======
 import android.view.WindowManager;
+>>>>>>> 1690084965674f8ddf07a5519a759d6099eec185
 import android.widget.PopupWindow;
 
 import com.example.wangning.R;
 import com.example.wangning.utils.AppUtil;
+
+import java.util.List;
 
 /**
  * file explain
@@ -24,6 +29,10 @@ import com.example.wangning.utils.AppUtil;
 public class MyPopupWindow {
     private Activity mActivity;
     private PopupWindow mPopupWindow;
+<<<<<<< HEAD
+    private List<String> mDataList;
+=======
+>>>>>>> 1690084965674f8ddf07a5519a759d6099eec185
 
     public MyPopupWindow(Activity activity) {
         mActivity = activity;
@@ -36,7 +45,21 @@ public class MyPopupWindow {
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable(mActivity.getResources(), (Bitmap) null));
     }
 
+<<<<<<< HEAD
+    public void setData(List<String> datas) {
+        mDataList = datas;
+    }
+
     public void show(View view) {
+   /*     WindowManager.LayoutParams windowLp = mActivity.getWindow().getAttributes();
+        windowLp.alpha = 0.5f;
+        mActivity.getWindow().setAttributes(windowLp);*/
+        // mPopupWindow.showAsDropDown(view);
+        //  mPopupWindow.showAtLocation(view, Gravity.NO_GRAVITY, 0, 0);
+
+=======
+    public void show(View view) {
+>>>>>>> 1690084965674f8ddf07a5519a759d6099eec185
         int[] location = new int[2];
         view.getLocationOnScreen(location);
         Log.e("AAA", "show:mPopupWindow.getWidth()= " + mPopupWindow.getWidth());
@@ -47,6 +70,12 @@ public class MyPopupWindow {
         if (location[0] + view.getWidth() / 2 + mPopupWindow.getWidth() > width) {
             mPopupWindow.showAtLocation(view, Gravity.NO_GRAVITY, location[0] + view.getWidth() / 2 - mPopupWindow.getWidth(), location[1] - mPopupWindow.getHeight() + view.getHeight() / 2);
 
+<<<<<<< HEAD
+        if (location[0] + view.getWidth() / 2 + mPopupWindow.getWidth() > width) {
+            mPopupWindow.showAtLocation(view, Gravity.NO_GRAVITY, location[0] + view.getWidth() / 2 - mPopupWindow.getWidth(), location[1] - mPopupWindow.getHeight() + view.getHeight() / 2);
+
+=======
+>>>>>>> 1690084965674f8ddf07a5519a759d6099eec185
         } else {
             mPopupWindow.showAtLocation(view, Gravity.NO_GRAVITY, location[0] + view.getWidth() / 2, location[1] - mPopupWindow.getHeight() + view.getHeight() / 2);
 
