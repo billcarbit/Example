@@ -37,13 +37,13 @@ public class GridViewActivity extends Activity {
             list.add("A"+i);
         }
         LastRowCenterGridView lastRowCenterGridView = (LastRowCenterGridView) findViewById(R.id.lastRowCenterGridView);
-        lastRowCenterGridView.initData(list,3);
+       // lastRowCenterGridView.initData(list,3);
         initView();
         initData();
     }
 
     void initView() {
-        mGv = (LastRowCenterGridView) findViewById(R.id.gv);
+       // mGv = (LastRowCenterGridView) findViewById(R.id.gv);
 
     }
 

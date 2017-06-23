@@ -11,8 +11,7 @@ import android.util.Log;
  * @version 1.0 2017-05-10
  * @since JDK 1.8
  */
-public class CountDownModel {
-    private static final String TAG = "CountDownModel";
+public class CountDownTimer {
     private int mTotalSec;//总秒数
     private OnTimeChangeListener mOnTimeChangeListener;
     private Handler mHandler = new Handler() {
@@ -20,7 +19,6 @@ public class CountDownModel {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    Log.e(TAG, "handleMessage: CountDownTimer=" + mTotalSec);
                     mHandler.sendEmptyMessageDelayed(1, 1000);
                     int remainderSec = mTotalSec - 1;
                     mOnTimeChangeListener.onCountDown(remainderSec);

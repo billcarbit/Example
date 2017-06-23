@@ -53,11 +53,6 @@ public class ListViewAdapter extends BaseAdapter {
             vh.tv_countdown = (TextView) convertView.findViewById(R.id.tv_countdown);
             vh.tv_tag = (TextView) convertView.findViewById(R.id.tv_tag);
 
-            Log.e(TAG, "getView: getItemId="+getItemId(position));
-            //new CountDownTimer().setTextView(vh.tv_countdown).setInitVal(getItemId(position)).start();
-
-
-
             convertView.setTag(vh);
         } else {
             vh = (ViewHolder) convertView.getTag();
