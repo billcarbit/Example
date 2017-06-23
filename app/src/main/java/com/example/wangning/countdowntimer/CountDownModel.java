@@ -72,6 +72,7 @@ public class CountDownModel {
     public void start(OnTimeChangeListener listener) {
         mOnTimeChangeListener = listener;
         mOnTimeChangeListener.onCountDownStart(mTotalSec);
+        stop();
         mHandler.sendEmptyMessageDelayed(1,1000);
     }
 
