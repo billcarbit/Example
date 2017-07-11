@@ -1,5 +1,6 @@
 package com.example.wangning.dialog;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -47,6 +48,7 @@ public class BaseConfirmDialog extends Dialog implements View.OnClickListener {
         mTvConfirm = (TextView) findViewById(R.id.tv_confirm);
         mTvContent = (TextView) findViewById(R.id.tv_content);
         mVSplit = findViewById(R.id.v_split);
+
 
 
     }

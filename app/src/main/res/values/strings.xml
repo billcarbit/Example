@@ -9,7 +9,6 @@
      <string name="html_text">
         <Data><![CDATA[%s]]></Data>
     </string>
-
     <string name="text_format" >%1$s到%2$s</string>
     <string name="text_double" >浮点数%.2f</string>
   <!--活着这样写  <string name="text_format" formatted="false">%s到%s</string>-->

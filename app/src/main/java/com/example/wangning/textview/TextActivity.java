@@ -3,9 +3,15 @@ package com.example.wangning.textview;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.example.wangning.R;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -29,8 +35,46 @@ public class TextActivity extends Activity {
         TextView tv_format = (TextView) findViewById(R.id.tv_format);
         String text_format = getString(R.string.text_format);
         tv_format.setText(String.format(text_format, "123", "456"));
-
-
         tv_format.setText(String.format(getString(R.string.text_double), 1.12));
+
+
+        TextView tv_html_color = (TextView) findViewById(R.id.tv_html_color);
+        String wfc_text_payment = getString(R.string.wfc_text_payment);
+        tv_html_color.setText(Html.fromHtml(String.format(wfc_text_payment, "AAA<")));
+
+
+        HashMap<String, String> sa = objToMap(new A());
+        Log.e("A", "onCreate: sa" + sa.toString());
+
+    }
+
+    public HashMap<String, String> objToMap(Object obj) {
+
+        HashMap<String, String> hashMap = new HashMap<String, String>();
+        Class clazz = obj.getClass();
+        List<Class> clazzs = new ArrayList<Class>();
+
+        do {
+            clazzs.add(clazz);
+            clazz = clazz.getSuperclass();
+        } while (!clazz.equals(Object.class));
+
+        for (Class iClazz : clazzs) {
+            Field[] fields = iClazz.getDeclaredFields();
+            for (Field field : fields) {
+                Object objVal = null;
+                field.setAccessible(true);
+                try {
+                    objVal = field.get(obj);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+
+                objVal = objVal == null ? "" : objVal;
+                hashMap.put(field.getName(), objVal.toString());
+            }
+        }
+
+        return hashMap;
     }
 }
