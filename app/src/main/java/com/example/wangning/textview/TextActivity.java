@@ -42,7 +42,6 @@ public class TextActivity extends Activity {
         String wfc_text_payment = getString(R.string.wfc_text_payment);
         tv_html_color.setText(Html.fromHtml(String.format(wfc_text_payment, "AAA<")));
 
-
         HashMap<String, String> sa = objToMap(new A());
         Log.e("A", "onCreate: sa" + sa.toString());
 

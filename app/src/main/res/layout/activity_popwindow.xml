@@ -10,10 +10,5 @@
         android:layout_height="wrap_content"
         android:text="弹出popWindow" />
 
-    <com.example.wangning.popwindow.LastRowCenterGridView
-        android:id="@+id/lastRowCenterGridView"
-        android:layout_marginTop="100dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
 </LinearLayout>

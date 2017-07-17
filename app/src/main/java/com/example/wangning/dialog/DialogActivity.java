@@ -16,12 +16,13 @@ import com.example.wangning.R;
  */
 public class DialogActivity extends Activity {
 
+    SlideDownDialog slideDownDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dialog_del);
-        Button btn = (Button) findViewById(R.id.btn);
+        final Button btn = (Button) findViewById(R.id.btn);
 
 
        /* final BaseConfirmDialog dialog = new BaseConfirmDialog(this);
@@ -39,7 +40,9 @@ public class DialogActivity extends Activity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showAlertDialog();
+                //showAlertDialog();
+                showSlideDownDialog(view);
+
             }
         });
 
@@ -52,5 +55,12 @@ public class DialogActivity extends Activity {
                 .setPositiveButton("确定", null)
                 .setNegativeButton("取消", null)
                 .show();
+    }
+
+    private void showSlideDownDialog(View view) {
+        if (slideDownDialog == null) {
+            slideDownDialog = new SlideDownDialog(this, (int) view.getX(), (int) view.getY() + view.getHeight());
+        }
+        slideDownDialog.show();
     }
 }

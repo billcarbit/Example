@@ -36,7 +36,7 @@ public class GridViewActivity extends Activity {
         for(int i=0;i<7;i++){
             list.add("A"+i);
         }
-        LastRowCenterGridView lastRowCenterGridView = (LastRowCenterGridView) findViewById(R.id.lastRowCenterGridView);
+      //  LastRowCenterGridView lastRowCenterGridView = (LastRowCenterGridView) findViewById(R.id.lastRowCenterGridView);
        // lastRowCenterGridView.initData(list,3);
         initView();
         initData();

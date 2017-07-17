@@ -20,13 +20,9 @@
         android:layout_height="wrap_content"
         android:src="@drawable/nav_bell_white1" />
 
-    <Button
-        android:id="@+id/btn_value_anim"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="属性动画" />
 
     <RelativeLayout
+        android:id="@+id/rl_number"
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_marginTop="14dp">
@@ -76,6 +72,24 @@
             android:background="@drawable/dichen" />
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_rotate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="旋转动画"
+        android:textSize="20dp"
+        android:padding="10dp"
+        android:background="@color/white"/>
+
+    <TextView
+        android:id="@+id/tv_xiahua"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="菜单下滑动画"
+        android:textSize="20dp"
+        android:padding="10dp"
+        android:background="@color/white"/>
 
 
 </LinearLayout>
