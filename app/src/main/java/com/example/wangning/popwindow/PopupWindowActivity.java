@@ -22,8 +22,8 @@ import java.util.List;
  */
 public class PopupWindowActivity extends Activity {
 
+    SlideDownWindow mSlideDownWindow;
     private TextView mButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,18 @@ public class PopupWindowActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                new SlideDownWindow(PopupWindowActivity.this).show(v);
+                if (mSlideDownWindow == null) {
+                    mSlideDownWindow = new SlideDownWindow(PopupWindowActivity.this);
+                }
+                mSlideDownWindow.show(v);
+                mButton.setText("1");
+                mSlideDownWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        mButton.setText("2");
+                    }
+                });
+
             }
         });
     }

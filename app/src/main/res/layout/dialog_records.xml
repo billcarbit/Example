@@ -72,7 +72,6 @@
         android:id="@+id/v_cover"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible"
         android:background="@color/transparent_background" />
 
 </LinearLayout>

@@ -18,8 +18,9 @@ import com.example.wangning.utils.AppUtil;
  * @version 1.0 2017-07-17
  * @since JDK 1.8
  */
-public class SlideDownWindow {
+public class SlideDownWindow implements PopupWindow.OnDismissListener {
     PopupWindow mPopupWindow;
+    PopupWindow.OnDismissListener mOnDismissListener;
 
     public SlideDownWindow(Context context) {
         View popupView = LayoutInflater.from(context).inflate(R.layout.dialog_records, null);
@@ -28,13 +29,22 @@ public class SlideDownWindow {
         mPopupWindow.setTouchable(true);
         mPopupWindow.setFocusable(true);//必须写
         mPopupWindow.setOutsideTouchable(true);
-        mPopupWindow.setAnimationStyle(R.style.slide_down);
+        mPopupWindow.setAnimationStyle(0);
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable(context.getResources(), (Bitmap) null));
-
+        mPopupWindow.setOnDismissListener(this);
     }
 
     public void show(View anchor) {
         mPopupWindow.showAsDropDown(anchor);
     }
 
+
+    public void setOnDismissListener(PopupWindow.OnDismissListener listener) {
+        mOnDismissListener = listener;
+    }
+
+    @Override
+    public void onDismiss() {
+        mOnDismissListener.onDismiss();
+    }
 }
