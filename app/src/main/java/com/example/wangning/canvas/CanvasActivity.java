@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -26,17 +27,16 @@ import com.example.wangning.R;
 public class CanvasActivity extends Activity {
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_canvas);
 
-        LinearLayout mylayout =(LinearLayout)findViewById(R.id.ll);
+        LinearLayout mylayout = (LinearLayout) findViewById(R.id.ll);
         Canvas canvas;
 
-        Paint  paint = new Paint();
-        Shader mShader = new LinearGradient(0,0,140,140,new int[] {Color.RED,Color.GREEN},new float[]{0.0f,0.5f},Shader.TileMode.CLAMP);
+        Paint paint = new Paint();
+        Shader mShader = new LinearGradient(0, 0, 140, 140, new int[]{Color.RED, Color.GREEN}, new float[]{0.0f, 0.5f}, Shader.TileMode.CLAMP);
         paint.setShader(mShader);
         paint.setStrokeWidth(5);//笔宽5像素
         paint.setColor(Color.RED);//设置为红笔
@@ -44,10 +44,12 @@ public class CanvasActivity extends Activity {
         Bitmap bitmap = Bitmap.createBitmap(800, 480, Bitmap.Config.ARGB_8888); //设置位图的宽高,bitmap为透明
         canvas = new Canvas(bitmap);
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//设置为透明，画布也是透明
-        canvas.drawLine(0, 20, 1000, 20, paint);
-
-
-        Drawable drawable = new BitmapDrawable(bitmap) ;
+  /*      canvas.drawLine(0, 20, 50, 50, paint);
+        canvas.drawLine(50, 50, 500, 100, paint);*/
+        RectF rectF = new RectF();
+        rectF.set(150.0f, 150.0f, 250.0f, 250.0f);
+        canvas.drawArc(rectF, 0.0f, 90.0f, true, paint);
+        Drawable drawable = new BitmapDrawable(bitmap);
         mylayout.setBackgroundDrawable(drawable);
 
     }
