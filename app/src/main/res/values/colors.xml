@@ -27,4 +27,17 @@
     <color name="divider_ccc">#ccc</color>
 
     <color name="bg_light_middle">#b2000000</color> <!--黑色70%透明度-->
+
+    <color name="bg_transparency_50">#80000000</color>
+
+    <color name="palatinate_blue">#103FFB</color>
+    <color name="muddy_waters">#A97946</color>
+    <color name="aqua">#03FCFE</color>
+    <color name="free_speech_green">#00F72C</color>
+    <color name="pink_flamingo">#FF4CFC</color>
+    <color name="tree_poppy">#FF9224</color>
+    <color name="vivid_violet">#922890</color>
+    <color name="scarlet">#FF2A1A</color>
+    <color name="daffodil">#FEF935</color>
+    <color name="gray">#919191</color>
 </resources>

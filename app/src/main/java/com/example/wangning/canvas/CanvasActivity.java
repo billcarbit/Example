@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 
 import com.example.wangning.R;
 
+
 /**
  * file explain
  *
@@ -23,6 +24,9 @@ import com.example.wangning.R;
  * @since JDK 1.8
  */
 public class CanvasActivity extends Activity {
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

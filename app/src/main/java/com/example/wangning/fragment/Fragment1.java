@@ -80,7 +80,7 @@ public class Fragment1 extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.tv_f1:
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.add(R.id.frame_layout,new Fragment2());
+              //  ft.add(R.id.frame_layout,new Fragment2());
                 ft.commit();
                 break;
             default:
