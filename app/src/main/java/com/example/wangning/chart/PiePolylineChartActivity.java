@@ -20,6 +20,7 @@ import com.example.wangning.R;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.Legend.LegendPosition;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -29,16 +30,17 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.github.mikephil.charting.utils.MPPointF;
 
 import java.util.ArrayList;
 
-public class PieChartActivity extends DemoBase implements OnSeekBarChangeListener,
+public class PiePolylineChartActivity extends DemoBase implements OnSeekBarChangeListener,
         OnChartValueSelectedListener {
 
     private PieChart mChart;
     private SeekBar mSeekBarX, mSeekBarY;
     private TextView tvX, tvY;
+    
+    private Typeface tf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,32 +54,38 @@ public class PieChartActivity extends DemoBase implements OnSeekBarChangeListene
 
         mSeekBarX = (SeekBar) findViewById(R.id.seekBar1);
         mSeekBarY = (SeekBar) findViewById(R.id.seekBar2);
-        mSeekBarX.setProgress(4);
+
         mSeekBarY.setProgress(10);
+
+        mSeekBarX.setOnSeekBarChangeListener(this);
+        mSeekBarY.setOnSeekBarChangeListener(this);
 
         mChart = (PieChart) findViewById(R.id.chart1);
         mChart.setUsePercentValues(true);
         mChart.getDescription().setEnabled(false);
         mChart.setExtraOffsets(5, 10, 5, 5);
 
-        mChart.setDragDecelerationFrictionCoef(0.5f);//饼图滑动惯性
+        mChart.setDragDecelerationFrictionCoef(0.95f);
 
-        mChart.setCenterTextTypeface(mTfLight);
-        mChart.setCenterText("握草");
-        //mChart.setCenterText(generateCenterSpannableText());
+        tf = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
 
-        mChart.setDrawHoleEnabled(true);//设置空心
+        mChart.setCenterTextTypeface(Typeface.createFromAsset(getAssets(), "OpenSans-Light.ttf"));
+        mChart.setCenterText(generateCenterSpannableText());
+
+        mChart.setExtraOffsets(20.f, 0.f, 20.f, 0.f);
+
+        mChart.setDrawHoleEnabled(true);
         mChart.setHoleColor(Color.WHITE);
 
-        mChart.setTransparentCircleColor(Color.RED);
-        mChart.setTransparentCircleAlpha(255);
+        mChart.setTransparentCircleColor(Color.WHITE);
+        mChart.setTransparentCircleAlpha(110);
 
-        mChart.setHoleRadius(58f);//中心半径
-        mChart.setTransparentCircleRadius(60f);
+        mChart.setHoleRadius(58f);
+        mChart.setTransparentCircleRadius(61f);
 
         mChart.setDrawCenterText(true);
 
-        mChart.setRotationAngle(0);//起始角度
+        mChart.setRotationAngle(0);
         // enable rotation of the chart by touch
         mChart.setRotationEnabled(true);
         mChart.setHighlightPerTapEnabled(true);
@@ -93,22 +101,12 @@ public class PieChartActivity extends DemoBase implements OnSeekBarChangeListene
         mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
         // mChart.spin(2000, 0, 360);
 
-        mSeekBarX.setOnSeekBarChangeListener(this);
-        mSeekBarY.setOnSeekBarChangeListener(this);
-
         Legend l = mChart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
         l.setDrawInside(false);
-        l.setXEntrySpace(7f);
-        l.setYEntrySpace(0f);
-        l.setYOffset(0f);
-
-        // entry label styling
-        mChart.setEntryLabelColor(Color.WHITE);
-        mChart.setEntryLabelTypeface(mTfRegular);
-        mChart.setEntryLabelTextSize(12f);
+        l.setEnabled(false);
     }
 
     @Override
@@ -124,13 +122,6 @@ public class PieChartActivity extends DemoBase implements OnSeekBarChangeListene
             case R.id.actionToggleValues: {
                 for (IDataSet<?> set : mChart.getData().getDataSets())
                     set.setDrawValues(!set.isDrawValuesEnabled());
-
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionToggleIcons: {
-                for (IDataSet<?> set : mChart.getData().getDataSets())
-                    set.setDrawIcons(!set.isDrawIconsEnabled());
 
                 mChart.invalidate();
                 break;
@@ -178,11 +169,6 @@ public class PieChartActivity extends DemoBase implements OnSeekBarChangeListene
                 mChart.animateXY(1400, 1400);
                 break;
             }
-            case R.id.actionToggleSpin: {
-                mChart.spin(1000, mChart.getRotationAngle(), mChart.getRotationAngle() + 360, Easing.EasingOption
-                        .EaseInCubic);
-                break;
-            }
         }
         return true;
     }
@@ -204,18 +190,12 @@ public class PieChartActivity extends DemoBase implements OnSeekBarChangeListene
 
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
         // the chart.
-        for (int i = 0; i < count ; i++) {
-            entries.add(new PieEntry((float) ((Math.random() * mult) + mult / 5),
-                    mParties[i % mParties.length],
-                    getResources().getDrawable(R.drawable.star)));
+        for (int i = 0; i < count; i++) {
+            entries.add(new PieEntry((float) (Math.random() * mult) + mult / 5, mParties[i % mParties.length]));
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "Election Results");
-
-        dataSet.setDrawIcons(false);
-
         dataSet.setSliceSpace(3f);
-        dataSet.setIconsOffset(new MPPointF(0, 40));
         dataSet.setSelectionShift(5f);
 
         // add a lot of colors
@@ -242,11 +222,18 @@ public class PieChartActivity extends DemoBase implements OnSeekBarChangeListene
         dataSet.setColors(colors);
         //dataSet.setSelectionShift(0f);
 
+
+        dataSet.setValueLinePart1OffsetPercentage(80.f);
+        dataSet.setValueLinePart1Length(0.2f);
+        dataSet.setValueLinePart2Length(0.4f);
+        //dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+        dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+
         PieData data = new PieData(dataSet);
         data.setValueFormatter(new PercentFormatter());
         data.setValueTextSize(11f);
-        data.setValueTextColor(Color.WHITE);
-        data.setValueTypeface(mTfLight);
+        data.setValueTextColor(Color.BLACK);
+        data.setValueTypeface(tf);
         mChart.setData(data);
 
         // undo all highlights
@@ -258,10 +245,10 @@ public class PieChartActivity extends DemoBase implements OnSeekBarChangeListene
     private SpannableString generateCenterSpannableText() {
 
         SpannableString s = new SpannableString("MPAndroidChart\ndeveloped by Philipp Jahoda");
-        s.setSpan(new RelativeSizeSpan(1.7f), 0, 14, 0);
+        s.setSpan(new RelativeSizeSpan(1.5f), 0, 14, 0);
         s.setSpan(new StyleSpan(Typeface.NORMAL), 14, s.length() - 15, 0);
         s.setSpan(new ForegroundColorSpan(Color.GRAY), 14, s.length() - 15, 0);
-        s.setSpan(new RelativeSizeSpan(.8f), 14, s.length() - 15, 0);
+        s.setSpan(new RelativeSizeSpan(.65f), 14, s.length() - 15, 0);
         s.setSpan(new StyleSpan(Typeface.ITALIC), s.length() - 14, s.length(), 0);
         s.setSpan(new ForegroundColorSpan(ColorTemplate.getHoloBlue()), s.length() - 14, s.length(), 0);
         return s;
@@ -273,7 +260,7 @@ public class PieChartActivity extends DemoBase implements OnSeekBarChangeListene
         if (e == null)
             return;
         Log.i("VAL SELECTED",
-                "Value: " + e.getY() + ", index: " + h.getX()
+                "Value: " + e.getY() + ", xIndex: " + e.getX()
                         + ", DataSet index: " + h.getDataSetIndex());
     }
 
