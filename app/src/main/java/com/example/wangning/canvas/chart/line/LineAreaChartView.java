@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -27,6 +29,8 @@ public class LineAreaChartView extends ViewGroup {
     private int mFontSize = 12;
     private int mScaleLength = 20;//刻度长度
     private Context mContext;
+    private int mXDataMarginScale = 10;//X轴数据与刻度的距离
+    private int mYDataMarginScale = 30;//Y轴数据与刻度的距离
 
     public LineAreaChartView(Context context) {
         this(context, null);
@@ -161,10 +165,11 @@ public class LineAreaChartView extends ViewGroup {
                 paint);//画X轴
         canvas.drawLine(yLine.getPaddingLeft(), yLine.getPaddingTop(), yLine.getPaddingLeft(), getHeight() - yLine.getPaddingBottom(), paint);//画Y轴
 
-        drawXLineScale(canvas, paint, xLine);
-
+        drawXLineScale(canvas, paint, xLine);//画X轴刻度
+        drawYLineScale(canvas, paint, yLine);//画Y轴刻度
 
     }
+
 
     /**
      * 画X轴刻度
@@ -175,7 +180,7 @@ public class LineAreaChartView extends ViewGroup {
         //得出X轴长度
         xLine.setLength(canvas.getWidth() - xLine.getPaddingLeft() - xLine.getPaddingRight());
 
-        //将X轴分成scaleXList.size() 等分,得出每个刻度长度
+        //将X轴分成scaleXList.size() - 1 等分,得出每个刻度长度
         int perLength = scaleXList.size() == 0
                 ? xLine.getLength()
                 : xLine.getLength() / (scaleXList.size() - 1);
@@ -187,21 +192,100 @@ public class LineAreaChartView extends ViewGroup {
                     getHeight() - xLine.getPaddingBottom() + mScaleLength,
                     paint);//画X轴刻度
 
+            String data = scaleXList.get(i).getDataX().getData();
             //每个刻度的数据
-            canvas.drawText(scaleXList.get(i).getDataX().getData(),
-                    xLine.getPaddingLeft() + perLength * i - 30,
-                    getHeight() - xLine.getPaddingBottom() + mScaleLength + 40,
+            canvas.drawText(data,
+                    xLine.getPaddingLeft() + perLength * i - getTextWidth(data, paint) / 2,
+                    getHeight() - xLine.getPaddingBottom() + mScaleLength + mXDataMarginScale + getTextHeight(data,paint),
                     paint);
         }
 
 
     }
 
+
+    private void drawYLineScale(Canvas canvas, Paint paint, LineY yLine) {
+        List<ScaleY> scaleYList = yLine.getScaleYList();
+        //得出Y轴长度
+        yLine.setLength(canvas.getHeight() - yLine.getPaddingBottom() - yLine.getPaddingTop());
+
+        //将Y轴分成 scaleYList.size() 等分，得出每个刻度长度
+        int perLength = scaleYList.size() == 0
+                ? yLine.getLength()
+                : yLine.getLength() / scaleYList.size();
+
+        //画0刻度
+        canvas.drawLine(yLine.getPaddingLeft(),
+                getHeight() - yLine.getPaddingBottom(),
+                yLine.getPaddingLeft() - mScaleLength,
+                getHeight() - yLine.getPaddingBottom(),
+                paint);
+        //画0刻度数据
+        canvas.drawText("0",
+                yLine.getPaddingLeft() - mScaleLength - mYDataMarginScale - getTextWidth("0", paint),
+                getHeight() - yLine.getPaddingBottom() + getTextHeight("0", paint) / 2,
+                paint);
+
+        for (int i = 0, length = scaleYList.size(); i < length; i++) {
+
+
+            canvas.drawLine(yLine.getPaddingLeft(),
+                    getHeight() - yLine.getPaddingBottom() - perLength * (i + 1),
+                    yLine.getPaddingLeft() - mScaleLength,
+                    getHeight() - yLine.getPaddingBottom() - perLength * (i + 1),
+                    paint);//画Y轴刻度
+
+            String data = scaleYList.get(i).getDataY().getData();
+
+            //每个刻度的数据
+            canvas.drawText(data,
+                    yLine.getPaddingLeft() - mScaleLength - mYDataMarginScale - getTextWidth(data, paint),
+                    getHeight() - yLine.getPaddingBottom() - perLength * (i + 1) + getTextHeight(data, paint) / 2,
+                    paint);
+
+        }
+
+    }
+
+    private int getTextWidth(String text, Paint paint) {
+        Rect rect = new Rect();
+        paint.getTextBounds(text, 0, text.length(), rect);
+        return rect.width();
+    }
+
+    private int getTextHeight(String text, Paint paint) {
+        Rect rect = new Rect();
+        paint.getTextBounds(text, 0, text.length(), rect);
+        return rect.height();
+    }
+
+
+    /**
+     * 设置字体的大小
+     *
+     * @param fontSizeDp
+     */
     public void setFontSize(int fontSizeDp) {
         mFontSize = fontSizeDp;
     }
 
+    /**
+     * 设置刻度线的长度
+     *
+     * @param scaleLength
+     */
     public void setScaleLength(int scaleLength) {
         mScaleLength = scaleLength;
+    }
+
+    /**
+     * 设置刻度数据距离画布左边缘和下边缘的距离
+     *
+     * @param xDataMarginScale
+     * @param yDataMarginScale
+     */
+    public void setScaleDataPadding(int xDataMarginScale, int yDataMarginScale) {
+        mXDataMarginScale = xDataMarginScale;//X轴数据与刻度的距离
+        mYDataMarginScale = yDataMarginScale;//Y轴数据与刻度的距离
     }
 }

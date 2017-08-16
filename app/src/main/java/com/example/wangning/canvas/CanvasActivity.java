@@ -40,7 +40,7 @@ public class CanvasActivity extends Activity {
 
         for (int i = 0; i < 5; i++) {
             DataY dataY = new DataY();
-            dataY.setData("123");
+            dataY.setData(String.valueOf(i+1000));
             dataYList.add(dataY);
         }
         lacv.setYData(dataYList);
