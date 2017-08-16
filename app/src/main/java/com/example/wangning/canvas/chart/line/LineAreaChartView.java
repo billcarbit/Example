@@ -31,6 +31,7 @@ public class LineAreaChartView extends ViewGroup {
     private Context mContext;
     private int mXDataMarginScale = 10;//X轴数据与刻度的距离
     private int mYDataMarginScale = 30;//Y轴数据与刻度的距离
+    private List<PathLine> mLinePathList = new ArrayList<PathLine>();
 
     public LineAreaChartView(Context context) {
         this(context, null);
@@ -86,8 +87,8 @@ public class LineAreaChartView extends ViewGroup {
         mLineY.setPaddingTop(70);
         mLineY.setPaddingLeft(dp2px(48));
         mLineY.setPaddingBottom(dp2px(26));
-        coordinate(canvas, mLineX, mLineY);
-
+        drawCoordinateAxis(canvas, mLineX, mLineY);
+        drawPathLine(canvas, mLinePathList, mLineX, mLineY);
  /*       Paint paint = new Paint();
         paint.setStrokeWidth(5);//笔宽5像素
         paint.setColor(Color.GREEN);//设置为绿笔
@@ -146,9 +147,9 @@ public class LineAreaChartView extends ViewGroup {
     }
 
     /**
-     * 画坐标
+     * 画坐标轴
      */
-    private void coordinate(Canvas canvas, LineX xLine, LineY yLine) {
+    private void drawCoordinateAxis(Canvas canvas, LineX xLine, LineY yLine) {
         Paint paint = new Paint();
         paint.setStrokeWidth(1);
         paint.setColor(Color.WHITE);
@@ -163,11 +164,42 @@ public class LineAreaChartView extends ViewGroup {
                 getWidth() - xLine.getPaddingRight(),
                 getHeight() - xLine.getPaddingBottom(),
                 paint);//画X轴
-        canvas.drawLine(yLine.getPaddingLeft(), yLine.getPaddingTop(), yLine.getPaddingLeft(), getHeight() - yLine.getPaddingBottom(), paint);//画Y轴
+
+        canvas.drawLine(yLine.getPaddingLeft(),
+                yLine.getPaddingTop(),
+                yLine.getPaddingLeft(),
+                getHeight() - yLine.getPaddingBottom(),
+                paint);//画Y轴
 
         drawXLineScale(canvas, paint, xLine);//画X轴刻度
+
         drawYLineScale(canvas, paint, yLine);//画Y轴刻度
 
+    }
+
+    private void drawPathLine(Canvas canvas, List<PathLine> pathLines, LineX lineX, LineY lineY) {
+        for (PathLine pathLine : pathLines) {
+            Paint paint = new Paint();
+            paint.setStrokeWidth(pathLine.getStrokeWidth());
+            paint.setColor(pathLine.getColor());
+            paint.setAntiAlias(true);
+            paint.setStyle(Paint.Style.FILL_AND_STROKE);
+            Path path = new Path();
+            List<Coordinate> coordinateList = pathLine.getCoordinateList();
+            path.moveTo(lineX.getPaddingLeft(), getHeight() - lineX.getPaddingBottom());//将画笔移动至坐标原点
+            for (int i = 0, length = coordinateList.size(); i < length; i++) {
+                float y = convertValueToY(coordinateList.get(i).getY(), 2500.0f, lineY);
+                path.lineTo(lineX.getScaleXList().get(i).getX(),
+                        y);
+            }
+            //从最后一个点画一条垂直于X轴的直线，形成闭合
+            path.lineTo(lineX.getScaleXList().get(coordinateList.size() - 1).getX(),
+                    lineY.getLength() + lineY.getPaddingTop());
+            //再画一条到原点的垂直于Y轴的直线，形成闭合
+          /*  path.lineTo(lineX.getPaddingLeft(),
+                    lineY.getLength() + lineY.getPaddingTop());*/
+            canvas.drawPath(path, paint);
+        }
     }
 
 
@@ -186,17 +218,23 @@ public class LineAreaChartView extends ViewGroup {
                 : xLine.getLength() / (scaleXList.size() - 1);
 
         for (int i = 0, length = scaleXList.size(); i < length; i++) {
-            canvas.drawLine(xLine.getPaddingLeft() + perLength * i,
-                    getHeight() - xLine.getPaddingBottom(),
-                    xLine.getPaddingLeft() + perLength * i,
-                    getHeight() - xLine.getPaddingBottom() + mScaleLength,
+            int x = xLine.getPaddingLeft() + perLength * i;
+            int y = getHeight() - xLine.getPaddingBottom();
+            //存入刻度绘制的起点位置
+            scaleXList.get(i).setX(x);
+            scaleXList.get(i).setY(y);
+
+            canvas.drawLine(x,
+                    y,
+                    x,
+                    y + mScaleLength,
                     paint);//画X轴刻度
 
             String data = scaleXList.get(i).getDataX().getData();
             //每个刻度的数据
             canvas.drawText(data,
-                    xLine.getPaddingLeft() + perLength * i - getTextWidth(data, paint) / 2,
-                    getHeight() - xLine.getPaddingBottom() + mScaleLength + mXDataMarginScale + getTextHeight(data,paint),
+                    x - getTextWidth(data, paint) / 2,
+                    y + mScaleLength + mXDataMarginScale + getTextHeight(data, paint),
                     paint);
         }
 
@@ -227,20 +265,24 @@ public class LineAreaChartView extends ViewGroup {
                 paint);
 
         for (int i = 0, length = scaleYList.size(); i < length; i++) {
+            int x = yLine.getPaddingLeft();
+            int y = getHeight() - yLine.getPaddingBottom() - perLength * (i + 1);
+            //存入刻度绘制的起点位置
+            scaleYList.get(i).setX(x);
+            scaleYList.get(i).setY(y);
 
-
-            canvas.drawLine(yLine.getPaddingLeft(),
-                    getHeight() - yLine.getPaddingBottom() - perLength * (i + 1),
-                    yLine.getPaddingLeft() - mScaleLength,
-                    getHeight() - yLine.getPaddingBottom() - perLength * (i + 1),
+            canvas.drawLine(x,
+                    y,
+                    x - mScaleLength,
+                    y,
                     paint);//画Y轴刻度
 
             String data = scaleYList.get(i).getDataY().getData();
 
             //每个刻度的数据
             canvas.drawText(data,
-                    yLine.getPaddingLeft() - mScaleLength - mYDataMarginScale - getTextWidth(data, paint),
-                    getHeight() - yLine.getPaddingBottom() - perLength * (i + 1) + getTextHeight(data, paint) / 2,
+                    x - mScaleLength - mYDataMarginScale - getTextWidth(data, paint),
+                    y + getTextHeight(data, paint) / 2,
                     paint);
 
         }
@@ -287,5 +329,22 @@ public class LineAreaChartView extends ViewGroup {
     public void setScaleDataPadding(int xDataMarginScale, int yDataMarginScale) {
         mXDataMarginScale = xDataMarginScale;//X轴数据与刻度的距离
         mYDataMarginScale = yDataMarginScale;//Y轴数据与刻度的距离
+    }
+
+    public void setLinePathList(List<PathLine> linePathList) {
+        mLinePathList = linePathList;
+    }
+
+    /**
+     * 将值转化为Y轴坐标值
+     *
+     * @param value
+     * @param max
+     * @return 所在Y轴画布上的位置
+     */
+    private float convertValueToY(float value, float max, LineY yLine) {
+        float lengthY = yLine.getLength();
+        float y = getHeight() - yLine.getPaddingTop() - lengthY * (1.0f - value / max);
+        return y;
     }
 }

@@ -1,5 +1,7 @@
 package com.example.wangning.canvas.chart.line;
 
+import com.example.wangning.R;
+
 /**
  * X,Y轴基类
  *
@@ -15,7 +17,8 @@ public class BaseLine {
     private int paddingRight;
     private int paddingTop;
     private int paddingBottom;
-
+    private int color = R.color.colorAccent;
+    private int strokeWidth = 1;
 
     public int getPaddingLeft() {
         return paddingLeft;
@@ -47,6 +50,22 @@ public class BaseLine {
 
     public void setPaddingBottom(int paddingBottom) {
         this.paddingBottom = paddingBottom;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+    }
+
+    public int getStrokeWidth() {
+        return strokeWidth;
+    }
+
+    public void setStrokeWidth(int strokeWidth) {
+        this.strokeWidth = strokeWidth;
     }
 
     public int getLength() {

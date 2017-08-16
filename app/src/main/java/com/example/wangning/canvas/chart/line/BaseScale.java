@@ -10,6 +10,8 @@ package com.example.wangning.canvas.chart.line;
 public class BaseScale {
     private int height = 5;//刻度高度
     private int width;//刻度宽度
+    private int x;//刻度在画布中的X位置
+    private int y;//刻度在画布中的Y位置
 
     public int getHeight() {
         return height;
@@ -27,5 +29,19 @@ public class BaseScale {
         this.width = width;
     }
 
+    public int getX() {
+        return x;
+    }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
 }

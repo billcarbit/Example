@@ -8,7 +8,7 @@ package com.example.wangning.canvas.chart.line;
  * @since JDK 1.8
  */
 public class ScaleX extends BaseScale {
-    private DataX dataX;
+    private DataX dataX;//刻度对应的数据
 
     public DataX getDataX() {
         return dataX;

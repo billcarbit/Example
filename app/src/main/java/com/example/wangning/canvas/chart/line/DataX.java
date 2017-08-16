@@ -1,7 +1,6 @@
 package com.example.wangning.canvas.chart.line;
 
 /**
- * file explain
  *
  * @author wangning
  * @version 1.0 2017-08-15
