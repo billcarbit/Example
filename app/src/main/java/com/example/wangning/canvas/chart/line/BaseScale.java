@@ -8,40 +8,40 @@ package com.example.wangning.canvas.chart.line;
  * @since JDK 1.8
  */
 public class BaseScale {
-    private int height = 5;//刻度高度
-    private int width;//刻度宽度
-    private int x;//刻度在画布中的X位置
-    private int y;//刻度在画布中的Y位置
+    private float height = 5;//刻度高度
+    private float width;//刻度宽度
+    private float x;//刻度在画布中的X位置
+    private float y;//刻度在画布中的Y位置
 
-    public int getHeight() {
+    public float getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(float height) {
         this.height = height;
     }
 
-    public int getWidth() {
+    public float getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
+    public void setWidth(float width) {
         this.width = width;
     }
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(float x) {
         this.x = x;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(float y) {
         this.y = y;
     }
 }

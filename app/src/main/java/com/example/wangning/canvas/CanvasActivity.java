@@ -43,22 +43,44 @@ public class CanvasActivity extends Activity {
 
         for (int i = 0; i < 5; i++) {
             DataY dataY = new DataY();
-            dataY.setData(String.valueOf((i+1) * 500));
+            dataY.setData(String.valueOf((i + 1) * 500));
             dataYList.add(dataY);
         }
         lacv.setYData(dataYList);
-
+        lacv.setMaxValueY(2500);
         List<PathLine> linePathList = new ArrayList<PathLine>();
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 4; i++) {
             PathLine linePath = new PathLine();
-            linePath.setColor(R.color.white);
-            linePath.setStrokeWidth(2);
+            if(i==0){
+                linePath.setColor(R.color.cyan_8ab8be);
+            }
+            if(i==1){
+                linePath.setColor(R.color.green_add3c0);
+            }
+            if(i==2){
+                linePath.setColor(R.color.red_dba38f);
+            }
+            if(i==3){
+                linePath.setColor(R.color.red_cf6e6b);
+            }
+            linePath.setStrokeWidth(1);
             List<Coordinate> coordinateList = new ArrayList<Coordinate>();
             for (int j = 0; j < 7; j++) {
                 Coordinate coordinate = new Coordinate();
                 coordinate.setX(100);
-                //new Random().nextInt(3000)
-                coordinate.setY(1500);
+                //new Random().nextInt(2500)
+                if(i==0){
+                    coordinate.setY(1700);
+                }
+                if(i==1){
+                    coordinate.setY(1300);
+                }
+                if(i==2){
+                    coordinate.setY(700);
+                }
+                if(i==3){
+                    coordinate.setY(200);
+                }
                 coordinateList.add(coordinate);
 
             }

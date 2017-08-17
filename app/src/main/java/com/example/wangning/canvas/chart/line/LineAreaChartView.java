@@ -11,6 +11,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ViewGroup;
 
+import com.example.wangning.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +34,7 @@ public class LineAreaChartView extends ViewGroup {
     private int mXDataMarginScale = 10;//X轴数据与刻度的距离
     private int mYDataMarginScale = 30;//Y轴数据与刻度的距离
     private List<PathLine> mLinePathList = new ArrayList<PathLine>();
+    private int mMaxValueY = 1;
 
     public LineAreaChartView(Context context) {
         this(context, null);
@@ -80,6 +83,7 @@ public class LineAreaChartView extends ViewGroup {
     @Override
     protected void onDraw(Canvas canvas) {
         Log.e(TAG, "onDraw: ");
+        canvas.drawColor(Color.WHITE);
         mLineX.setPaddingBottom(dp2px(26));
         mLineX.setPaddingRight(70);
         mLineX.setPaddingLeft(dp2px(48));
@@ -89,41 +93,7 @@ public class LineAreaChartView extends ViewGroup {
         mLineY.setPaddingBottom(dp2px(26));
         drawCoordinateAxis(canvas, mLineX, mLineY);
         drawPathLine(canvas, mLinePathList, mLineX, mLineY);
- /*       Paint paint = new Paint();
-        paint.setStrokeWidth(5);//笔宽5像素
-        paint.setColor(Color.GREEN);//设置为绿笔
-        paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        canvas.drawColor(Color.GRAY);
-
-        Path path = new Path();
-
-        path.moveTo(0, 500);
-        path.lineTo(300, 200);
-        path.lineTo(800, 400);
-        path.lineTo(800, 800);
-        path.lineTo(0, 800);
-
-        canvas.drawPath(path, paint);
-
-
-        Paint paint2 = new Paint();
-        paint2.setStrokeWidth(5);//笔宽5像素
-        paint2.setColor(Color.RED);
-        paint2.setAntiAlias(true);
-        paint2.setStyle(Paint.Style.FILL_AND_STROKE);
-
-
-        Path path2 = new Path();
-        path2.moveTo(0, 600);
-        path2.lineTo(400, 300);
-        path2.lineTo(800, 500);
-        path2.lineTo(800, 800);
-        path2.lineTo(0, 800);
-
-        canvas.drawPath(path2, paint2);*/
-
-
+        drawGraticule(canvas, mLineX, mLineY);//画平行于X轴的标线
     }
 
     public void setYData(List<DataY> yDataList) {
@@ -150,30 +120,40 @@ public class LineAreaChartView extends ViewGroup {
      * 画坐标轴
      */
     private void drawCoordinateAxis(Canvas canvas, LineX xLine, LineY yLine) {
-        Paint paint = new Paint();
-        paint.setStrokeWidth(1);
-        paint.setColor(Color.WHITE);
-        paint.setTextSize(dp2px(mFontSize));//设置字体大小
-        paint.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));//设置字体类型
-        paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        canvas.drawColor(Color.GRAY);
+
+        Paint linePaint = new Paint();
+        int width = dp2px(1);
+        xLine.setWidth(width);
+        yLine.setWidth(width);
+        linePaint.setStrokeWidth(width);
+        linePaint.setColor(getResources().getColor(R.color.text_333333));
+
+
+        Paint textPaint = new Paint();
+        textPaint.setStrokeWidth(1);
+        textPaint.setColor(getResources().getColor(R.color.text_666666));
+        textPaint.setTextSize(dp2px(mFontSize));//设置字体大小
+        textPaint.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));//设置字体类型
+        textPaint.setAntiAlias(true);
+        textPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+
 
         canvas.drawLine(xLine.getPaddingLeft(),
                 getHeight() - xLine.getPaddingBottom(),
                 getWidth() - xLine.getPaddingRight(),
                 getHeight() - xLine.getPaddingBottom(),
-                paint);//画X轴
+                linePaint);//画X轴
 
         canvas.drawLine(yLine.getPaddingLeft(),
                 yLine.getPaddingTop(),
                 yLine.getPaddingLeft(),
                 getHeight() - yLine.getPaddingBottom(),
-                paint);//画Y轴
+                linePaint);//画Y轴
 
-        drawXLineScale(canvas, paint, xLine);//画X轴刻度
+        drawXLineScale(canvas, textPaint, linePaint, xLine);//画X轴刻度
 
-        drawYLineScale(canvas, paint, yLine);//画Y轴刻度
+        drawYLineScale(canvas, textPaint, linePaint, yLine);//画Y轴刻度
+
 
     }
 
@@ -181,22 +161,23 @@ public class LineAreaChartView extends ViewGroup {
         for (PathLine pathLine : pathLines) {
             Paint paint = new Paint();
             paint.setStrokeWidth(pathLine.getStrokeWidth());
-            paint.setColor(pathLine.getColor());
+            paint.setColor(getResources().getColor(pathLine.getColor()));
             paint.setAntiAlias(true);
-            paint.setStyle(Paint.Style.FILL_AND_STROKE);
+            paint.setStyle(Paint.Style.FILL);
             Path path = new Path();
             List<Coordinate> coordinateList = pathLine.getCoordinateList();
-            path.moveTo(lineX.getPaddingLeft(), getHeight() - lineX.getPaddingBottom());//将画笔移动至坐标原点
+            path.moveTo(lineX.getPaddingLeft() + lineY.getWidth()/2 ,
+                    getHeight() - lineX.getPaddingBottom() - lineX.getWidth()/2);//将画笔移动至坐标原点
             for (int i = 0, length = coordinateList.size(); i < length; i++) {
-                float y = convertValueToY(coordinateList.get(i).getY(), 2500.0f, lineY);
-                path.lineTo(lineX.getScaleXList().get(i).getX(),
+                float y = convertValueToY(coordinateList.get(i).getY(), mMaxValueY, lineY);
+                path.lineTo(lineX.getScaleXList().get(i).getX() +  lineY.getWidth()/2,
                         y);
             }
             //从最后一个点画一条垂直于X轴的直线，形成闭合
-            path.lineTo(lineX.getScaleXList().get(coordinateList.size() - 1).getX(),
-                    lineY.getLength() + lineY.getPaddingTop());
+            path.lineTo(lineX.getScaleXList().get(coordinateList.size() - 1).getX() +  lineY.getWidth()/2,
+                    lineY.getLength() + lineY.getPaddingTop() - lineX.getWidth()/2);
             //再画一条到原点的垂直于Y轴的直线，形成闭合
-          /*  path.lineTo(lineX.getPaddingLeft(),
+           /* path.lineTo(lineX.getPaddingLeft(),
                     lineY.getLength() + lineY.getPaddingTop());*/
             canvas.drawPath(path, paint);
         }
@@ -206,7 +187,7 @@ public class LineAreaChartView extends ViewGroup {
     /**
      * 画X轴刻度
      */
-    private void drawXLineScale(Canvas canvas, Paint paint, LineX xLine) {
+    private void drawXLineScale(Canvas canvas, Paint paint, Paint linePaint, LineX xLine) {
         List<ScaleX> scaleXList = xLine.getScaleXList();
 
         //得出X轴长度
@@ -228,7 +209,7 @@ public class LineAreaChartView extends ViewGroup {
                     y,
                     x,
                     y + mScaleLength,
-                    paint);//画X轴刻度
+                    linePaint);//画X轴刻度
 
             String data = scaleXList.get(i).getDataX().getData();
             //每个刻度的数据
@@ -242,7 +223,14 @@ public class LineAreaChartView extends ViewGroup {
     }
 
 
-    private void drawYLineScale(Canvas canvas, Paint paint, LineY yLine) {
+    /**
+     * 画Y轴刻度及数据
+     *
+     * @param canvas
+     * @param paint
+     * @param yLine
+     */
+    private void drawYLineScale(Canvas canvas, Paint paint, Paint linePaint, LineY yLine) {
         List<ScaleY> scaleYList = yLine.getScaleYList();
         //得出Y轴长度
         yLine.setLength(canvas.getHeight() - yLine.getPaddingBottom() - yLine.getPaddingTop());
@@ -257,7 +245,7 @@ public class LineAreaChartView extends ViewGroup {
                 getHeight() - yLine.getPaddingBottom(),
                 yLine.getPaddingLeft() - mScaleLength,
                 getHeight() - yLine.getPaddingBottom(),
-                paint);
+                linePaint);
         //画0刻度数据
         canvas.drawText("0",
                 yLine.getPaddingLeft() - mScaleLength - mYDataMarginScale - getTextWidth("0", paint),
@@ -275,7 +263,7 @@ public class LineAreaChartView extends ViewGroup {
                     y,
                     x - mScaleLength,
                     y,
-                    paint);//画Y轴刻度
+                    linePaint);//画Y轴刻度
 
             String data = scaleYList.get(i).getDataY().getData();
 
@@ -287,6 +275,20 @@ public class LineAreaChartView extends ViewGroup {
 
         }
 
+    }
+
+
+    private void drawGraticule(Canvas canvas, LineX xLine, LineY yLine) {
+        Paint paint = new Paint();
+        paint.setStrokeWidth(1);
+        paint.setColor(getResources().getColor(R.color.divider_ccc));
+        paint.setAntiAlias(true);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+        List<ScaleY> scaleYList = yLine.getScaleYList();
+        for (ScaleY scaleY : scaleYList) {
+            canvas.drawLine(scaleY.getX(), scaleY.getY(), scaleY.getX() + xLine.getLength(), scaleY.getY(), paint);
+        }
     }
 
     private int getTextWidth(String text, Paint paint) {
@@ -343,8 +345,13 @@ public class LineAreaChartView extends ViewGroup {
      * @return 所在Y轴画布上的位置
      */
     private float convertValueToY(float value, float max, LineY yLine) {
-        float lengthY = yLine.getLength();
-        float y = getHeight() - yLine.getPaddingTop() - lengthY * (1.0f - value / max);
+        int lengthY = yLine.getLength();
+        float y = getHeight() -
+                (lengthY * (value / max) + yLine.getPaddingBottom());
         return y;
+    }
+
+    public void setMaxValueY(int maxY) {
+        mMaxValueY = maxY;
     }
 }

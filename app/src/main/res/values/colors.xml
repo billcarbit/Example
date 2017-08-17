@@ -20,6 +20,7 @@
     <!--文字颜色-->
     <color name="text_ff6600">#ff6600</color>
     <color name="text_222222">#222222</color>
+    <color name="text_333333">#333333</color>
     <color name="text_666666">#666666</color>
     <color name="text_999999">#999999</color>
     <color name="bg_white_middle">#fafafb</color>
@@ -40,4 +41,9 @@
     <color name="scarlet">#FF2A1A</color>
     <color name="daffodil">#FEF935</color>
     <color name="gray">#919191</color>
+
+    <color name="green_add3c0">#add3c0</color>
+    <color name="red_dba38f">#dba38f</color>
+    <color name="cyan_8ab8be">#8ab8be</color>
+    <color name="red_cf6e6b">#cf6e6b</color>
 </resources>
