@@ -5,6 +5,9 @@ import android.os.Bundle;
 
 import com.example.wangning.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * file explain
  *
@@ -18,5 +21,36 @@ public class PieActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pie);
         PieView pieView = (PieView) findViewById(R.id.v_pie);
+        List<LineSign> lineSigns = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            LineSign lineSign = new LineSign();
+            lineSign.setLineAboveText("上" + i);
+            lineSign.setLineBelowText("下" + i);
+            if (i == 0) {
+                lineSign.setPercent(0.2f);
+                lineSign.setLineColor(R.color.red_f05a4a);
+            }
+            if (i == 1) {
+                lineSign.setPercent(0.2f);
+                lineSign.setLineColor(R.color.green_1dac91);
+            }
+            if (i == 2) {
+                lineSign.setPercent(0.2f);
+                lineSign.setLineColor(R.color.blue_00a5e6);
+            }
+            if (i == 3) {
+                lineSign.setPercent(0.2f);
+                lineSign.setLineColor(R.color.blue_3474c4);
+            }
+            if (i == 4) {
+                lineSign.setPercent(0.2f);
+                lineSign.setLineColor(R.color.yellow_f59800);
+            }
+            lineSign.setPointRadius(10);
+            lineSign.setTurnXLength(30);
+            lineSign.setTurnYLength(30);
+            lineSigns.add(lineSign);
+        }
+        pieView.setData(lineSigns);
     }
 }

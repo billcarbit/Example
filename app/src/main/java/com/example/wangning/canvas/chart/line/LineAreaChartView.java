@@ -291,12 +291,24 @@ public class LineAreaChartView extends ViewGroup {
         }
     }
 
+    /**
+     * 获得文字宽度
+     * @param text
+     * @param paint
+     * @return
+     */
     private int getTextWidth(String text, Paint paint) {
         Rect rect = new Rect();
         paint.getTextBounds(text, 0, text.length(), rect);
         return rect.width();
     }
 
+    /**
+     * 获得文字高度
+     * @param text
+     * @param paint
+     * @return
+     */
     private int getTextHeight(String text, Paint paint) {
         Rect rect = new Rect();
         paint.getTextBounds(text, 0, text.length(), rect);

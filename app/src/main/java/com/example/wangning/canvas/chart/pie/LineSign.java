@@ -1,5 +1,7 @@
 package com.example.wangning.canvas.chart.pie;
 
+import com.example.wangning.R;
+
 /**
  * file explain
  *
@@ -8,8 +10,68 @@ package com.example.wangning.canvas.chart.pie;
  * @since JDK 1.8
  */
 public class LineSign {
+
     private String lineAboveText;
     private String lineBelowText;
-    private int lineColor;//折线颜色
-    private float pointRadius;//点的半径
+    private int lineColor = R.color.text_333333;//折线颜色
+    private float pointRadius = 10;//点的半径
+    private float turnXLength = 50;//折线转折点距离起始点的x距离
+    private float turnYLength = 50;//折线转折点距离起始点的y距离
+    private float percent;
+
+    public float getPercent() {
+        return percent;
+    }
+
+    public void setPercent(float percent) {
+        this.percent = percent;
+    }
+
+    public String getLineAboveText() {
+        return lineAboveText;
+    }
+
+    public void setLineAboveText(String lineAboveText) {
+        this.lineAboveText = lineAboveText;
+    }
+
+    public String getLineBelowText() {
+        return lineBelowText;
+    }
+
+    public void setLineBelowText(String lineBelowText) {
+        this.lineBelowText = lineBelowText;
+    }
+
+    public int getLineColor() {
+        return lineColor;
+    }
+
+    public void setLineColor(int lineColor) {
+        this.lineColor = lineColor;
+    }
+
+    public float getPointRadius() {
+        return pointRadius;
+    }
+
+    public void setPointRadius(float pointRadius) {
+        this.pointRadius = pointRadius;
+    }
+
+    public float getTurnXLength() {
+        return turnXLength;
+    }
+
+    public void setTurnXLength(float turnXLength) {
+        this.turnXLength = turnXLength;
+    }
+
+    public float getTurnYLength() {
+        return turnYLength;
+    }
+
+    public void setTurnYLength(float turnYLength) {
+        this.turnYLength = turnYLength;
+    }
 }
