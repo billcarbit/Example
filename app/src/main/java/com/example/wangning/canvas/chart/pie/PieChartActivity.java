@@ -53,7 +53,7 @@ public class PieChartActivity  extends DemoBase implements
         setContentView(R.layout.activity_chart_pie);
 
         mChart = (PieChart) findViewById(R.id.chart1);
-        mChart.setUsePercentValues(false);
+        mChart.setUsePercentValues(true);
         mChart.getDescription().setEnabled(false);
         mChart.setExtraOffsets(5, 10, 5, 5);
         mChart.setDragDecelerationFrictionCoef(0.95f);
@@ -218,7 +218,7 @@ public class PieChartActivity  extends DemoBase implements
         data.setValueTypeface(tf);
         mChart.setData(data);
         mChart.setDrawEntryLabels(false);
-        mChart.setUsePercentValues(false);
+        mChart.setUsePercentValues(true);
         // undo all highlights
         mChart.highlightValues(null);
 
