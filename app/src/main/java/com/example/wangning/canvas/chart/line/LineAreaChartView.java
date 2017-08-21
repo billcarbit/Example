@@ -69,7 +69,6 @@ public class LineAreaChartView extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        Log.e(TAG, "onLayout: ");
         setWillNotDraw(false);
         invalidate();
     }
@@ -77,12 +76,10 @@ public class LineAreaChartView extends ViewGroup {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        Log.e(TAG, "onMeasure: ");
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Log.e(TAG, "onDraw: ");
         canvas.drawColor(Color.WHITE);
         mLineX.setPaddingBottom(dp2px(26));
         mLineX.setPaddingRight(70);
@@ -94,6 +91,7 @@ public class LineAreaChartView extends ViewGroup {
         drawCoordinateAxis(canvas, mLineX, mLineY);
         drawPathLine(canvas, mLinePathList, mLineX, mLineY);
         drawGraticule(canvas, mLineX, mLineY);//画平行于X轴的标线
+        drawTurnCircle(canvas,mLinePathList,mLineX,mLineY);
     }
 
     public void setYData(List<DataY> yDataList) {
@@ -137,7 +135,6 @@ public class LineAreaChartView extends ViewGroup {
         textPaint.setAntiAlias(true);
         textPaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
-
         canvas.drawLine(xLine.getPaddingLeft(),
                 getHeight() - xLine.getPaddingBottom(),
                 getWidth() - xLine.getPaddingRight(),
@@ -158,28 +155,34 @@ public class LineAreaChartView extends ViewGroup {
     }
 
     private void drawPathLine(Canvas canvas, List<PathLine> pathLines, LineX lineX, LineY lineY) {
+        Paint paint = new Paint();
+
+
         for (PathLine pathLine : pathLines) {
-            Paint paint = new Paint();
             paint.setStrokeWidth(pathLine.getStrokeWidth());
             paint.setColor(getResources().getColor(pathLine.getColor()));
             paint.setAntiAlias(true);
             paint.setStyle(Paint.Style.FILL);
+
+
+
             Path path = new Path();
             List<Coordinate> coordinateList = pathLine.getCoordinateList();
-            path.moveTo(lineX.getPaddingLeft() + lineY.getWidth()/2 ,
-                    getHeight() - lineX.getPaddingBottom() - lineX.getWidth()/2);//将画笔移动至坐标原点
+            path.moveTo(lineX.getPaddingLeft() + lineY.getWidth() / 2,
+                    getHeight() - lineX.getPaddingBottom() - lineX.getWidth() / 2);//将画笔移动至坐标原点
             for (int i = 0, length = coordinateList.size(); i < length; i++) {
                 float y = convertValueToY(coordinateList.get(i).getY(), mMaxValueY, lineY);
-                path.lineTo(lineX.getScaleXList().get(i).getX() +  lineY.getWidth()/2,
-                        y);
+                float x = lineX.getScaleXList().get(i).getX() + lineY.getWidth() / 2;
+                path.lineTo(x, y);
             }
             //从最后一个点画一条垂直于X轴的直线，形成闭合
-            path.lineTo(lineX.getScaleXList().get(coordinateList.size() - 1).getX() +  lineY.getWidth()/2,
-                    lineY.getLength() + lineY.getPaddingTop() - lineX.getWidth()/2);
+            path.lineTo(lineX.getScaleXList().get(coordinateList.size() - 1).getX() + lineY.getWidth() / 2,
+                    lineY.getLength() + lineY.getPaddingTop() - lineX.getWidth() / 2);
             //再画一条到原点的垂直于Y轴的直线，形成闭合
            /* path.lineTo(lineX.getPaddingLeft(),
                     lineY.getLength() + lineY.getPaddingTop());*/
             canvas.drawPath(path, paint);
+
         }
     }
 
@@ -218,8 +221,6 @@ public class LineAreaChartView extends ViewGroup {
                     y + mScaleLength + mXDataMarginScale + getTextHeight(data, paint),
                     paint);
         }
-
-
     }
 
 
@@ -278,6 +279,39 @@ public class LineAreaChartView extends ViewGroup {
     }
 
 
+    /**
+     * 画转折圆点
+     *
+     * @param canvas
+     * @param pathLines
+     * @param lineX
+     * @param lineY
+     */
+    private void drawTurnCircle(Canvas canvas, List<PathLine> pathLines, LineX lineX, LineY lineY) {
+        Paint circlePaint = new Paint();
+        Paint circleCenterPaint = new Paint();
+        for (PathLine pathLine : pathLines) {
+            circlePaint.setStrokeWidth(3);
+            circlePaint.setColor(getResources().getColor(pathLine.getColor()));
+            circlePaint.setAntiAlias(true);
+            circlePaint.setStyle(Paint.Style.STROKE);
+
+            circleCenterPaint.setStrokeWidth(pathLine.getStrokeWidth());
+            circleCenterPaint.setColor(getResources().getColor(R.color.white));
+            circleCenterPaint.setAntiAlias(true);
+            circleCenterPaint.setStyle(Paint.Style.FILL);
+
+            List<Coordinate> coordinateList = pathLine.getCoordinateList();
+            for (int i = 0, length = coordinateList.size(); i < length; i++) {
+                float y = convertValueToY(coordinateList.get(i).getY(), mMaxValueY, lineY);
+                float x = lineX.getScaleXList().get(i).getX() + lineY.getWidth() / 2;
+                canvas.drawCircle(x, y, 10, circlePaint);
+                canvas.drawCircle(x, y, 7, circleCenterPaint);
+
+            }
+        }
+    }
+
     private void drawGraticule(Canvas canvas, LineX xLine, LineY yLine) {
         Paint paint = new Paint();
         paint.setStrokeWidth(1);
@@ -293,6 +327,7 @@ public class LineAreaChartView extends ViewGroup {
 
     /**
      * 获得文字宽度
+     *
      * @param text
      * @param paint
      * @return
@@ -305,6 +340,7 @@ public class LineAreaChartView extends ViewGroup {
 
     /**
      * 获得文字高度
+     *
      * @param text
      * @param paint
      * @return
