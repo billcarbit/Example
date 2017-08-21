@@ -7,5 +7,7 @@
     <com.example.wangning.canvas.chart.pie.PieView
         android:id="@+id/v_pie"
         android:layout_width="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_height="match_parent" />
 </LinearLayout>

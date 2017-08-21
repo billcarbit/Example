@@ -39,6 +39,7 @@ public class PieView extends ViewGroup {
     private static final String TAG = "PieView";
     final float mDensity;
     private float mRadius = 300.0f;//报表半径
+    private float mCoreRadius = 100.0f;//中心半径
     private List<LineSign> mLineSigns = new ArrayList<LineSign>();
     private float mPointOvalSpacing = 50.0f;
     private float mStartAngle;
@@ -68,6 +69,7 @@ public class PieView extends ViewGroup {
             mStartAngle = mStartAngle + 360 * lineSign.getPercent();
 
         }
+        drawCoreRoundRadius(canvas, R.color.white, mCoreRadius);
 
     }
 
@@ -90,6 +92,15 @@ public class PieView extends ViewGroup {
         drawLineSign(canvas, lineSign, x, y, paint);
     }
 
+    private void drawCoreRoundRadius(Canvas canvas, int color, float radius) {
+        Paint paint = new Paint();
+        paint.setColor(getResources().getColor(color));
+        paint.setStrokeWidth(1);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setAntiAlias(true);
+        canvas.drawCircle(0, 0, radius, paint);
+    }
+
     private void drawArc(Canvas canvas, int color, float startAngle, float sweepAngle, float radius) {
         Paint paint = new Paint();
         paint.setStrokeWidth(3);
@@ -108,7 +119,7 @@ public class PieView extends ViewGroup {
      * @param dp dp数值
      * @return px数值
      */
-    private int dp2px(float dp) {
+    public int dp2px(float dp) {
         return (int) (dp * mDensity + 0.5f);
     }
 
@@ -127,6 +138,18 @@ public class PieView extends ViewGroup {
         textPaint.setColor(getResources().getColor(R.color.text_333333));
         textPaint.setTextSize(dp2px(13));//设置字体大小
 
+        Paint floatingValuePaint = new Paint();
+        floatingValuePaint.setStrokeWidth(1);
+        floatingValuePaint.setStyle(Paint.Style.FILL);
+        floatingValuePaint.setTextSize(dp2px(13));//设置字体大小
+        floatingValuePaint.setColor(lineSign.isIncrease()
+                ?
+                getResources().getColor(R.color.red_ff4221)
+                :
+                getResources().getColor(R.color.green_00b11e)
+        );
+
+
         if (x > 0 && y > 0) {//绘制坐标系第一象限
             turnX = x + lineSign.getTurnXLength();
             turnY = y + lineSign.getTurnYLength();
@@ -139,17 +162,19 @@ public class PieView extends ViewGroup {
 
             String aboveText = lineSign.getLineAboveText();
             String belowText = lineSign.getLineBelowText();
-     /*       float textStartX = turnX+getTextWidth(text,textPaint);
-            float textStartY = turnY - getTextHeight(text,textPaint);*/
 
-            float aboveTextStartX = getWidth() / 2 - getTextWidth(aboveText, textPaint);
-            float aboveTextStartY = turnY - getTextHeight(aboveText, textPaint);
+            float aboveTextStartX = getWidth() / 2 - getTextWidth(aboveText + getFloatingValueText(lineSign), textPaint) - 10;
+            float aboveTextStartY = turnY - getTextHeight(aboveText, textPaint) + 10;
 
-            float belowTextStartX = getWidth() / 2 - getTextWidth(belowText, textPaint);
-            float belowTextStartY = turnY + getTextHeight(belowText, textPaint);
+            float belowTextStartX = getWidth() / 2 - getTextWidth(belowText, textPaint) - 10;
+            float belowTextStartY = turnY + getTextHeight(belowText, textPaint) + 10;
+
+            float floatingValueStartX = aboveTextStartX + getTextWidth(aboveText, floatingValuePaint)+10;
+            float floatingValueStartY = aboveTextStartY;
 
             canvas.drawText(aboveText, aboveTextStartX, aboveTextStartY, textPaint);
             canvas.drawText(belowText, belowTextStartX, belowTextStartY, textPaint);
+            canvas.drawText(getFloatingValueText(lineSign),floatingValueStartX , floatingValueStartY, floatingValuePaint);
 
         } else if (x < 0 && y > 0) {//绘制坐标系第二象限
             turnX = x - lineSign.getTurnXLength();
@@ -164,14 +189,20 @@ public class PieView extends ViewGroup {
             String aboveText = lineSign.getLineAboveText();
             String belowText = lineSign.getLineBelowText();
 
-            float aboveTextStartX = -getWidth() / 2;
-            float aboveTextStartY = turnY - getTextHeight(aboveText, textPaint);
+            float aboveTextStartX = -getWidth() / 2 + 10;
+            float aboveTextStartY = turnY - getTextHeight(aboveText, textPaint) + 10;
 
-            float belowTextStartX = -getWidth() / 2;
-            float belowTextStartY = turnY + getTextHeight(belowText, textPaint);
+            float belowTextStartX = -getWidth() / 2 + 10;
+            float belowTextStartY = turnY + getTextHeight(belowText, textPaint) + 10;
+
+
+            float floatingValueStartX = aboveTextStartX + getTextWidth(aboveText, floatingValuePaint)+10;
+            float floatingValueStartY = aboveTextStartY;
 
             canvas.drawText(aboveText, aboveTextStartX, aboveTextStartY, textPaint);
             canvas.drawText(belowText, belowTextStartX, belowTextStartY, textPaint);
+            canvas.drawText(getFloatingValueText(lineSign),floatingValueStartX , floatingValueStartY, floatingValuePaint);
+
 
         } else if (x < 0 && y < 0) {//绘制坐标系第三象限
             turnX = x - lineSign.getTurnXLength();
@@ -186,14 +217,20 @@ public class PieView extends ViewGroup {
             String aboveText = lineSign.getLineAboveText();
             String belowText = lineSign.getLineBelowText();
 
-            float aboveTextStartX = -getWidth() / 2;
-            float aboveTextStartY = turnY + getTextHeight(aboveText, textPaint);
+            float aboveTextStartX = -getWidth() / 2 + 10;
+            float aboveTextStartY = turnY - getTextHeight(aboveText, textPaint) + 10;
 
-            float belowTextStartX = -getWidth() / 2;
-            float belowTextStartY = turnY - getTextHeight(belowText, textPaint);
+            float belowTextStartX = -getWidth() / 2 + 10;
+            float belowTextStartY = turnY + getTextHeight(belowText, textPaint) + 10;
+
+            float floatingValueStartX = aboveTextStartX + getTextWidth(aboveText, floatingValuePaint)+10;
+            float floatingValueStartY = aboveTextStartY;
 
             canvas.drawText(aboveText, aboveTextStartX, aboveTextStartY, textPaint);
             canvas.drawText(belowText, belowTextStartX, belowTextStartY, textPaint);
+            canvas.drawText(getFloatingValueText(lineSign),floatingValueStartX , floatingValueStartY, floatingValuePaint);
+
+
 
 
         } else if (x > 0 && y < 0) {//绘制坐标系第四象限
@@ -209,17 +246,19 @@ public class PieView extends ViewGroup {
             String aboveText = lineSign.getLineAboveText();
             String belowText = lineSign.getLineBelowText();
 
-            float aboveTextStartX = getWidth() / 2 - getTextWidth(aboveText, textPaint);
-            float aboveTextStartY = turnY + getTextHeight(aboveText, textPaint);
+            float aboveTextStartX = getWidth() / 2 - getTextWidth(aboveText+getFloatingValueText(lineSign), textPaint) - 10;
+            float aboveTextStartY = turnY - getTextHeight(aboveText, textPaint) + 10;
 
-            float belowTextStartX =  getWidth() / 2 - getTextWidth(aboveText, textPaint);
-            float belowTextStartY = turnY - getTextHeight(belowText, textPaint);
+            float belowTextStartX = getWidth() / 2 - getTextWidth(aboveText, textPaint) - 10;
+            float belowTextStartY = turnY + getTextHeight(belowText, textPaint) + 10;
+
+            float floatingValueStartX = aboveTextStartX + getTextWidth(aboveText, floatingValuePaint)+10;
+            float floatingValueStartY = aboveTextStartY;
 
             canvas.drawText(aboveText, aboveTextStartX, aboveTextStartY, textPaint);
             canvas.drawText(belowText, belowTextStartX, belowTextStartY, textPaint);
+            canvas.drawText(getFloatingValueText(lineSign),floatingValueStartX , floatingValueStartY, floatingValuePaint);
         }
-
-
     }
 
 
@@ -257,5 +296,18 @@ public class PieView extends ViewGroup {
         Rect rect = new Rect();
         paint.getTextBounds(text, 0, text.length(), rect);
         return rect.height();
+    }
+
+
+    public void setCoreRadius(float radius) {
+        mCoreRadius = radius;
+    }
+
+    private String getFloatingValueText(LineSign lineSign) {
+        return lineSign.isIncrease() ?
+                "(+" + lineSign.getIncreaseNum() + ")"
+                :
+                "(-" + lineSign.getReduceNum() + ")"
+                ;
     }
 }
