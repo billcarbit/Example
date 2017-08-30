@@ -27,7 +27,7 @@ public class LineAreaChartActivity extends Activity {
 
         List<DataX> dataXList = new ArrayList<DataX>();
         List<DataY> dataYList = new ArrayList<DataY>();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 2; i++) {
             DataX dataX = new DataX();
             dataX.setData("周" + (i + 1));
             dataXList.add(dataX);
@@ -36,11 +36,10 @@ public class LineAreaChartActivity extends Activity {
 
         for (int i = 0; i < 5; i++) {
             DataY dataY = new DataY();
-            dataY.setData(String.valueOf((i + 1) * 500));
+            dataY.setData(String.valueOf((i + 1) * 1000));
             dataYList.add(dataY);
         }
         lacv.setYData(dataYList);
-        lacv.setMaxValueY(2500);
         List<PathLine> linePathList = new ArrayList<PathLine>();
         for (int i = 0; i < 4; i++) {
             PathLine linePath = new PathLine();
@@ -56,12 +55,10 @@ public class LineAreaChartActivity extends Activity {
             if(i==3){
                 linePath.setColor(R.color.red_cf6e6b);
             }
-            linePath.setStrokeWidth(1);
             List<Coordinate> coordinateList = new ArrayList<Coordinate>();
-            for (int j = 0; j < 7; j++) {
+            for (int j = 0; j < 5; j++) {
                 Coordinate coordinate = new Coordinate();
                 coordinate.setX(100);
-                //new Random().nextInt(2500)
                 if(i==0){
                     coordinate.setY(1700);
                 }

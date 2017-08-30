@@ -11,61 +11,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.wangning.MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/black"
-            android:text="测试字体边距"
-            android:textColor="@color/white" />
-
-
-        <EditText
-            android:id="@+id/et"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:hint="请输入字体大小"
-
-            android:inputType="number" />
-
-
-        <EditText
-            android:id="@+id/et2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:hint="请输入字体大小"
-
-            android:inputType="number" />
-
-
-        <EditText
-            android:id="@+id/et3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:hint="请输入字体大小"
-
-            android:inputType="number" />
-
-
-        <EditText
-            android:id="@+id/et4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:hint="请输入字体大小"
-
-            android:inputType="number" />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_yang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="￥" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¥" />
 
     <Button
         android:id="@+id/btn"

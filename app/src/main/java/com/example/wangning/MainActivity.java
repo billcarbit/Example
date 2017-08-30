@@ -11,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -36,15 +37,13 @@ public class MainActivity extends Activity {
 
         Log.e(TAG, "onCreate: " + formatTosepara(0.32f));
 
+        final TextView tv_yang = (TextView) findViewById(R.id.tv_yang);
+
         Button btn = (Button) findViewById(R.id.btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String aaa = "1,2,3,,";
-                String[] b = aaa.split(",");
-                for (int i = 0; i < b.length; i++) {
-                    Log.e(TAG, "onClick: b["+i+"]"+b[i]);
-                }
+                //tv_yang.setText(getString(R.string.rmb_unit));
             }
         });
 

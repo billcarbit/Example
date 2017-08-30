@@ -47,7 +47,6 @@ public class CanvasActivity extends Activity {
             dataYList.add(dataY);
         }
         lacv.setYData(dataYList);
-        lacv.setMaxValueY(2500);
         List<PathLine> linePathList = new ArrayList<PathLine>();
         for (int i = 0; i < 4; i++) {
             PathLine linePath = new PathLine();
