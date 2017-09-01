@@ -169,12 +169,12 @@ public class PieView extends ViewGroup {
             float belowTextStartX = getWidth() / 2 - getTextWidth(belowText, textPaint) - 10;
             float belowTextStartY = turnY + getTextHeight(belowText, textPaint) + 10;
 
-            float floatingValueStartX = aboveTextStartX + getTextWidth(aboveText, floatingValuePaint)+10;
+            float floatingValueStartX = aboveTextStartX + getTextWidth(aboveText, floatingValuePaint) + 10;
             float floatingValueStartY = aboveTextStartY;
 
             canvas.drawText(aboveText, aboveTextStartX, aboveTextStartY, textPaint);
             canvas.drawText(belowText, belowTextStartX, belowTextStartY, textPaint);
-            canvas.drawText(getFloatingValueText(lineSign),floatingValueStartX , floatingValueStartY, floatingValuePaint);
+            canvas.drawText(getFloatingValueText(lineSign), floatingValueStartX, floatingValueStartY, floatingValuePaint);
 
         } else if (x < 0 && y > 0) {//绘制坐标系第二象限
             turnX = x - lineSign.getTurnXLength();
@@ -196,12 +196,12 @@ public class PieView extends ViewGroup {
             float belowTextStartY = turnY + getTextHeight(belowText, textPaint) + 10;
 
 
-            float floatingValueStartX = aboveTextStartX + getTextWidth(aboveText, floatingValuePaint)+10;
+            float floatingValueStartX = aboveTextStartX + getTextWidth(aboveText, floatingValuePaint) + 10;
             float floatingValueStartY = aboveTextStartY;
 
             canvas.drawText(aboveText, aboveTextStartX, aboveTextStartY, textPaint);
             canvas.drawText(belowText, belowTextStartX, belowTextStartY, textPaint);
-            canvas.drawText(getFloatingValueText(lineSign),floatingValueStartX , floatingValueStartY, floatingValuePaint);
+            canvas.drawText(getFloatingValueText(lineSign), floatingValueStartX, floatingValueStartY, floatingValuePaint);
 
 
         } else if (x < 0 && y < 0) {//绘制坐标系第三象限
@@ -223,15 +223,12 @@ public class PieView extends ViewGroup {
             float belowTextStartX = -getWidth() / 2 + 10;
             float belowTextStartY = turnY + getTextHeight(belowText, textPaint) + 10;
 
-            float floatingValueStartX = aboveTextStartX + getTextWidth(aboveText, floatingValuePaint)+10;
+            float floatingValueStartX = aboveTextStartX + getTextWidth(aboveText, floatingValuePaint) + 10;
             float floatingValueStartY = aboveTextStartY;
 
             canvas.drawText(aboveText, aboveTextStartX, aboveTextStartY, textPaint);
             canvas.drawText(belowText, belowTextStartX, belowTextStartY, textPaint);
-            canvas.drawText(getFloatingValueText(lineSign),floatingValueStartX , floatingValueStartY, floatingValuePaint);
-
-
-
+            canvas.drawText(getFloatingValueText(lineSign), floatingValueStartX, floatingValueStartY, floatingValuePaint);
 
         } else if (x > 0 && y < 0) {//绘制坐标系第四象限
             turnX = x + lineSign.getTurnXLength();
@@ -246,18 +243,18 @@ public class PieView extends ViewGroup {
             String aboveText = lineSign.getLineAboveText();
             String belowText = lineSign.getLineBelowText();
 
-            float aboveTextStartX = getWidth() / 2 - getTextWidth(aboveText+getFloatingValueText(lineSign), textPaint) - 10;
+            float aboveTextStartX = getWidth() / 2 - getTextWidth(aboveText + getFloatingValueText(lineSign), textPaint) - 10;
             float aboveTextStartY = turnY - getTextHeight(aboveText, textPaint) + 10;
 
             float belowTextStartX = getWidth() / 2 - getTextWidth(aboveText, textPaint) - 10;
             float belowTextStartY = turnY + getTextHeight(belowText, textPaint) + 10;
 
-            float floatingValueStartX = aboveTextStartX + getTextWidth(aboveText, floatingValuePaint)+10;
+            float floatingValueStartX = aboveTextStartX + getTextWidth(aboveText, floatingValuePaint) + 10;
             float floatingValueStartY = aboveTextStartY;
 
             canvas.drawText(aboveText, aboveTextStartX, aboveTextStartY, textPaint);
             canvas.drawText(belowText, belowTextStartX, belowTextStartY, textPaint);
-            canvas.drawText(getFloatingValueText(lineSign),floatingValueStartX , floatingValueStartY, floatingValuePaint);
+            canvas.drawText(getFloatingValueText(lineSign), floatingValueStartX, floatingValueStartY, floatingValuePaint);
         }
     }
 
@@ -304,6 +301,9 @@ public class PieView extends ViewGroup {
     }
 
     private String getFloatingValueText(LineSign lineSign) {
+        if (lineSign.getIncreaseNum() == 0) {
+            return "";
+        }
         return lineSign.isIncrease() ?
                 "(+" + lineSign.getIncreaseNum() + ")"
                 :

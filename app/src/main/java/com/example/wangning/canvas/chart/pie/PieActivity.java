@@ -28,8 +28,8 @@ public class PieActivity extends Activity {
             lineSign.setLineBelowText("下" + i);
             if (i == 0) {
                 lineSign.setIncreaseColor(R.color.red_f05a4a);
-                lineSign.setIncreaseNum(11);
-                lineSign.setIncrease(true);
+                //lineSign.setIncreaseNum(11);
+                //lineSign.setIncrease(true);
                 lineSign.setPercent(0.2f);
                 lineSign.setLineColor(R.color.red_f05a4a);
             }
