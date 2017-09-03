@@ -52,7 +52,7 @@ public class GestureActivity extends Activity {
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            Log.d("onScroll", e1.toString());
+            Log.d("onScroll", "e1="+e1.getY()+",e2="+e2.getY());
             return true;
         }
 
@@ -64,8 +64,7 @@ public class GestureActivity extends Activity {
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            Log.d("d", e1.toString());
-            Log.d("e2", e2.toString());
+            Log.d("onFling", "velocityX="+velocityX+",velocityY="+velocityY);
             return true;
         }
     }
