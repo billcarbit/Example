@@ -91,7 +91,7 @@ public class LineAreaChartView extends ViewGroup {
         drawCoordinateAxis(canvas, mLineX, mLineY);
         drawPathLine(canvas, mLinePathList, mLineX, mLineY);
         drawGraticule(canvas, mLineX, mLineY);//画平行于X轴的标线
-        drawTurnCircle(canvas,mLinePathList,mLineX,mLineY);
+        drawTurnCircle(canvas, mLinePathList, mLineX, mLineY);
     }
 
     public void setYData(List<DataY> yDataList) {
@@ -102,6 +102,7 @@ public class LineAreaChartView extends ViewGroup {
             scaleYList.add(scaleY);
         }
         mLineY.setScaleYList(scaleYList);
+        setMaxValueY(mLineY);
     }
 
     public void setXData(List<DataX> xDataList) {
@@ -156,28 +157,34 @@ public class LineAreaChartView extends ViewGroup {
 
     private void drawPathLine(Canvas canvas, List<PathLine> pathLines, LineX lineX, LineY lineY) {
         Paint paint = new Paint();
-
-
         for (PathLine pathLine : pathLines) {
+            List<Coordinate> coordinateList = pathLine.getCoordinateList();
+            int sLength = lineX.getScaleXList().size();
+            int cLength = coordinateList.size();
+            if (cLength > sLength) {
+                for (int i = 0; i < cLength - sLength; i++) {
+                    coordinateList.remove(cLength - i - 1);
+                }
+            }
             paint.setStrokeWidth(pathLine.getStrokeWidth());
             paint.setColor(getResources().getColor(pathLine.getColor()));
             paint.setAntiAlias(true);
             paint.setStyle(Paint.Style.FILL);
-
-
-
             Path path = new Path();
-            List<Coordinate> coordinateList = pathLine.getCoordinateList();
             path.moveTo(lineX.getPaddingLeft() + lineY.getWidth() / 2,
                     getHeight() - lineX.getPaddingBottom() - lineX.getWidth() / 2);//将画笔移动至坐标原点
-            for (int i = 0, length = coordinateList.size(); i < length; i++) {
+            for (int i = 0; i < coordinateList.size() && i < lineX.getScaleXList().size(); i++) {
                 float y = convertValueToY(coordinateList.get(i).getY(), mMaxValueY, lineY);
                 float x = lineX.getScaleXList().get(i).getX() + lineY.getWidth() / 2;
                 path.lineTo(x, y);
             }
             //从最后一个点画一条垂直于X轴的直线，形成闭合
-            path.lineTo(lineX.getScaleXList().get(coordinateList.size() - 1).getX() + lineY.getWidth() / 2,
-                    lineY.getLength() + lineY.getPaddingTop() - lineX.getWidth() / 2);
+            int cLastIndex = coordinateList.size() - 1;
+            if (cLastIndex < lineX.getScaleXList().size() && cLastIndex > 0) {
+                path.lineTo(lineX.getScaleXList().get(cLastIndex).getX() + lineY.getWidth() / 2,
+                        lineY.getLength() + lineY.getPaddingTop() - lineX.getWidth() / 2);
+            }
+
             //再画一条到原点的垂直于Y轴的直线，形成闭合
            /* path.lineTo(lineX.getPaddingLeft(),
                     lineY.getLength() + lineY.getPaddingTop());*/
@@ -291,6 +298,16 @@ public class LineAreaChartView extends ViewGroup {
         Paint circlePaint = new Paint();
         Paint circleCenterPaint = new Paint();
         for (PathLine pathLine : pathLines) {
+            List<Coordinate> coordinateList = pathLine.getCoordinateList();
+            int sLength = lineX.getScaleXList().size();
+            int cLength = coordinateList.size();
+            if (cLength > sLength) {
+                for (int i = 0; i < cLength - sLength; i++) {
+                    coordinateList.remove(cLength - i - 1);
+                }
+
+            }
+
             circlePaint.setStrokeWidth(3);
             circlePaint.setColor(getResources().getColor(pathLine.getColor()));
             circlePaint.setAntiAlias(true);
@@ -301,8 +318,7 @@ public class LineAreaChartView extends ViewGroup {
             circleCenterPaint.setAntiAlias(true);
             circleCenterPaint.setStyle(Paint.Style.FILL);
 
-            List<Coordinate> coordinateList = pathLine.getCoordinateList();
-            for (int i = 0, length = coordinateList.size(); i < length; i++) {
+            for (int i = 0; i < coordinateList.size() && i < lineX.getScaleXList().size(); i++) {
                 float y = convertValueToY(coordinateList.get(i).getY(), mMaxValueY, lineY);
                 float x = lineX.getScaleXList().get(i).getX() + lineY.getWidth() / 2;
                 canvas.drawCircle(x, y, 10, circlePaint);
@@ -399,7 +415,9 @@ public class LineAreaChartView extends ViewGroup {
         return y;
     }
 
-    public void setMaxValueY(int maxY) {
-        mMaxValueY = maxY;
+    private void setMaxValueY(LineY lineY) {
+        List<ScaleY> scaleYList = lineY.getScaleYList();
+        ScaleY scaleY = scaleYList.get(scaleYList.size() - 1);
+        mMaxValueY = Integer.valueOf(scaleY.getDataY().getData());
     }
 }

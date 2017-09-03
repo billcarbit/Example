@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
 import java.text.DecimalFormat;
 
 public class MainActivity extends Activity {
@@ -27,11 +28,7 @@ public class MainActivity extends Activity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String aaa = "1,2,3,,";
-                String[] b = aaa.split(",");
-                for (int i = 0; i < b.length; i++) {
-                    Log.e(TAG, "onClick: b["+i+"]"+b[i]);
-                }
+                //tv_yang.setText(getString(R.string.rmb_unit));
             }
         });
 
