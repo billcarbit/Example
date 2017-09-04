@@ -82,14 +82,28 @@
         android:padding="10dp"
         android:background="@color/white"/>
 
+    <LinearLayout
+        android:id="@+id/ll_tran"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
     <TextView
         android:id="@+id/tv_xiahua"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="菜单下滑动画"
+        android:text="位移动画"
         android:textSize="20dp"
         android:padding="10dp"
         android:background="@color/white"/>
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:textSize="20dp"
+        android:padding="10dp"
+        android:text="固定区域"/>
+    </LinearLayout>
 
 </LinearLayout>

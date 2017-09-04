@@ -1,5 +1,6 @@
 package com.example.wangning.annimate;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -12,6 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,7 +36,7 @@ public class ValueAnimActivity extends Activity
     RelativeLayout rl_number;
     RotateAnim rotateAnim;
     SlideDownAnim slideDownAnim;
-
+    LinearLayout ll_tran;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +46,8 @@ public class ValueAnimActivity extends Activity
         rl_number = (RelativeLayout) findViewById(R.id.rl_number);
         tv_rotate = (TextView) findViewById(R.id.tv_rotate);
         tv_xiahua = (TextView) findViewById(R.id.tv_xiahua);
+        ll_tran = (LinearLayout) findViewById(R.id.ll_tran);
+
         tv_rotate.setOnClickListener(this);
         rl_number.setOnClickListener(this);
         tv_xiahua.setOnClickListener(this);
@@ -84,11 +88,25 @@ public class ValueAnimActivity extends Activity
                 runSignAnim();
                 break;
             case R.id.tv_xiahua:
-
+                translationChange(ll_tran,1000,tv_xiahua.getHeight()).start();
                 break;
             default:
                 break;
 
         }
+    }
+
+    public Animator translationChange(final View view, int millsecDur, float y) {
+        ValueAnimator animator = ValueAnimator.ofFloat(0, -y);
+        animator.setTarget(view);
+        animator.setDuration(millsecDur);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Float value = (Float) animation.getAnimatedValue();
+                view.setTranslationY(value);
+            }
+        });
+        return animator;
     }
 }

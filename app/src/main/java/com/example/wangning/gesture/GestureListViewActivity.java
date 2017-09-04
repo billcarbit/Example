@@ -1,12 +1,19 @@
 package com.example.wangning.gesture;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.example.wangning.R;
 
@@ -18,72 +25,43 @@ import java.util.Map;
 /**
  * Created by Administrator on 2017/9/3.
  */
-public class GestureListViewActivity extends Activity {
-    GestureDetector mGestureDetector;
+public class GestureListViewActivity extends Activity implements View.OnClickListener {
+    TextView tv;
+    LinearLayout ll_main;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gesture_listview);
-        mGestureDetector = new GestureDetector(this, new LearnGestureListener());
-        ListView listView =  (ListView)findViewById(R.id.listView);
 
+        ScrollView sv = (ScrollView) findViewById(R.id.sv);
+        sv.smoothScrollTo(0, 0);
+
+        tv = (TextView) findViewById(R.id.tv);
+        tv.setOnClickListener(this);
+        ListView listView = (ListView) findViewById(R.id.listView);
+        ll_main = (LinearLayout) findViewById(R.id.ll_main);
         List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
         for (int i = 0; i < 20; i++) {
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put("title", "APPLE_"+i);
+            map.put("title", "APPLE_" + i);
             map.put("image", R.mipmap.ic_launcher);
             data.add(map);
         }
         SimpleAdapter sAdapter = new SimpleAdapter(getApplicationContext(),
                 data,
                 R.layout.item,
-                new String[]{"title","image"},
+                new String[]{"title", "image"},
                 new int[]{R.id.title, R.id.image});
         listView.setAdapter(sAdapter);
     }
 
+
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (mGestureDetector.onTouchEvent(event))
-            return true;
-        else
-            return false;
-    }
-
-
-    private class LearnGestureListener extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public boolean onSingleTapUp(MotionEvent ev) {
-            Log.d("onSingleTapUp", ev.toString());
-            return true;
-        }
-
-        @Override
-        public void onShowPress(MotionEvent ev) {
-            Log.d("onShowPress", ev.toString());
-        }
-
-        @Override
-        public void onLongPress(MotionEvent ev) {
-            Log.d("onLongPress", ev.toString());
-        }
-
-        @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            Log.d("onScroll", "e1="+e1.getY()+",e2="+e2.getY());
-            return true;
-        }
-
-        @Override
-        public boolean onDown(MotionEvent ev) {
-            Log.d("onDownd", ev.toString());
-            return true;
-        }
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            Log.d("onFling", "velocityX="+velocityX+",velocityY="+velocityY);
-            return true;
+    public void onClick(View v) {
+        if (R.id.tv == v.getId()) {
         }
     }
+
+
 }

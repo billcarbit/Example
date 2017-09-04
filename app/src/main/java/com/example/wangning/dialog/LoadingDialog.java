@@ -3,7 +3,6 @@ package com.example.wangning.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
-import android.util.Log;
 import android.view.Window;
 import android.widget.ImageView;
 
