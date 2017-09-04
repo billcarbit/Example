@@ -25,36 +25,36 @@ public class PieActivity extends Activity {
         for (int i = 0; i < 5; i++) {
             LineSign lineSign = new LineSign();
             lineSign.setLineAboveText("上" + i);
-            lineSign.setLineBelowText("下" + i);
+            lineSign.setLineBelowText("下123456" + i);
             if (i == 0) {
                 lineSign.setIncreaseColor(R.color.red_f05a4a);
                 //lineSign.setIncreaseNum(11);
                 //lineSign.setIncrease(true);
-                lineSign.setPercent(0.2f);
+                lineSign.setPercent(0.0f);
                 lineSign.setLineColor(R.color.red_f05a4a);
             }
             if (i == 1) {
                 lineSign.setReduceNum(22);
                 lineSign.setIncrease(false);
-                lineSign.setPercent(0.2f);
+                lineSign.setPercent(0.0f);
                 lineSign.setLineColor(R.color.green_1dac91);
             }
             if (i == 2) {
                 lineSign.setReduceNum(33);
                 lineSign.setIncrease(false);
-                lineSign.setPercent(0.2f);
+                lineSign.setPercent(0.3f);
                 lineSign.setLineColor(R.color.blue_00a5e6);
             }
             if (i == 3) {
                 lineSign.setIncreaseNum(44);
                 lineSign.setIncrease(true);
-                lineSign.setPercent(0.2f);
+                lineSign.setPercent(0.3f);
                 lineSign.setLineColor(R.color.blue_3474c4);
             }
             if (i == 4) {
                 lineSign.setIncreaseNum(55);
                 lineSign.setIncrease(true);
-                lineSign.setPercent(0.2f);
+                lineSign.setPercent(0.4f);
                 lineSign.setLineColor(R.color.yellow_f59800);
             }
             lineSign.setPointRadius(10);

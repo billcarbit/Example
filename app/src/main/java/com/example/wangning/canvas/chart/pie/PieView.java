@@ -64,6 +64,9 @@ public class PieView extends ViewGroup {
     protected void onDraw(Canvas canvas) {
         canvas.translate(getWidth() / 2, getHeight() / 2);
         for (LineSign lineSign : mLineSigns) {
+            if(lineSign.getPercent()==0.0f){
+                continue;
+            }
             drawArc(canvas, lineSign.getLineColor(), mStartAngle, 360 * lineSign.getPercent(), mRadius);
             drawPoint(lineSign, canvas, mStartAngle, 360 * lineSign.getPercent() / 2, mRadius + mPointOvalSpacing);
             mStartAngle = mStartAngle + 360 * lineSign.getPercent();
@@ -246,7 +249,7 @@ public class PieView extends ViewGroup {
             float aboveTextStartX = getWidth() / 2 - getTextWidth(aboveText + getFloatingValueText(lineSign), textPaint) - 10;
             float aboveTextStartY = turnY - getTextHeight(aboveText, textPaint) + 10;
 
-            float belowTextStartX = getWidth() / 2 - getTextWidth(aboveText, textPaint) - 10;
+            float belowTextStartX = getWidth() / 2 - getTextWidth(belowText, textPaint) - 10;
             float belowTextStartY = turnY + getTextHeight(belowText, textPaint) + 10;
 
             float floatingValueStartX = aboveTextStartX + getTextWidth(aboveText, floatingValuePaint) + 10;
