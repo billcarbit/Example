@@ -5,24 +5,41 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import com.example.wangning.R;
 
-/**
- * file explain
- *
- * @author wangning
- * @version 1.0 2017-07-18
- * @since JDK 1.8
- */
-public class GestureActivity extends Activity {
-    GestureDetector mGestureDetector;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+/**
+ * Created by Administrator on 2017/9/3.
+ */
+public class GestureListViewActivity extends Activity {
+    GestureDetector mGestureDetector;
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gesture);
+        setContentView(R.layout.activity_gesture_listview);
         mGestureDetector = new GestureDetector(this, new LearnGestureListener());
+        ListView listView =  (ListView)findViewById(R.id.listView);
+
+        List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+        for (int i = 0; i < 20; i++) {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("title", "APPLE_"+i);
+            map.put("image", R.mipmap.ic_launcher);
+            data.add(map);
+        }
+        SimpleAdapter sAdapter = new SimpleAdapter(getApplicationContext(),
+                data,
+                R.layout.item,
+                new String[]{"title","image"},
+                new int[]{R.id.title, R.id.image});
+        listView.setAdapter(sAdapter);
     }
 
     @Override
@@ -32,6 +49,7 @@ public class GestureActivity extends Activity {
         else
             return false;
     }
+
 
     private class LearnGestureListener extends GestureDetector.SimpleOnGestureListener {
         @Override
@@ -68,5 +86,4 @@ public class GestureActivity extends Activity {
             return true;
         }
     }
-
 }
