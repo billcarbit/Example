@@ -1,16 +1,11 @@
 package com.example.wangning.gesture;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -39,7 +34,7 @@ public class GestureListViewActivity extends Activity implements View.OnClickLis
 
         tv = (TextView) findViewById(R.id.tv);
         tv.setOnClickListener(this);
-        ListView listView = (ListView) findViewById(R.id.listView);
+        ListViewForScrollView listView = (ListViewForScrollView) findViewById(R.id.listView);
         ll_main = (LinearLayout) findViewById(R.id.ll_main);
         List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
         for (int i = 0; i < 20; i++) {
@@ -54,6 +49,19 @@ public class GestureListViewActivity extends Activity implements View.OnClickLis
                 new String[]{"title", "image"},
                 new int[]{R.id.title, R.id.image});
         listView.setAdapter(sAdapter);
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                Log.e("ADAD", "onScrollStateChanged: scrollState="+scrollState );
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                Log.e("ADAD", "onScroll: firstVisibleItem=" + firstVisibleItem + "," +
+                        "visibleItemCount=" + visibleItemCount
+                        + ",totalItemCount=" + totalItemCount);
+            }
+        });
     }
 
 
