@@ -3,8 +3,10 @@ package com.example.wangning.canvas.chart.line;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.PopupWindow;
 
 import com.example.wangning.R;
+import com.example.wangning.popwindow.LineAreaPopWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,23 +19,43 @@ import java.util.List;
  * @since JDK 1.8
  */
 public class LineAreaChartActivity extends Activity {
-
+    LineAreaPopWindow mPopupWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_canvas);
-        LineAreaChartView lacv = (LineAreaChartView) findViewById(R.id.lacv);
+        final LineAreaChartView lacv = (LineAreaChartView) findViewById(R.id.lacv);
 
-        List<DataX> dataXList = new ArrayList<DataX>();
-        List<DataY> dataYList = new ArrayList<DataY>();
+        final List<DataX> dataXList = new ArrayList<DataX>();
+        final List<DataY> dataYList = new ArrayList<DataY>();
         for (int i = 0; i < 7; i++) {
             DataX dataX = new DataX();
             dataX.setData("周" + (i + 1));
             dataXList.add(dataX);
         }
         lacv.setXData(dataXList);
+        lacv.setOnDataXClickListener(new LineAreaChartView.OnDataXClickListener() {
+            @Override
+            public void onClick(int position,float x,float y ) {
+                if (mPopupWindow == null) {
+                    mPopupWindow = new LineAreaPopWindow(LineAreaChartActivity.this);
+                }
 
+                mPopupWindow.setTitle( dataXList.get(position).getData(),
+                        dataYList.get(3).getData(),
+                        dataYList.get(2).getData(),
+                        dataYList.get(1).getData(),
+                        dataYList.get(0).getData());
+                mPopupWindow.showAtLocation(lacv,(int)x,(int)y );
+                mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                    }
+                });
+
+            }
+        });
         for (int i = 0; i < 5; i++) {
             DataY dataY = new DataY();
             dataY.setData(String.valueOf((i + 1) * 1000));

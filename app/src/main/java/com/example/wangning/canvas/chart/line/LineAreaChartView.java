@@ -9,7 +9,9 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.wangning.R;
 
@@ -35,11 +37,12 @@ public class LineAreaChartView extends ViewGroup {
     private int mYDataMarginScale = 30;//Y轴数据与刻度的距离
     private List<PathLine> mLinePathList = new ArrayList<PathLine>();
     private int mMaxValueY = 1;
+    private OnDataXClickListener mOnDataXClickListener;
+
 
     public LineAreaChartView(Context context) {
         this(context, null);
     }
-
 
     public LineAreaChartView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -193,7 +196,6 @@ public class LineAreaChartView extends ViewGroup {
         }
     }
 
-
     /**
      * 画X轴刻度
      */
@@ -227,9 +229,13 @@ public class LineAreaChartView extends ViewGroup {
                     x - getTextWidth(data, paint) / 2,
                     y + mScaleLength + mXDataMarginScale + getTextHeight(data, paint),
                     paint);
+
+            xLine.getScaleXList().get(i).getDataX().setStartX(x - getTextWidth(data, paint) / 2);
+            xLine.getScaleXList().get(i).getDataX().setEndX(x + getTextWidth(data, paint) / 2);
+            xLine.getScaleXList().get(i).getDataX().setStartY(y + mScaleLength + mXDataMarginScale);
+            xLine.getScaleXList().get(i).getDataX().setEndY(y + mScaleLength + mXDataMarginScale + getTextHeight(data, paint));
         }
     }
-
 
     /**
      * 画Y轴刻度及数据
@@ -284,7 +290,6 @@ public class LineAreaChartView extends ViewGroup {
         }
 
     }
-
 
     /**
      * 画转折圆点
@@ -367,7 +372,6 @@ public class LineAreaChartView extends ViewGroup {
         return rect.height();
     }
 
-
     /**
      * 设置字体的大小
      *
@@ -419,5 +423,34 @@ public class LineAreaChartView extends ViewGroup {
         List<ScaleY> scaleYList = lineY.getScaleYList();
         ScaleY scaleY = scaleYList.get(scaleYList.size() - 1);
         mMaxValueY = Integer.valueOf(scaleY.getDataY().getData());
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            for (int i = 0; i < mLineX.getScaleXList().size(); i++) {
+                float touchXStart = mLineX.getScaleXList().get(i).getDataX().getStartX();
+                float touchXEnd = mLineX.getScaleXList().get(i).getDataX().getEndX();
+                float touchYStart = mLineX.getScaleXList().get(i).getDataX().getStartY();
+                float touchYEnd = mLineX.getScaleXList().get(i).getDataX().getEndY();
+                if (event.getX() > touchXStart &&
+                        event.getX() < touchXEnd &&
+                        event.getY() > touchYStart &&
+                        event.getY() < touchYEnd) {
+                    if (mOnDataXClickListener != null) {
+                        mOnDataXClickListener.onClick(i,touchXStart,touchYStart);
+                    }
+                }
+            }
+        }
+        return super.onTouchEvent(event);
+    }
+
+    public void setOnDataXClickListener(OnDataXClickListener listener) {
+        mOnDataXClickListener = listener;
+    }
+
+    public interface OnDataXClickListener {
+        void onClick(int position,float x,float y);
     }
 }

@@ -3,15 +3,10 @@ package com.example.wangning.popwindow;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.wangning.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * file explain
@@ -22,8 +17,8 @@ import java.util.List;
  */
 public class PopupWindowActivity extends Activity {
 
-    SlideDownWindow mSlideDownWindow;
-    private TextView mButton;
+    LineAreaPopWindow mPopupWindow;
+    private TextView mButton,mButton2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,16 +26,28 @@ public class PopupWindowActivity extends Activity {
         setContentView(R.layout.activity_popwindow);
 
         mButton = (TextView) findViewById(R.id.btn_popupwin);
+        mButton2 = (TextView) findViewById(R.id.btn_popupwin2);
+
+        mButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mPopupWindow == null) {
+                    mPopupWindow = new LineAreaPopWindow(PopupWindowActivity.this);
+                }
+                mPopupWindow.show(v);
+            }
+        });
+
         mButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                if (mSlideDownWindow == null) {
-                    mSlideDownWindow = new SlideDownWindow(PopupWindowActivity.this);
+                if (mPopupWindow == null) {
+                    mPopupWindow = new LineAreaPopWindow(PopupWindowActivity.this);
                 }
-                mSlideDownWindow.show(v);
+                mPopupWindow.show(v);
                 mButton.setText("1");
-                mSlideDownWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                     @Override
                     public void onDismiss() {
                         mButton.setText("2");
