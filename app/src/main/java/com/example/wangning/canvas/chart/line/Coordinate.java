@@ -8,14 +8,15 @@ package com.example.wangning.canvas.chart.line;
  * @since JDK 1.8
  */
 public class Coordinate {
-    private int x;
+    private float x;
     private float y;
 
-    public int getX() {
+
+    public float getX() {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(float x) {
         this.x = x;
     }
 

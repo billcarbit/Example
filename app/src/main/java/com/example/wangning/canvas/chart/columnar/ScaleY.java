@@ -1,7 +1,5 @@
 package com.example.wangning.canvas.chart.columnar;
 
-import java.util.List;
-
 /**
  * Y轴刻度
  *
@@ -10,13 +8,13 @@ import java.util.List;
  * @since JDK 1.8
  */
 public class ScaleY extends BaseScale{
-    private List<DataY> dataYList;
+    private DataY dataY;
 
-    public List<DataY> getDataYList() {
-        return dataYList;
+    public DataY getDataY() {
+        return dataY;
     }
 
-    public void setDataYList(List<DataY> dataYList) {
-        this.dataYList = dataYList;
+    public void setDataY(DataY dataY) {
+        this.dataY = dataY;
     }
 }
