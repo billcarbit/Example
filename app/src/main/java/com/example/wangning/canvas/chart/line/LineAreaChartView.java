@@ -86,10 +86,7 @@ public class LineAreaChartView extends ViewGroup {
         canvas.drawColor(Color.WHITE);
         mLineX.setPaddingBottom(dp2px(26));
         mLineX.setPaddingRight(70);
-        mLineX.setPaddingLeft(dp2px(48));
-
         mLineY.setPaddingTop(70);
-        mLineY.setPaddingLeft(dp2px(48));
         mLineY.setPaddingBottom(dp2px(26));
         drawCoordinateAxis(canvas, mLineX, mLineY);
         drawPathLine(canvas, mLinePathList, mLineX, mLineY);
@@ -138,6 +135,11 @@ public class LineAreaChartView extends ViewGroup {
         textPaint.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));//设置字体类型
         textPaint.setAntiAlias(true);
         textPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+        //根据实际数据计算出X,Y轴应该得到的paddingLeft
+        int paddingLeft = getTextWidth(String.valueOf(mMaxValueY), textPaint) + mScaleLength + mYDataMarginScale;
+        xLine.setPaddingLeft(paddingLeft);
+        yLine.setPaddingLeft(paddingLeft);
 
         canvas.drawLine(xLine.getPaddingLeft(),
                 getHeight() - xLine.getPaddingBottom(),

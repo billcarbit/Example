@@ -204,13 +204,17 @@ public class ColumnarChartView extends ViewGroup {
      * @param yLine
      */
     private void drawGraticule(Canvas canvas, LineX xLine, LineY yLine) {
+        List<ScaleY> scaleYList = yLine.getScaleYList();
+        if(scaleYList==null){
+            return;
+        }
+
         Paint paint = new Paint();
         paint.setStrokeWidth(1);
         paint.setColor(getResources().getColor(R.color.divider_ccc));
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
 
-        List<ScaleY> scaleYList = yLine.getScaleYList();
         for (ScaleY scaleY : scaleYList) {
             canvas.drawLine(scaleY.getX(), scaleY.getY(), scaleY.getX() + xLine.getLength(), scaleY.getY(), paint);
         }
@@ -275,6 +279,9 @@ public class ColumnarChartView extends ViewGroup {
      */
     private void drawYLineScale(Canvas canvas, Paint textPaint, Paint linePaint, LineY yLine) {
         List<ScaleY> scaleYList = yLine.getScaleYList();
+        if (scaleYList == null || scaleYList.size() == 0) {
+            return;
+        }
         //得出Y轴长度
         yLine.setLength(canvas.getHeight() - yLine.getPaddingBottom() - yLine.getPaddingTop());
 
@@ -553,7 +560,7 @@ public class ColumnarChartView extends ViewGroup {
 
     private void setMaxValueY(LineY lineY) {
         List<ScaleY> scaleYList = lineY.getScaleYList();
-        if (scaleYList.size() <= 0) {
+        if (scaleYList==null || scaleYList.size() == 0) {
             return;
         }
         ScaleY scaleY = scaleYList.get(scaleYList.size() - 1);

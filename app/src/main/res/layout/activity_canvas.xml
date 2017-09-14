@@ -9,6 +9,7 @@
     <com.example.wangning.canvas.chart.line.LineAreaChartView
         android:id="@+id/lacv"
         android:layout_width="match_parent"
+        android:layout_marginRight="60dp"
         android:layout_height="match_parent" />
 
 </LinearLayout>

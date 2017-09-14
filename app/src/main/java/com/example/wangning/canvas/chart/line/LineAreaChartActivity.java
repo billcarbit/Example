@@ -58,7 +58,7 @@ public class LineAreaChartActivity extends Activity {
         });
         for (int i = 0; i < 5; i++) {
             DataY dataY = new DataY();
-            dataY.setData(String.valueOf((i + 1) * 1000));
+            dataY.setData(String.valueOf((i + 1) * 100));
             dataYList.add(dataY);
         }
         lacv.setYData(dataYList);
