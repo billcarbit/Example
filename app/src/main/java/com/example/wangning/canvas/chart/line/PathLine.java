@@ -1,5 +1,7 @@
 package com.example.wangning.canvas.chart.line;
 
+import com.example.wangning.canvas.chart.columnar.Coordinate;
+
 import java.util.ArrayList;
 import java.util.List;
 

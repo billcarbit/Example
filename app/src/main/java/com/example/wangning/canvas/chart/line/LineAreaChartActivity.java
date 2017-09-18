@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.PopupWindow;
 
 import com.example.wangning.R;
+import com.example.wangning.canvas.chart.columnar.Coordinate;
 import com.example.wangning.popwindow.LineAreaPopWindow;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class LineAreaChartActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_canvas);
+        setContentView(R.layout.activity_line_char_canvas);
         final LineAreaChartView lacv = (LineAreaChartView) findViewById(R.id.lacv);
 
         final List<DataX> dataXList = new ArrayList<DataX>();
@@ -74,7 +75,7 @@ public class LineAreaChartActivity extends Activity {
                 }
                 for (Integer order120Item : dataList) {
                     Coordinate coordinate = new Coordinate();
-                    coordinate.setY(order120Item);
+                    coordinate.setValY(order120Item);
                     coordinateList.add(coordinate);
                 }
                 linePath.setCoordinateList(coordinateList);
@@ -88,7 +89,7 @@ public class LineAreaChartActivity extends Activity {
                 }
                 for (Integer order120Item : dataList) {
                     Coordinate coordinate = new Coordinate();
-                    coordinate.setY(order120Item);
+                    coordinate.setValY(order120Item);
                     coordinateList.add(coordinate);
                 }
                 linePath.setCoordinateList(coordinateList);
@@ -102,7 +103,7 @@ public class LineAreaChartActivity extends Activity {
                 }
                 for (Integer order120Item : dataList) {
                     Coordinate coordinate = new Coordinate();
-                    coordinate.setY(order120Item);
+                    coordinate.setValY(order120Item);
                     coordinateList.add(coordinate);
                 }
                 linePath.setCoordinateList(coordinateList);
@@ -116,7 +117,7 @@ public class LineAreaChartActivity extends Activity {
                 }
                 for (Integer order120Item : dataList) {
                     Coordinate coordinate = new Coordinate();
-                    coordinate.setY(order120Item);
+                    coordinate.setValY(order120Item);
                     coordinateList.add(coordinate);
                 }
                 linePath.setCoordinateList(coordinateList);

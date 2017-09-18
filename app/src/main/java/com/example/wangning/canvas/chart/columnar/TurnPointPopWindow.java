@@ -56,7 +56,9 @@ public class TurnPointPopWindow implements PopupWindow.OnDismissListener {
 
     @Override
     public void onDismiss() {
-        mOnDismissListener.onDismiss();
+        if(mOnDismissListener!=null){
+            mOnDismissListener.onDismiss();
+        }
     }
 
     public void dismiss() {

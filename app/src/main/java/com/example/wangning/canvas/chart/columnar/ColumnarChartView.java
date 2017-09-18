@@ -205,7 +205,7 @@ public class ColumnarChartView extends ViewGroup {
      */
     private void drawGraticule(Canvas canvas, LineX xLine, LineY yLine) {
         List<ScaleY> scaleYList = yLine.getScaleYList();
-        if(scaleYList==null){
+        if (scaleYList == null) {
             return;
         }
 
@@ -344,7 +344,7 @@ public class ColumnarChartView extends ViewGroup {
             textPaint.setColor(getResources().getColor(columnarList.get(i).getTopTextColor()));
             float y = getHeight()
                     - xLine.getPaddingBottom()
-                    - xLine.getWidth()/2
+                    - xLine.getWidth() / 2
                     - columnarList.get(i).getHeight()
                     - dp2px(columnarList.get(i).getTopTextMargin())
                     - getTextHeight(data, textPaint);
@@ -560,7 +560,7 @@ public class ColumnarChartView extends ViewGroup {
 
     private void setMaxValueY(LineY lineY) {
         List<ScaleY> scaleYList = lineY.getScaleYList();
-        if (scaleYList==null || scaleYList.size() == 0) {
+        if (scaleYList == null || scaleYList.size() == 0) {
             return;
         }
         ScaleY scaleY = scaleYList.get(scaleYList.size() - 1);
@@ -580,11 +580,15 @@ public class ColumnarChartView extends ViewGroup {
         mSpacing = spacing;
     }
 
+    public List<PathLine> getLinePathList() {
+        return mLinePathList;
+    }
+
     public void setLinePathList(List<PathLine> linePathList) {
         mLinePathList = linePathList;
     }
 
-    interface OnTurnCircleClickListener {
+    public interface OnTurnCircleClickListener {
         void onTurnCircleClick(int position, int x, int y);
     }
 }

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.wangning.R;
-import com.example.wangning.canvas.chart.line.Coordinate;
+import com.example.wangning.canvas.chart.columnar.Coordinate;
 import com.example.wangning.canvas.chart.line.DataX;
 import com.example.wangning.canvas.chart.line.DataY;
 import com.example.wangning.canvas.chart.line.LineAreaChartView;
@@ -13,7 +13,6 @@ import com.example.wangning.canvas.chart.line.PathLine;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 
 /**
@@ -29,7 +28,7 @@ public class CanvasActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_canvas);
+        setContentView(R.layout.activity_line_char_canvas);
         LineAreaChartView lacv = (LineAreaChartView) findViewById(R.id.lacv);
 
         List<DataX> dataXList = new ArrayList<DataX>();

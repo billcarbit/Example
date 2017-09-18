@@ -4,12 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.example.wangning.canvas.chart.columnar.ColumnarChartView
-        android:id="@+id/v_columnar"
+
+    <com.example.wangning.canvas.chart.line.CurveCharView
+        android:id="@+id/ccv"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:background="@color/white" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>
