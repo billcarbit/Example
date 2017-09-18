@@ -113,6 +113,7 @@ public class CurveCharView extends ViewGroup {
         Paint whitePaint = new Paint();
         whitePaint.setColor(getResources().getColor(R.color.white));
         whitePaint.setStrokeWidth(dp2px(2));
+        whitePaint.setStyle(Paint.Style.FILL_AND_STROKE);
         whitePaint.setAntiAlias(true);
 
         Paint areaPaint = new Paint();
@@ -121,7 +122,7 @@ public class CurveCharView extends ViewGroup {
         LinearGradient gradient = new LinearGradient(0, convertValueToY(mMaxValueY, mMaxValueY, mLineY), 0, getHeight(), orange_f76b1c, white_fdf6df, Shader.TileMode.CLAMP);
         areaPaint.setShader(gradient);
         areaPaint.setAntiAlias(true);
-        areaPaint.setStrokeWidth(1.0f);
+        areaPaint.setStrokeWidth(1);
         areaPaint.setStyle(Paint.Style.FILL);
 
 
@@ -144,7 +145,7 @@ public class CurveCharView extends ViewGroup {
             pathLinePaint.setColor(getResources().getColor(pathLine.getColor()));
 
             Path path = new Path();
-            float originX = lineX.getPaddingLeft() + lineY.getWidth() / 2 + mScaleXMarginLeftAndRight;
+            float originX = lineX.getPaddingLeft() + lineY.getWidth() / 2 + mScaleXMarginLeftAndRight - dp2px(1);
             float originY = getHeight() - lineX.getPaddingBottom() - lineX.getWidth() / 2;
             float firstX = 0.0f;
             float firstY = 0.0f;
@@ -155,10 +156,10 @@ public class CurveCharView extends ViewGroup {
             path.moveTo(originX, originY);//将画笔移动至X
             for (int i = 0; i < coordinateList.size() && i < lineX.getScaleXList().size(); i++) {
                 Coordinate coordinate = coordinateList.get(i);
+                float x = lineX.getScaleXList().get(i).getX() + lineY.getWidth() / 2 - dp2px(1);
                 float y = convertValueToY(coordinate.getValY(), mMaxValueY, lineY);
-                float x = lineX.getScaleXList().get(i).getX() + lineY.getWidth() / 2;
-                coordinate.setY(y);
                 coordinate.setX(x);
+                coordinate.setY(y);
                 if (i == 0) {
                     firstX = x;
                     firstY = y;
@@ -171,10 +172,13 @@ public class CurveCharView extends ViewGroup {
                     float firstControlPointY = prevY;
                     float secondControlPointX = prevX + (x - prevX) / 2.0f;
                     float secondControlPointY = y;
-                    path.cubicTo(firstControlPointX, firstControlPointY, secondControlPointX, secondControlPointY, x, y);
+
                     if (i == coordinateList.size() - 1) {
-                        lastX = coordinateList.get(coordinateList.size() - 1).getX();
+                        path.cubicTo(firstControlPointX, firstControlPointY, secondControlPointX, secondControlPointY, x+ dp2px(2), y);
+                        lastX = coordinateList.get(coordinateList.size() - 1).getX() + dp2px(2);
                         lastY = coordinateList.get(coordinateList.size() - 1).getY();
+                    }else{
+                        path.cubicTo(firstControlPointX, firstControlPointY, secondControlPointX, secondControlPointY, x, y);
                     }
                 }
 
@@ -183,7 +187,7 @@ public class CurveCharView extends ViewGroup {
             //从最后一个点画一条垂直于X轴的直线，形成闭合
             int cLastIndex = coordinateList.size() - 1;
             if (cLastIndex < lineX.getScaleXList().size() && cLastIndex > 0) {
-                closeX = lineX.getScaleXList().get(cLastIndex).getX() + lineY.getWidth() / 2 + dp2px(1);
+                closeX = lineX.getScaleXList().get(cLastIndex).getX() + lineY.getWidth() / 2 + dp2px(2);
                 closeY = lineY.getLength() + lineY.getPaddingTop() - lineX.getWidth() / 2;
                 path.lineTo(closeX,closeY);
             }
