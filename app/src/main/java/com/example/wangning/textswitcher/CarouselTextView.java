@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextSwitcher;
@@ -75,7 +76,10 @@ public class CarouselTextView extends LinearLayout implements ViewSwitcher.ViewF
 
     @Override
     public View makeView() {
-        return new TextView(mContext);
+        TextView textView = new TextView(mContext);
+        textView.setTextSize(13);
+        textView.setTextColor(mContext.getResources().getColor(R.color.colorAccent));
+        return textView;
     }
 
     private void initView() {

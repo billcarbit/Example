@@ -39,8 +39,10 @@ public class CurveCharView extends ViewGroup {
     private int mMaxValueY = 1;
     private int mScaleXMarginLeftAndRight = 100;
     private int mTurnPointRadius;
+    private int mTurnPointSelectedRadius;//选中后的拐点半径
     private int mTurnPointStroke;
     private int mTurnPointCenterRadius;
+    private int mTurnPointCenterSelectedRadius;//选中后的拐点中心半径
     private Paint mTurnPointCenterPaint;
     private OnTurnCircleClickListener mOnTurnCircleClickListener;
 
@@ -58,7 +60,11 @@ public class CurveCharView extends ViewGroup {
     private void initTurnPoint() {
         mTurnPointRadius = dp2px(3);
         mTurnPointStroke = dp2px(1);
+
         mTurnPointCenterRadius = mTurnPointRadius - mTurnPointStroke / 2;
+
+        mTurnPointSelectedRadius = mTurnPointRadius + dp2px(1);
+        mTurnPointCenterSelectedRadius = mTurnPointCenterRadius + dp2px(1);
     }
 
     private void initPaint() {
@@ -330,18 +336,23 @@ public class CurveCharView extends ViewGroup {
 
 
             for (int i = 0; i < coordinateList.size() &&
-                    lineX.getScaleXList() !=null &&
+                    lineX.getScaleXList() != null &&
                     i < lineX.getScaleXList().size(); i++) {
                 float originX = lineX.getScaleXList().get(i).getX();
                 Coordinate coordinate = coordinateList.get(i);
                 float y = convertValueToY(coordinate.getValY(), mMaxValueY, lineY);
                 coordinate.setY(y);
-                circleCenterPaint.setColor(
-                        coordinate.isSelected()
-                                ? circlePaint.getColor()
-                                : getResources().getColor(R.color.white));
-                canvas.drawCircle(originX, y, mTurnPointRadius, circlePaint);
-                canvas.drawCircle(originX, y, mTurnPointCenterRadius, circleCenterPaint);
+                if (coordinate.isSelected()) {
+                    circleCenterPaint.setColor(getResources().getColor(R.color.orange_ffa263));
+                    canvas.drawCircle(originX, y, mTurnPointSelectedRadius, circlePaint);
+                    canvas.drawCircle(originX, y, mTurnPointCenterSelectedRadius, circleCenterPaint);
+                } else {
+                    circleCenterPaint.setColor(getResources().getColor(R.color.white));
+                    canvas.drawCircle(originX, y, mTurnPointRadius, circlePaint);
+                    canvas.drawCircle(originX, y, mTurnPointCenterRadius, circleCenterPaint);
+                }
+
+
                 int touchExpand = dp2px(10);
                 int radius = mTurnPointRadius + mTurnPointStroke / 2;
                 coordinate.setTouchXStart(originX - radius - touchExpand);

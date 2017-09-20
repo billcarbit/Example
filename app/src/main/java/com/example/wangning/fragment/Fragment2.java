@@ -23,6 +23,7 @@ public class Fragment2 extends Fragment {
     private static final String TAG = "Fragment2";
     TextView tv;
     EditText et;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -32,14 +33,15 @@ public class Fragment2 extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        tv= (TextView) view.findViewById(R.id.tv);
-        et= (EditText) view.findViewById(R.id.et);
+        tv = (TextView) view.findViewById(R.id.tv);
+        et = (EditText) view.findViewById(R.id.et);
 
         initData();
     }
 
     private void initData() {
         String a = (String) getArguments().get("a");
+        Log.e(TAG, "initData: a=" + a);
         tv.setText(a);
     }
 }
