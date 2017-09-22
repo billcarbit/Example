@@ -66,6 +66,9 @@ public class CarouselTextView extends LinearLayout implements ViewSwitcher.ViewF
     }
 
     public void start() {
+        if(mDataList==null || mDataList.size()==0){
+            return;
+        }
         mHandler.removeMessages(1);
         mHandler.sendEmptyMessage(1);
     }

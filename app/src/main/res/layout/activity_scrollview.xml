@@ -21,21 +21,19 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="V
-                F
-                V
-                F
-                V"
-                android:textSize="100sp" />
-
-            <ListView
-                android:id="@+id/listView"
+            <com.example.wangning.scrollview.CustomViewPager
+                android:id="@+id/main_viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
 
+                <android.support.v4.view.PagerTabStrip
+                    android:id="@+id/main_viewtabpager"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top" />
+
+            </com.example.wangning.scrollview.CustomViewPager>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

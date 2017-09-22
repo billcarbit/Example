@@ -40,7 +40,7 @@ public class CurveCharViewActivity extends Activity {
         lacv.setXData(dataXList);
         for (int i = 0; i < 5; i++) {
             DataY dataY = new DataY();
-            dataY.setData(String.valueOf((i + 1) * 100));
+            dataY.setData(String.valueOf((i + 1) * 123456789));
             dataYList.add(dataY);
         }
         lacv.setYData(dataYList);
@@ -49,17 +49,17 @@ public class CurveCharViewActivity extends Activity {
         linePath.setColor(R.color.orange);
         List<Coordinate> coordinateList = new ArrayList<Coordinate>();
         List<Integer> dataList = new ArrayList<>();
-        for (int k = 0; k < 10; k++) {
+        for (int k = 0; k < 8; k++) {
 
             switch (k) {
                 case 0:
-                    dataList.add(350);
+                    dataList.add(350456789);
                     break;
                 case 1:
-                    dataList.add(200);
+                    dataList.add(450496789);
                     break;
                 case 2:
-                    dataList.add(450);
+                    dataList.add(250496789);
                     break;
                 case 3:
                     dataList.add(400);

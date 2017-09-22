@@ -7,6 +7,16 @@
 
 
     <TextView
+        android:id="@+id/tv_diff_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="22dp"
+        android:text="100万" />
+
+
+
+    <TextView
         android:id="@+id/tv_html_format"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
