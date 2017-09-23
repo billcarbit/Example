@@ -5,21 +5,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.example.wangning.swipemenu.SwipeMenuLayout
-        android:id="@+id/sml"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:ios="false"
-        app:leftSwipe="true"
-        app:swipeEnable="true">
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="1"
-            android:textSize="30dp" />
+            android:text="1
+            2
+            3
+            4
+            5
+            6
+            7
+            8
+            9
+            0"
+            android:textSize="130dp" />
 
         <TextView
             android:layout_width="66dp"
@@ -29,5 +29,4 @@
             android:text="删除"
             android:textColor="@color/white"
             android:textSize="15dp" />
-    </com.example.wangning.swipemenu.SwipeMenuLayout>
 </LinearLayout>

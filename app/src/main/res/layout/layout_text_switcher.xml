@@ -3,8 +3,8 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.wangning.textswitcher.CarouselTextView
-        android:id="@+id/ctv"
+    <TextSwitcher
+        android:id="@+id/ts"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"/>
 </LinearLayout>

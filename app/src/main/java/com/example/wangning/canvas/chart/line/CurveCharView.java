@@ -10,6 +10,7 @@ import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.ViewGroup;
 
 import com.example.wangning.R;
@@ -37,15 +38,42 @@ public class CurveCharView extends ViewGroup {
     private List<PathLine> mLinePathList = new ArrayList<PathLine>();
     private int mMaxValueY = 1;
     private int mScaleXMarginLeftAndRight = 100;
+    private int mTurnPointRadius;
+    private int mTurnPointSelectedRadius;//选中后的拐点半径
+    private int mTurnPointStroke;
+    private int mTurnPointCenterRadius;
+    private int mTurnPointCenterSelectedRadius;//选中后的拐点中心半径
+    private Paint mTurnPointCenterPaint;
+    private OnTurnCircleClickListener mOnTurnCircleClickListener;
 
     public CurveCharView(Context context) {
         this(context, null);
     }
 
+
     public CurveCharView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
         mDensity = mContext.getResources().getDisplayMetrics().density;
+    }
+
+    private void initTurnPoint() {
+        mTurnPointRadius = dp2px(3);
+        mTurnPointStroke = dp2px(1);
+
+        mTurnPointCenterRadius = mTurnPointRadius - mTurnPointStroke / 2;
+
+        mTurnPointSelectedRadius = mTurnPointRadius + dp2px(1);
+        mTurnPointCenterSelectedRadius = mTurnPointCenterRadius + dp2px(1);
+    }
+
+    private void initPaint() {
+        mTurnPointCenterPaint = new Paint();
+        mTurnPointCenterPaint.setStrokeWidth(1);
+        mTurnPointCenterPaint.setColor(getResources().getColor(R.color.white));
+        mTurnPointCenterPaint.setAntiAlias(true);
+        mTurnPointCenterPaint.setStyle(Paint.Style.FILL);
+
     }
 
     @Override
@@ -56,6 +84,8 @@ public class CurveCharView extends ViewGroup {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        initTurnPoint();
+        initPaint();
         canvas.drawColor(Color.WHITE);
         mLineX.setPaddingBottom(dp2px(26));
         mLineX.setPaddingRight(70);
@@ -65,48 +95,6 @@ public class CurveCharView extends ViewGroup {
         drawPathLine(canvas, mLinePathList, mLineX, mLineY);
         drawGraticule(canvas, mLineX, mLineY);//画平行于X轴的标线
         drawTurnCircle(canvas, mLinePathList, mLineX, mLineY);
-    }
-
-    /**
-     * 画转折圆点
-     *
-     * @param canvas
-     * @param pathLines
-     * @param lineX
-     * @param lineY
-     */
-    private void drawTurnCircle(Canvas canvas, List<PathLine> pathLines, LineX lineX, LineY lineY) {
-        Paint circlePaint = new Paint();
-        Paint circleCenterPaint = new Paint();
-        for (PathLine pathLine : pathLines) {
-            List<Coordinate> coordinateList = pathLine.getCoordinateList();
-            int sLength = lineX.getScaleXList().size();
-            int cLength = coordinateList.size();
-            if (cLength > sLength) {
-                for (int i = 0; i < cLength - sLength; i++) {
-                    coordinateList.remove(cLength - i - 1);
-                }
-
-            }
-
-            circlePaint.setStrokeWidth(3);
-            circlePaint.setColor(getResources().getColor(pathLine.getColor()));
-            circlePaint.setAntiAlias(true);
-            circlePaint.setStyle(Paint.Style.STROKE);
-
-            circleCenterPaint.setStrokeWidth(pathLine.getStrokeWidth());
-            circleCenterPaint.setColor(getResources().getColor(R.color.white));
-            circleCenterPaint.setAntiAlias(true);
-            circleCenterPaint.setStyle(Paint.Style.FILL);
-
-            for (int i = 0; i < coordinateList.size() && i < lineX.getScaleXList().size(); i++) {
-                float y = convertValueToY(coordinateList.get(i).getValY(), mMaxValueY, lineY);
-                float x = lineX.getScaleXList().get(i).getX() + lineY.getWidth() / 2;
-                canvas.drawCircle(x, y, 10, circlePaint);
-                canvas.drawCircle(x, y, 7, circleCenterPaint);
-
-            }
-        }
     }
 
     private void drawPathLine(Canvas canvas, List<PathLine> pathLines, LineX lineX, LineY lineY) {
@@ -174,10 +162,10 @@ public class CurveCharView extends ViewGroup {
                     float secondControlPointY = y;
 
                     if (i == coordinateList.size() - 1) {
-                        path.cubicTo(firstControlPointX, firstControlPointY, secondControlPointX, secondControlPointY, x+ dp2px(2), y);
+                        path.cubicTo(firstControlPointX, firstControlPointY, secondControlPointX, secondControlPointY, x + dp2px(2), y);
                         lastX = coordinateList.get(coordinateList.size() - 1).getX() + dp2px(2);
                         lastY = coordinateList.get(coordinateList.size() - 1).getY();
-                    }else{
+                    } else {
                         path.cubicTo(firstControlPointX, firstControlPointY, secondControlPointX, secondControlPointY, x, y);
                     }
                 }
@@ -189,7 +177,7 @@ public class CurveCharView extends ViewGroup {
             if (cLastIndex < lineX.getScaleXList().size() && cLastIndex > 0) {
                 closeX = lineX.getScaleXList().get(cLastIndex).getX() + lineY.getWidth() / 2 + dp2px(2);
                 closeY = lineY.getLength() + lineY.getPaddingTop() - lineX.getWidth() / 2;
-                path.lineTo(closeX,closeY);
+                path.lineTo(closeX, closeY);
             }
 
             //再画一条到原点的垂直于Y轴的直线，形成闭合
@@ -224,7 +212,6 @@ public class CurveCharView extends ViewGroup {
             canvas.drawLine(scaleY.getX(), scaleY.getY(), scaleY.getX() + xLine.getLength(), scaleY.getY(), paint);
         }
     }
-
 
     /**
      * 画坐标轴
@@ -281,7 +268,6 @@ public class CurveCharView extends ViewGroup {
 
     }
 
-
     /**
      * 画X轴刻度
      */
@@ -324,6 +310,59 @@ public class CurveCharView extends ViewGroup {
         }
     }
 
+    /**
+     * 画转折圆点
+     *
+     * @param canvas
+     * @param pathLines
+     * @param lineX
+     * @param lineY
+     */
+    private void drawTurnCircle(Canvas canvas, List<PathLine> pathLines, LineX lineX, LineY lineY) {
+        Paint circlePaint = new Paint();
+        Paint circleCenterPaint = new Paint();
+        for (PathLine pathLine : pathLines) {
+            List<Coordinate> coordinateList = pathLine.getCoordinateList();
+
+            circlePaint.setStrokeWidth(mTurnPointStroke);
+            circlePaint.setColor(getResources().getColor(pathLine.getColor()));
+            circlePaint.setAntiAlias(true);
+            circlePaint.setStyle(Paint.Style.STROKE);
+
+            circleCenterPaint.setStrokeWidth(pathLine.getStrokeWidth());
+            circleCenterPaint.setColor(getResources().getColor(R.color.white));
+            circleCenterPaint.setAntiAlias(true);
+            circleCenterPaint.setStyle(Paint.Style.FILL);
+
+
+            for (int i = 0; i < coordinateList.size() &&
+                    lineX.getScaleXList() != null &&
+                    i < lineX.getScaleXList().size(); i++) {
+                float originX = lineX.getScaleXList().get(i).getX();
+                Coordinate coordinate = coordinateList.get(i);
+                float y = convertValueToY(coordinate.getValY(), mMaxValueY, lineY);
+                coordinate.setY(y);
+                if (coordinate.isSelected()) {
+                    circleCenterPaint.setColor(getResources().getColor(R.color.orange_ffa263));
+                    canvas.drawCircle(originX, y, mTurnPointSelectedRadius, circlePaint);
+                    canvas.drawCircle(originX, y, mTurnPointCenterSelectedRadius, circleCenterPaint);
+                } else {
+                    circleCenterPaint.setColor(getResources().getColor(R.color.white));
+                    canvas.drawCircle(originX, y, mTurnPointRadius, circlePaint);
+                    canvas.drawCircle(originX, y, mTurnPointCenterRadius, circleCenterPaint);
+                }
+
+
+                int touchExpand = dp2px(10);
+                int radius = mTurnPointRadius + mTurnPointStroke / 2;
+                coordinate.setTouchXStart(originX - radius - touchExpand);
+                coordinate.setTouchYStart(y - radius - touchExpand);
+                coordinate.setTouchXEnd(originX + radius + touchExpand);
+                coordinate.setTouchYEnd(y + radius + touchExpand);
+                coordinate.setX(originX);
+            }
+        }
+    }
 
     /**
      * 画Y轴刻度及数据
@@ -367,6 +406,54 @@ public class CurveCharView extends ViewGroup {
         }
 
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            for (PathLine pathLine : mLinePathList) {
+                List<Coordinate> coordinateList = pathLine.getCoordinateList();
+                for (int i = 0, length = coordinateList.size(); i < length; i++) {
+                    Coordinate coordinate = coordinateList.get(i);
+                    float touchXStart = coordinate.getTouchXStart();
+                    float touchXEnd = coordinate.getTouchXEnd();
+                    float touchYStart = coordinate.getTouchYStart();
+                    float touchYEnd = coordinate.getTouchYEnd();
+
+                    if (event.getX() > touchXStart &&
+                            event.getX() < touchXEnd &&
+                            event.getY() > touchYStart &&
+                            event.getY() < touchYEnd) {
+                        clearAllTurnCircleSelected(coordinateList);
+                        coordinate.setSelected(true);
+                        invalidate();
+                        if (mOnTurnCircleClickListener != null) {
+                            mOnTurnCircleClickListener.onTurnCircleClick(i, (int) coordinate.getX(), (int) coordinate.getY());
+                        }
+                    }
+                }
+            }
+        }
+        return super.onTouchEvent(event);
+    }
+
+    private void clearAllTurnCircleSelected(List<Coordinate> coordinateList) {
+        for (Coordinate coordinate : coordinateList) {
+            coordinate.setSelected(false);
+        }
+    }
+
+    public List<PathLine> getLinePathList() {
+        return mLinePathList;
+    }
+
+    public void setLinePathList(List<PathLine> linePathList) {
+        mLinePathList = linePathList;
+    }
+
+    public void setOnTurnCircleClickListener(OnTurnCircleClickListener listener) {
+        mOnTurnCircleClickListener = listener;
+    }
+
 
     /**
      * 获得文字高度
@@ -426,10 +513,6 @@ public class CurveCharView extends ViewGroup {
         mMaxValueY = Integer.valueOf(scaleY.getDataY().getData());
     }
 
-    public void setLinePathList(List<PathLine> linePathList) {
-        mLinePathList = linePathList;
-    }
-
     public void setXData(List<DataX> xDataList) {
         List<ScaleX> scaleXList = new ArrayList<>();
         for (DataX dataX : xDataList) {
@@ -438,6 +521,10 @@ public class CurveCharView extends ViewGroup {
             scaleXList.add(scaleX);
         }
         mLineX.setScaleXList(scaleXList);
+    }
+
+    public interface OnTurnCircleClickListener {
+        void onTurnCircleClick(int position, int x, int y);
     }
 
 }

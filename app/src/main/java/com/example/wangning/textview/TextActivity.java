@@ -3,12 +3,17 @@ package com.example.wangning.textview;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
 import android.util.Log;
 import android.widget.TextView;
 
 import com.example.wangning.R;
+import com.example.wangning.utils.MoneyUtils;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,11 +28,23 @@ import java.util.List;
  */
 public class TextActivity extends Activity {
 
-
+    private static final String TAG = "TextActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text);
+
+        TextView tv_diff_size = (TextView) findViewById(R.id.tv_diff_size);
+        String text = MoneyUtils.rahToStrWanYuan(null);
+        Log.e(TAG, "onCreate: text="+text );
+        SpannableString s = new SpannableString(text);
+        if(text.endsWith("万") || text.endsWith("元")){
+            s.setSpan(new AbsoluteSizeSpan(14, true), s.length()-1, s.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        tv_diff_size.setText(s);
+
+
         TextView tv_html_format = (TextView) findViewById(R.id.tv_html_format);
         String html_text = getString(R.string.html_text);
         tv_html_format.setText(Html.fromHtml(String.format(html_text, "123<br/>456")));

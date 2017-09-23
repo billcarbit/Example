@@ -96,12 +96,7 @@ public class ColumnarActivity extends Activity {
             }
         });
 
-  /*      mTurnPointPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
 
-            }
-        });*/
     }
 
     @Override
