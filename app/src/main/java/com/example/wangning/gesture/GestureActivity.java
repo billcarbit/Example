@@ -22,6 +22,7 @@ public class GestureActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gesture);
+
         mGestureDetector = new GestureDetector(this, new LearnGestureListener());
     }
 
