@@ -12,6 +12,7 @@ import com.example.wangning.canvas.chart.columnar.Coordinate;
 import com.example.wangning.canvas.chart.columnar.TurnPointPopWindow;
 import com.example.wangning.popwindow.LineAreaPopWindow;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import java.util.List;
  */
 public class CurveCharViewActivity extends Activity {
     private TurnPointPopWindow mTurnPointPopWindow;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +34,7 @@ public class CurveCharViewActivity extends Activity {
         mTurnPointPopWindow = new TurnPointPopWindow(this);
         final List<DataX> dataXList = new ArrayList<DataX>();
         final List<DataY> dataYList = new ArrayList<DataY>();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 4; i++) {
             DataX dataX = new DataX();
             dataX.setData("周" + (i + 1));
             dataXList.add(dataX);
@@ -40,7 +42,26 @@ public class CurveCharViewActivity extends Activity {
         lacv.setXData(dataXList);
         for (int i = 0; i < 5; i++) {
             DataY dataY = new DataY();
-            dataY.setData(String.valueOf((i + 1) * 123456789));
+            switch (i) {
+                case 0:
+                    dataY.setData("84512000");
+                    break;
+                case 1:
+                    dataY.setData("88384000");
+                    break;
+                case 2:
+                    dataY.setData("92256000");
+                    break;
+                case 3:
+                    dataY.setData("96128000");
+                    break;
+                case 4:
+                    dataY.setData("100000000");
+                    break;
+                default:
+                    break;
+            }
+
             dataYList.add(dataY);
         }
         lacv.setYData(dataYList);
@@ -49,29 +70,26 @@ public class CurveCharViewActivity extends Activity {
         linePath.setColor(R.color.orange);
         List<Coordinate> coordinateList = new ArrayList<Coordinate>();
         List<Integer> dataList = new ArrayList<>();
-        for (int k = 0; k < 8; k++) {
+        for (int k = 0; k < 4; k++) {
 
             switch (k) {
                 case 0:
-                    dataList.add(350456789);
+                    dataList.add(84512121);
                     break;
                 case 1:
-                    dataList.add(450496789);
+                    dataList.add(89445522);
                     break;
                 case 2:
-                    dataList.add(250496789);
+                    dataList.add(85555555);
                     break;
                 case 3:
-                    dataList.add(400);
-                    break;
-                default:
-                    dataList.add(100);
+                    dataList.add(99999941);
                     break;
             }
         }
         for (Integer order120Item : dataList) {
             Coordinate coordinate = new Coordinate();
-            coordinate.setValY(order120Item);
+            coordinate.setValY(new BigDecimal(order120Item.toString()));
             coordinateList.add(coordinate);
         }
         linePath.setCoordinateList(coordinateList);
@@ -83,7 +101,7 @@ public class CurveCharViewActivity extends Activity {
             public void onTurnCircleClick(int position, int x, int y) {
                 Coordinate coordinate = lacv.getLinePathList().get(0).getCoordinateList().get(position);
 
-                mTurnPointPopWindow.setContent(String.valueOf((int) coordinate.getValY()));
+                mTurnPointPopWindow.setContent(coordinate.getValY().toString());
 
                 int popHeight = mTurnPointPopWindow.getHeight();
                 int popWidth = mTurnPointPopWindow.getWidth();

@@ -10,12 +10,14 @@ import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 
 import com.example.wangning.R;
 import com.example.wangning.canvas.chart.columnar.Coordinate;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class CurveCharView extends ViewGroup {
     private int mXDataMarginScale = 10;//X轴数据与刻度的距离
     private int mYDataMarginScale = 30;//Y轴数据与刻度的距离
     private List<PathLine> mLinePathList = new ArrayList<PathLine>();
-    private int mMaxValueY = 1;
+    private BigDecimal mMaxValueY = new BigDecimal("1");
     private int mScaleXMarginLeftAndRight = 100;
     private int mTurnPointRadius;
     private int mTurnPointSelectedRadius;//选中后的拐点半径
@@ -145,7 +147,7 @@ public class CurveCharView extends ViewGroup {
             for (int i = 0; i < coordinateList.size() && i < lineX.getScaleXList().size(); i++) {
                 Coordinate coordinate = coordinateList.get(i);
                 float x = lineX.getScaleXList().get(i).getX() + lineY.getWidth() / 2 - dp2px(1);
-                float y = convertValueToY(coordinate.getValY(), mMaxValueY, lineY);
+                float y = convertValueToY(new BigDecimal(coordinate.getValY().toString()), mMaxValueY, lineY);
                 coordinate.setX(x);
                 coordinate.setY(y);
                 if (i == 0) {
@@ -267,7 +269,7 @@ public class CurveCharView extends ViewGroup {
 
 
     }
-
+    int perLength = 0;
     /**
      * 画X轴刻度
      */
@@ -279,9 +281,15 @@ public class CurveCharView extends ViewGroup {
 
         int betweenLength = xLine.getLength() - 2 * mScaleXMarginLeftAndRight;
         //将X轴分成scaleXList.size() - 1 等分,得出每个刻度长度
-        int perLength = scaleXList.size() == 0
-                ? betweenLength
-                : betweenLength / (scaleXList.size() - 1);
+
+        if (scaleXList.size() <= 1) {
+            perLength = betweenLength;
+        } else {
+            perLength = scaleXList.size() == 0
+                    ? betweenLength
+                    : betweenLength / (scaleXList.size() - 1);
+        }
+
 
         for (int i = 0, length = scaleXList.size(); i < length; i++) {
             int x = xLine.getPaddingLeft() + perLength * i + mScaleXMarginLeftAndRight;
@@ -488,10 +496,11 @@ public class CurveCharView extends ViewGroup {
      * @param max
      * @return 所在Y轴画布上的位置
      */
-    private float convertValueToY(float value, float max, LineY yLine) {
+    private float convertValueToY(BigDecimal value, BigDecimal max, LineY yLine) {
         int lengthY = yLine.getLength();
+        float percent = value.divide(max, 2, BigDecimal.ROUND_HALF_UP).floatValue();
         float y = getHeight() -
-                (lengthY * (value / max) + yLine.getPaddingBottom());
+                (lengthY *  percent+ yLine.getPaddingBottom());
         return y;
     }
 
@@ -510,7 +519,7 @@ public class CurveCharView extends ViewGroup {
     private void setMaxValueY(LineY lineY) {
         List<ScaleY> scaleYList = lineY.getScaleYList();
         ScaleY scaleY = scaleYList.get(scaleYList.size() - 1);
-        mMaxValueY = Integer.valueOf(scaleY.getDataY().getData());
+        mMaxValueY = new BigDecimal(scaleY.getDataY().getData());
     }
 
     public void setXData(List<DataX> xDataList) {

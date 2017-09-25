@@ -9,6 +9,7 @@ import com.example.wangning.R;
 import com.example.wangning.canvas.chart.columnar.Coordinate;
 import com.example.wangning.popwindow.LineAreaPopWindow;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +76,7 @@ public class LineAreaChartActivity extends Activity {
                 }
                 for (Integer order120Item : dataList) {
                     Coordinate coordinate = new Coordinate();
-                    coordinate.setValY(order120Item);
+                    coordinate.setValY(new BigDecimal(order120Item));
                     coordinateList.add(coordinate);
                 }
                 linePath.setCoordinateList(coordinateList);
@@ -89,7 +90,7 @@ public class LineAreaChartActivity extends Activity {
                 }
                 for (Integer order120Item : dataList) {
                     Coordinate coordinate = new Coordinate();
-                    coordinate.setValY(order120Item);
+                    coordinate.setValY(new BigDecimal(order120Item));
                     coordinateList.add(coordinate);
                 }
                 linePath.setCoordinateList(coordinateList);
@@ -103,7 +104,7 @@ public class LineAreaChartActivity extends Activity {
                 }
                 for (Integer order120Item : dataList) {
                     Coordinate coordinate = new Coordinate();
-                    coordinate.setValY(order120Item);
+                    coordinate.setValY(new BigDecimal(order120Item));
                     coordinateList.add(coordinate);
                 }
                 linePath.setCoordinateList(coordinateList);
@@ -117,7 +118,7 @@ public class LineAreaChartActivity extends Activity {
                 }
                 for (Integer order120Item : dataList) {
                     Coordinate coordinate = new Coordinate();
-                    coordinate.setValY(order120Item);
+                    coordinate.setValY(new BigDecimal(order120Item));
                     coordinateList.add(coordinate);
                 }
                 linePath.setCoordinateList(coordinateList);
