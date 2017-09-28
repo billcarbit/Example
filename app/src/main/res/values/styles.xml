@@ -133,4 +133,11 @@
         <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
 
+
+    <style name="MyCheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
+
+        <item name="android:button">@drawable/selector_apply_check_easy_box</item>
+
+    </style>
+
 </resources>
