@@ -4,10 +4,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <com.example.wangning.canvas.chart.line.CurveCharView
-        android:id="@+id/ccv"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="500dp">
 
+
+        <com.example.wangning.canvas.chart.line.CurveCharView
+            android:id="@+id/ccv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <RelativeLayout
+            android:id="@+id/rl_pop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
 </LinearLayout>

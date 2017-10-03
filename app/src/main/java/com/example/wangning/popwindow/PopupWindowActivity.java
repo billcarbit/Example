@@ -17,8 +17,8 @@ import com.example.wangning.R;
  */
 public class PopupWindowActivity extends Activity {
 
-    LineAreaPopWindow mPopupWindow;
-    private TextView mButton,mButton2;
+    ProcessPopupWindow mPopupWindow;
+    private TextView mButton, mButton2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,29 +32,19 @@ public class PopupWindowActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (mPopupWindow == null) {
-                    mPopupWindow = new LineAreaPopWindow(PopupWindowActivity.this);
+                    mPopupWindow = new ProcessPopupWindow(PopupWindowActivity.this);
                 }
                 mPopupWindow.show(v);
+                mPopupWindow.startValueAnimator(0.0f,1.0f,2000);
             }
         });
+    }
 
-        mButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if (mPopupWindow == null) {
-                    mPopupWindow = new LineAreaPopWindow(PopupWindowActivity.this);
-                }
-                mPopupWindow.show(v);
-                mButton.setText("1");
-                mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                    @Override
-                    public void onDismiss() {
-                        mButton.setText("2");
-                    }
-                });
-
-            }
-        });
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mPopupWindow != null) {
+            mPopupWindow.dismiss();
+        }
     }
 }

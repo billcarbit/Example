@@ -1,7 +1,9 @@
 package com.example.wangning.dialog;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -15,52 +17,42 @@ import com.example.wangning.R;
  * @since JDK 1.8
  */
 public class DialogActivity extends Activity {
-
-    SlideDownDialog slideDownDialog;
+    private static final String TAG = "DialogActivity";
+    ProcessDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dialog_del);
+
+        dialog = new ProcessDialog(this);
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                finish();
+            }
+        });
         final Button btn = (Button) findViewById(R.id.btn);
-
-
-       /* final BaseConfirmDialog dialog = new BaseConfirmDialog(this);
-        dialog.setContent("AADDDD")
-                .setConfirmText("我知道了")
-                .setBtnNum(2)
-                .setOnConfirmListener(new BaseConfirmDialog.OnConfirmListener() {
-                    @Override
-                    public void onConfirm() {
-                        dialog.dismiss();
-                    }
-                });
-        dialog.show();*/
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //showAlertDialog();
-                showSlideDownDialog(view);
-
+                dialog.show();
+                dialog.setDuration(3000);
+                dialog.setFromPercent(0.0f);
+                dialog.setToPercent(1.0f);
+                dialog.notifyData();
             }
         });
 
 
     }
 
-    private void showAlertDialog() {
-        new BaseAlertDialog(this)
-                .setMessage("是否确定将所选3个客资分配给杨四郎？")
-                .setPositiveButton("确定", null)
-                .setNegativeButton("取消", null)
-                .show();
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Log.e(TAG, "onBackPressed: ");
     }
 
-    private void showSlideDownDialog(View view) {
-        if (slideDownDialog == null) {
-            slideDownDialog = new SlideDownDialog(this, (int) view.getX(), (int) view.getY() + view.getHeight());
-        }
-        slideDownDialog.show();
-    }
 }

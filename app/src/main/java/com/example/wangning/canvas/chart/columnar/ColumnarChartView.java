@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.wangning.R;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class ColumnarChartView extends ViewGroup {
     private int mColFontSize = 10;
     private int mScaleLength = 10;//刻度长度
     private int mYDataMarginScale = 20;//Y轴数据与刻度的距离
-    private int mMaxValueY;
+    private BigDecimal mMaxValueY = new BigDecimal("1");
     private List<AColumnar> mColumnarList = new ArrayList<AColumnar>();
     private float mSpacing = 10;//柱子间隔
     private List<PathLine> mLinePathList = new ArrayList<PathLine>();
@@ -189,10 +190,10 @@ public class ColumnarChartView extends ViewGroup {
      * @param max
      * @return 所在Y轴画布上的位置
      */
-    private float convertValueToY(float value, float max, LineY yLine) {
+    private float convertValueToY(BigDecimal value, BigDecimal max, LineY yLine) {
         int lengthY = yLine.getLength();
         float y = getHeight() -
-                (lengthY * (value / max) + yLine.getPaddingBottom());
+                (lengthY * value.divide(max, 2, BigDecimal.ROUND_HALF_UP).floatValue() + yLine.getPaddingBottom());
         return y;
     }
 
@@ -564,7 +565,7 @@ public class ColumnarChartView extends ViewGroup {
             return;
         }
         ScaleY scaleY = scaleYList.get(scaleYList.size() - 1);
-        mMaxValueY = Integer.valueOf(scaleY.getDataY().getValue());
+        mMaxValueY = new BigDecimal(scaleY.getDataY().getValue());
     }
 
     public void setColumnarList(List<AColumnar> columnarList) {

@@ -37,6 +37,8 @@ public class ValueAnimActivity extends Activity
     RotateAnim rotateAnim;
     SlideDownAnim slideDownAnim;
     LinearLayout ll_tran;
+    TextView tv_value_change;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +49,12 @@ public class ValueAnimActivity extends Activity
         tv_rotate = (TextView) findViewById(R.id.tv_rotate);
         tv_xiahua = (TextView) findViewById(R.id.tv_xiahua);
         ll_tran = (LinearLayout) findViewById(R.id.ll_tran);
+        tv_value_change = (TextView) findViewById(R.id.tv_value_change);
 
         tv_rotate.setOnClickListener(this);
         rl_number.setOnClickListener(this);
         tv_xiahua.setOnClickListener(this);
+        tv_value_change.setOnClickListener(this);
         slideDownAnim = new SlideDownAnim();
         rotateAnim = new RotateAnim(tv_rotate);
 
@@ -82,13 +86,27 @@ public class ValueAnimActivity extends Activity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_rotate:
-                rotateAnim.toggleRotate(500,0, -90);
+                rotateAnim.toggleRotate(500, 0, -90);
                 break;
             case R.id.rl_number:
                 runSignAnim();
                 break;
             case R.id.tv_xiahua:
-                translationChange(ll_tran,1000,tv_xiahua.getHeight()).start();
+                translationChange(ll_tran, 1000, tv_xiahua.getHeight()).start();
+                break;
+            case R.id.tv_value_change:
+                ValueAnimator valueAnimator = ValueAnimator.ofInt(10, 20);
+                valueAnimator.setDuration(500);
+                valueAnimator
+                        .addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                            @Override
+                            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                                tv_value_change.setText(valueAnimator
+                                        .getAnimatedValue().toString());
+                            }
+                        });
+
+                valueAnimator.start();
                 break;
             default:
                 break;

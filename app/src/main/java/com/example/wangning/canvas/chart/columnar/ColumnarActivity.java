@@ -7,6 +7,7 @@ import android.widget.PopupWindow;
 
 import com.example.wangning.R;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,22 +53,13 @@ public class ColumnarActivity extends Activity {
             Coordinate coordinate = new Coordinate();
             switch (j) {
                 case 0:
-                    coordinate.setValY(10000);
+                    coordinate.setValY(new BigDecimal(10000));
                     break;
                 case 1:
-                    coordinate.setValY(20000);
-                    break;
-                case 2:
-                    coordinate.setValY(2000);
-                    break;
-                case 3:
-                    coordinate.setValY(30000);
-                    break;
-                case 4:
-                    coordinate.setValY(15000);
+                    coordinate.setValY(new BigDecimal(20000));
                     break;
                 default:
-                    coordinate.setValY(25000);
+                    coordinate.setValY(new BigDecimal(25000));
                     break;
             }
             coordinateList.add(coordinate);
@@ -80,7 +72,7 @@ public class ColumnarActivity extends Activity {
             public void onTurnCircleClick(int position, int x, int y) {
                 Coordinate coordinate = ccv.getLinePathList().get(0).getCoordinateList().get(position);
 
-                mTurnPointPopWindow.setContent(String.valueOf((int) coordinate.getValY()));
+                mTurnPointPopWindow.setContent(coordinate.getValY().toString());
 
                 int popHeight = mTurnPointPopWindow.getHeight();
                 int popWidth = mTurnPointPopWindow.getWidth();

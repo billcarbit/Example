@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.Button;
 
 import com.example.wangning.R;
 
@@ -21,8 +20,8 @@ import java.util.List;
  * @since JDK 1.8
  */
 public class ViewPagerActivity extends Activity {
-    ViewPager main_viewpager;
-    PagerTabStrip main_viewtabpager;
+    ViewPager viewPager;
+    PagerTabStrip pagerTabStrip;
     List<String> titles;
     List<View> views;
 
@@ -30,8 +29,8 @@ public class ViewPagerActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_viewpager);
-        main_viewpager = (ViewPager) findViewById(R.id.main_viewpager);
-        main_viewtabpager = (PagerTabStrip) findViewById(R.id.main_viewtabpager);
+        viewPager = (ViewPager) findViewById(R.id.main_viewpager);
+        pagerTabStrip = (PagerTabStrip) findViewById(R.id.main_viewtabpager);
 
         //准备 标题数据源
         titles = new ArrayList<String>();
@@ -51,17 +50,16 @@ public class ViewPagerActivity extends Activity {
 
 
         //设置 标题样式
-        main_viewtabpager.setBackgroundColor(Color.GREEN);
-        main_viewtabpager.setDrawFullUnderline(false);
-        main_viewtabpager.setTextColor(Color.RED);
-        main_viewtabpager.setTabIndicatorColor(Color.BLACK);
+        pagerTabStrip.setBackgroundColor(Color.GREEN);
+        pagerTabStrip.setDrawFullUnderline(false);
+        pagerTabStrip.setTextColor(Color.RED);
+        pagerTabStrip.setTabIndicatorColor(Color.BLACK);
 
         //创建 Adapter
         MyPagerAdapter pagerAdapter = new MyPagerAdapter(views, titles);
 
         //添加适配器
-        main_viewpager.setAdapter(pagerAdapter);
-
+        viewPager.setAdapter(pagerAdapter);
 
     }
 }

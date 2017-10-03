@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.example.wangning.R;
+
 /**
  * file explain
  *
@@ -26,25 +28,28 @@ public class ViewInvalidateActivity extends Activity {
         setContentView(new View(getApplicationContext()) {
 
             Paint vPaint = new Paint();  //绘制样式物件
-            private int i = 0;           //弧形角度
+            int sweepAngle = 0;           //弧形角度
+            int radius = 100;
 
             @Override
             protected void onDraw(Canvas canvas) {
-                Log.e(TAG, "onDraw: ");
+                Log.d(TAG, "onDraw: sweepAngle=" + sweepAngle);
                 super.onDraw(canvas);
 
                 // 设定绘图样式
-                vPaint.setColor(0xff00ffff); //画笔颜色
+                vPaint.setColor(getResources().getColor(R.color.orange)); //画笔颜色
                 vPaint.setAntiAlias(true);   //反锯齿
                 vPaint.setStyle(Paint.Style.FILL);
-
+                int center = radius;
+                RectF rect = new RectF(center - radius, center - radius, center
+                        + radius, center + radius);
                 // 绘制一个弧形
-                canvas.drawArc(new RectF(60, 120, 260, 320), 0, i, true, vPaint);
+                canvas.drawArc(rect, 0, sweepAngle, true, vPaint);
 
                 // 弧形角度
-                if ((i += 10) > 360)
-                    i = 0;
-
+                if ((sweepAngle += 10) > 360) {
+                    sweepAngle = 0;
+                }
                 // 重绘, 再一次执行onDraw 程序
                 invalidate();
             }

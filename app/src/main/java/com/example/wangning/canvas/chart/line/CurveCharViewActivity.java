@@ -1,17 +1,22 @@
 package com.example.wangning.canvas.chart.line;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Color;
+import android.icu.util.Measure;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
-import android.widget.PopupWindow;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.wangning.R;
-import com.example.wangning.canvas.chart.columnar.ColumnarChartView;
 import com.example.wangning.canvas.chart.columnar.Coordinate;
-import com.example.wangning.canvas.chart.columnar.TurnPointPopWindow;
-import com.example.wangning.popwindow.LineAreaPopWindow;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,16 +28,19 @@ import java.util.List;
  * @since JDK 1.8
  */
 public class CurveCharViewActivity extends Activity {
-    private TurnPointPopWindow mTurnPointPopWindow;
+    private RelativeLayout rlPop;
+    private Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         setContentView(R.layout.activity_curve_char_canvas);
         final CurveCharView lacv = (CurveCharView) findViewById(R.id.ccv);
-        mTurnPointPopWindow = new TurnPointPopWindow(this);
+        rlPop = (RelativeLayout) findViewById(R.id.rl_pop);
         final List<DataX> dataXList = new ArrayList<DataX>();
         final List<DataY> dataYList = new ArrayList<DataY>();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 4; i++) {
             DataX dataX = new DataX();
             dataX.setData("周" + (i + 1));
             dataXList.add(dataX);
@@ -40,7 +48,7 @@ public class CurveCharViewActivity extends Activity {
         lacv.setXData(dataXList);
         for (int i = 0; i < 5; i++) {
             DataY dataY = new DataY();
-            dataY.setData(String.valueOf((i + 1) * 123456789));
+            dataY.setData(String.valueOf(100 * (i + 1)));
             dataYList.add(dataY);
         }
         lacv.setYData(dataYList);
@@ -49,29 +57,26 @@ public class CurveCharViewActivity extends Activity {
         linePath.setColor(R.color.orange);
         List<Coordinate> coordinateList = new ArrayList<Coordinate>();
         List<Integer> dataList = new ArrayList<>();
-        for (int k = 0; k < 8; k++) {
+        for (int k = 0; k < 4; k++) {
 
             switch (k) {
                 case 0:
-                    dataList.add(350456789);
+                    dataList.add(260);
                     break;
                 case 1:
-                    dataList.add(450496789);
+                    dataList.add(284);
                     break;
                 case 2:
-                    dataList.add(250496789);
+                    dataList.add(154);
                     break;
                 case 3:
-                    dataList.add(400);
-                    break;
-                default:
-                    dataList.add(100);
+                    dataList.add(336);
                     break;
             }
         }
         for (Integer order120Item : dataList) {
             Coordinate coordinate = new Coordinate();
-            coordinate.setValY(order120Item);
+            coordinate.setValY(new BigDecimal(order120Item.toString()));
             coordinateList.add(coordinate);
         }
         linePath.setCoordinateList(coordinateList);
@@ -82,20 +87,23 @@ public class CurveCharViewActivity extends Activity {
             @Override
             public void onTurnCircleClick(int position, int x, int y) {
                 Coordinate coordinate = lacv.getLinePathList().get(0).getCoordinateList().get(position);
+                rlPop.removeAllViews();
+                TextView textView = new TextView(context);
+                textView.setTextColor(Color.WHITE);
+                textView.setBackgroundResource(R.drawable.turn_point_pop_bg);
+                textView.setPadding(10, 10, 10, 15);
+                textView.setGravity(Gravity.CENTER);
+                textView.setText(coordinate.getValY().toString());
+                RelativeLayout.LayoutParams rlPopLp = (RelativeLayout.LayoutParams) rlPop.getLayoutParams();
+                textView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+                int rlPopMeasuredHeight = textView.getMeasuredHeight();
+                int rlPopMeasuredWidth = textView.getMeasuredWidth();
+                rlPopLp.leftMargin = (int) coordinate.getX() - rlPopMeasuredWidth / 2;
+                rlPopLp.topMargin = (int) coordinate.getY() - rlPopMeasuredHeight - 30;
 
-                mTurnPointPopWindow.setContent(String.valueOf((int) coordinate.getValY()));
 
-                int popHeight = mTurnPointPopWindow.getHeight();
-                int popWidth = mTurnPointPopWindow.getWidth();
-                int[] location = new int[2];
-                int marginTurnPointTop = 20;
-                lacv.getLocationOnScreen(location);
-                int anchorY = location[1] + y - popHeight - marginTurnPointTop;
-                int anchorX = location[0] + x - popWidth / 2;
-                Log.e("onTurnCircleClick", "anchorY= " + anchorY + ",anchorX=" + anchorX +
-                        ",popWidth=" + popWidth
-                        + ",popHeight=" + popHeight);
-                mTurnPointPopWindow.showAtLocation(lacv, anchorX, anchorY);
+                rlPop.setLayoutParams(rlPopLp);
+                rlPop.addView(textView);
             }
         });
     }
