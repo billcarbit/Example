@@ -34,4 +34,5 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.android.support:design:24.1.0'
+    compile 'com.google.zxing:core:3.3.0'
 }
