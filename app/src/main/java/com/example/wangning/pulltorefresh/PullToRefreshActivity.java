@@ -14,25 +14,25 @@ public class PullToRefreshActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pull_resresh);
-
+/*
         final RefreshLayout2 refreshLayout = (RefreshLayout2) findViewById(R.id.rl_modulename_refresh);
         refreshLayout.setPullDownListener(new RefreshLayout2.OnPullDownListener() {
             @Override
             public void onRefresh() {
               Log.e(TAG, "onRefresh: setPullDownListener" );
-            /*      refreshLayout.postDelayed(new Runnable() {
+            *//*      refreshLayout.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         refreshLayout.refreshComplete();
                     }
-                }, 2000);*/
+                }, 2000);*//*
             }
         }).setPullUpListener(new RefreshLayout2.OnPullUpListener() {
             @Override
             public void onRefresh() {
                 Log.e(TAG, "onRefresh: OnPullUpListener");
             }
-        });
+        });*/
 
     }
 
