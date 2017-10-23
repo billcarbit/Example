@@ -30,6 +30,7 @@ import java.util.List;
  */
 public class CurveCharView extends ViewGroup {
     final float mDensity;
+    int perLength = 0;
     private LineX mLineX = new LineX();
     private LineY mLineY = new LineY();
     private int mFontSize = 12;
@@ -48,10 +49,10 @@ public class CurveCharView extends ViewGroup {
     private Paint mTurnPointCenterPaint;
     private OnTurnCircleClickListener mOnTurnCircleClickListener;
 
+
     public CurveCharView(Context context) {
         this(context, null);
     }
-
 
     public CurveCharView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -147,7 +148,7 @@ public class CurveCharView extends ViewGroup {
             for (int i = 0; i < coordinateList.size() && i < lineX.getScaleXList().size(); i++) {
                 Coordinate coordinate = coordinateList.get(i);
                 float x = lineX.getScaleXList().get(i).getX() + lineY.getWidth() / 2 - dp2px(1);
-                float y = convertValueToY(new BigDecimal(coordinate.getValY().toString()), mMaxValueY, lineY);
+                float y = convertValueToY(coordinate.getValY(), mMaxValueY, lineY);
                 coordinate.setX(x);
                 coordinate.setY(y);
                 if (i == 0) {
@@ -269,7 +270,7 @@ public class CurveCharView extends ViewGroup {
 
 
     }
-    int perLength = 0;
+
     /**
      * 画X轴刻度
      */
@@ -392,7 +393,7 @@ public class CurveCharView extends ViewGroup {
 
         for (int i = 0, length = scaleYList.size(); i < length; i++) {
             int x = yLine.getPaddingLeft();
-            int y = getHeight() - yLine.getPaddingBottom() - perLength * (i + 1);
+            int y = getHeight() - yLine.getPaddingBottom() - perLength * i;
             //存入刻度绘制的起点位置
             scaleYList.get(i).setX(x);
             scaleYList.get(i).setY(y);
@@ -498,9 +499,18 @@ public class CurveCharView extends ViewGroup {
      */
     private float convertValueToY(BigDecimal value, BigDecimal max, LineY yLine) {
         int lengthY = yLine.getLength();
-        float percent = value.divide(max, 2, BigDecimal.ROUND_HALF_UP).floatValue();
+        int originY = yLine.getPaddingTop() + lengthY;
+        if (max.intValue() == 0) {
+            return originY;
+        }
+        List<ScaleY> scaleYList = yLine.getScaleYList();
+        if (scaleYList == null || scaleYList.size() == 0) {
+            return originY;
+        }
+        BigDecimal multiplyVal = value.subtract(new BigDecimal(scaleYList.get(0).getDataY().getData()));
+        float percent = multiplyVal.divide(max, 2, BigDecimal.ROUND_HALF_UP).floatValue();
         float y = getHeight() -
-                (lengthY *  percent+ yLine.getPaddingBottom());
+                (lengthY * percent + yLine.getPaddingBottom());
         return y;
     }
 
@@ -518,8 +528,10 @@ public class CurveCharView extends ViewGroup {
 
     private void setMaxValueY(LineY lineY) {
         List<ScaleY> scaleYList = lineY.getScaleYList();
-        ScaleY scaleY = scaleYList.get(scaleYList.size() - 1);
-        mMaxValueY = new BigDecimal(scaleY.getDataY().getData());
+        if (scaleYList != null && scaleYList.size() > 0) {
+            ScaleY scaleY = scaleYList.get(scaleYList.size() - 1);
+            mMaxValueY = new BigDecimal(scaleY.getDataY().getData());
+        }
     }
 
     public void setXData(List<DataX> xDataList) {

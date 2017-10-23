@@ -32,7 +32,7 @@ public class TextSwitcherActivity extends Activity{
         setContentView(R.layout.activity_text_switcher);
         CarouselTextView carouselTextView= (CarouselTextView)findViewById(R.id.ctv);
         List<String> list = new ArrayList<String>();
-        list.add("AAA");
+        list.add("AAA\n aaa \n aaaa1111");
         list.add("BBB");
         list.add("CCC");
         carouselTextView.getDataList().addAll(list);

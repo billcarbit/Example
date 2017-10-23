@@ -48,7 +48,7 @@ public class CurveCharViewActivity extends Activity {
         lacv.setXData(dataXList);
         for (int i = 0; i < 5; i++) {
             DataY dataY = new DataY();
-            dataY.setData(String.valueOf(100 * (i + 1)));
+            dataY.setData(String.valueOf(100.1f * (i + 1)));
             dataYList.add(dataY);
         }
         lacv.setYData(dataYList);
@@ -61,7 +61,7 @@ public class CurveCharViewActivity extends Activity {
 
             switch (k) {
                 case 0:
-                    dataList.add(260);
+                    dataList.add(100);
                     break;
                 case 1:
                     dataList.add(284);
