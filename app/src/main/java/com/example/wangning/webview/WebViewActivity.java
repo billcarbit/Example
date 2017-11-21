@@ -32,8 +32,8 @@ public class WebViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
         webView = (WebView)findViewById(R.id.webView);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.addJavascriptInterface(this, "nativeMethod");
+      /*  webView.getSettings().setJavaScriptEnabled(true);
+        webView.addJavascriptInterface(this, "nativeMethod");*/
         //webView.loadUrl("file:///android_asset/index.html");
         webView.loadUrl("https://www.baidu.com");
         webView.setWebViewClient(new WebViewClient(){
@@ -44,10 +44,11 @@ public class WebViewActivity extends Activity {
             }
 
 
+
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                Log.e(TAG, "onPageFinished: view="+view+",url="+url );
+                Log.e(TAG, "onPageFinished: view.title="+view.getTitle()+",url="+url );
             }
 
             @Override
@@ -76,5 +77,9 @@ public class WebViewActivity extends Activity {
         }
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        webView.destroy();
+    }
 }

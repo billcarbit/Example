@@ -33,7 +33,7 @@ public class TabPageActivity extends FragmentActivity {
         initData();
        final TabPageIndicator mTabIndicator = (TabPageIndicator) findViewById(R.id.tab_indicator);
         ViewPager vpTab = (ViewPager) findViewById(R.id.tab_viewpager);
-        vpTab.setOffscreenPageLimit(0);
+        vpTab.setOffscreenPageLimit(1);
         FragmentAdapter mTabsAdapter = new FragmentAdapter(getSupportFragmentManager(), mTabTitleList, mPdFragmentList);
         mTabsAdapter.setFragments(mTabTitleList, mPdFragmentList);
         vpTab.setAdapter(mTabsAdapter);
