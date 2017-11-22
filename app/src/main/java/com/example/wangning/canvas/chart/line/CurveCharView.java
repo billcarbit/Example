@@ -385,11 +385,14 @@ public class CurveCharView extends ViewGroup {
         //得出Y轴长度
         yLine.setLength(canvas.getHeight() - yLine.getPaddingBottom() - yLine.getPaddingTop());
 
-        //将Y轴分成 scaleYList.size() 等分，得出每个刻度长度
+  /*      //将Y轴分成 scaleYList.size() 等分，得出每个刻度长度
         int perLength = scaleYList.size() == 0
                 ? yLine.getLength()
-                : yLine.getLength() / scaleYList.size();
-
+                : yLine.getLength() / scaleYList.size();*/
+        //将Y轴分成 scaleYList.size() -1 等分，得出每个刻度长度
+        int perLength = scaleYList.size() - 1 == 0
+                ? yLine.getLength()
+                : yLine.getLength() / (scaleYList.size() - 1);
 
         for (int i = 0, length = scaleYList.size(); i < length; i++) {
             int x = yLine.getPaddingLeft();
@@ -508,15 +511,16 @@ public class CurveCharView extends ViewGroup {
             return originY;
         }
         int orginY = Integer.valueOf(scaleYList.get(0).getDataY().getData());
+        float perValPx = (float)lengthY / (float) (max - orginY);
         float multiplyVal = value - orginY;
         // BigDecimal multiplyVal = value.subtract(new BigDecimal(scaleYList.get(0).getDataY().getData()));
         //float percent = multiplyVal.divide(max, 5, BigDecimal.ROUND_HALF_UP).floatValue();
-        float percent = multiplyVal / max;
-        float perValPx = (float)lengthY / (float) (max - orginY);
-        float y = getHeight() -
-                (multiplyVal * perValPx + yLine.getPaddingBottom());
+        float percent = value / max;
+    /*    float y = getHeight() -
+                (lengthY * percent + yLine.getPaddingBottom());*/
         float y2 = yLine.getPaddingTop() + (max - value) * perValPx;
-         Log.e("WN", "convertValueToY: lengthY=" + lengthY + ",percent=" + percent + ",multiplyVal=" + multiplyVal + ",value=" + value + ",max=" + max + ",y=" + y+",heightVal="+multiplyVal * perValPx);
+         //Log.e("WN", "convertValueToY: lengthY=" + lengthY + ",percent=" + percent + ",multiplyVal=" + multiplyVal + ",value=" + value + ",max=" + max + ",y=" + y+",heightVal="+multiplyVal * perValPx);
+
         return y2;
     }
 

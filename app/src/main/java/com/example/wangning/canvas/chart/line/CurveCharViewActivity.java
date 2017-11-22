@@ -3,20 +3,15 @@ package com.example.wangning.canvas.chart.line;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.icu.util.Measure;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.wangning.R;
 import com.example.wangning.canvas.chart.columnar.Coordinate;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,8 +43,8 @@ public class CurveCharViewActivity extends Activity {
         lacv.setXData(dataXList);
         for (int i = 0; i < 6; i++) {
             DataY dataY = new DataY();
-            dataY.setData(String.valueOf(55 * (i+1)));
-       /*     switch (i) {
+           // dataY.setData(String.valueOf(55 * (i)));
+            switch (i) {
                 case 0:
                     dataY.setData("55");
                     break;
@@ -68,7 +63,7 @@ public class CurveCharViewActivity extends Activity {
                 case 5:
                     dataY.setData("125");
                     break;
-            }*/
+            }
 
             dataYList.add(dataY);
         }
@@ -79,30 +74,31 @@ public class CurveCharViewActivity extends Activity {
         List<Coordinate> coordinateList = new ArrayList<Coordinate>();
         List<Integer> dataList = new ArrayList<>();
         for (int k = 0; k < 6; k++) {
+          //  dataList.add(50 * k);
             switch (k) {
                 case 0:
-                    //dataList.add(55);
-                    dataList.add(160);
+                    dataList.add(55);
+                    //dataList.add(160);
                     break;
                 case 1:
-                    //dataList.add(66);
-                    dataList.add(269);
+                    dataList.add(66);
+                    //dataList.add(269);
                     break;
                 case 2:
-                    //dataList.add(77);
-                    dataList.add(520);
+                    dataList.add(77);
+                    //dataList.add(520);
                     break;
                 case 3:
-                    //dataList.add(62);
-                    dataList.add(790);
+                    dataList.add(62);
+                    //dataList.add(790);
                     break;
                 case 4:
-                    //dataList.add(99);
-                    dataList.add(233);
+                    dataList.add(99);
+                    //dataList.add(233);
                     break;
                 case 5:
-                    //dataList.add(88);
-                    dataList.add(333);
+                    dataList.add(88);
+                    //dataList.add(333);
                     break;
             }
         }
@@ -125,7 +121,7 @@ public class CurveCharViewActivity extends Activity {
                 textView.setBackgroundResource(R.drawable.turn_point_pop_bg);
                 textView.setPadding(10, 10, 10, 15);
                 textView.setGravity(Gravity.CENTER);
-                textView.setText(""+coordinate.getValY());
+                textView.setText("" + coordinate.getValY());
                 RelativeLayout.LayoutParams rlPopLp = (RelativeLayout.LayoutParams) rlPop.getLayoutParams();
                 textView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
                 int rlPopMeasuredHeight = textView.getMeasuredHeight();
