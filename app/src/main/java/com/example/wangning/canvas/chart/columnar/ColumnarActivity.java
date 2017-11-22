@@ -53,13 +53,13 @@ public class ColumnarActivity extends Activity {
             Coordinate coordinate = new Coordinate();
             switch (j) {
                 case 0:
-                    coordinate.setValY(new BigDecimal(10000));
+                    coordinate.setValY(10000);
                     break;
                 case 1:
-                    coordinate.setValY(new BigDecimal(20000));
+                    coordinate.setValY(20000);
                     break;
                 default:
-                    coordinate.setValY(new BigDecimal(25000));
+                    coordinate.setValY(25000);
                     break;
             }
             coordinateList.add(coordinate);
@@ -72,7 +72,7 @@ public class ColumnarActivity extends Activity {
             public void onTurnCircleClick(int position, int x, int y) {
                 Coordinate coordinate = ccv.getLinePathList().get(0).getCoordinateList().get(position);
 
-                mTurnPointPopWindow.setContent(coordinate.getValY().toString());
+                mTurnPointPopWindow.setContent(coordinate.getValY()+"");
 
                 int popHeight = mTurnPointPopWindow.getHeight();
                 int popWidth = mTurnPointPopWindow.getWidth();

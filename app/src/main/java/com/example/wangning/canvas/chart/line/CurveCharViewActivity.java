@@ -40,15 +40,36 @@ public class CurveCharViewActivity extends Activity {
         rlPop = (RelativeLayout) findViewById(R.id.rl_pop);
         final List<DataX> dataXList = new ArrayList<DataX>();
         final List<DataY> dataYList = new ArrayList<DataY>();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 6; i++) {
             DataX dataX = new DataX();
             dataX.setData("周" + (i + 1));
             dataXList.add(dataX);
         }
         lacv.setXData(dataXList);
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             DataY dataY = new DataY();
-            dataY.setData(String.valueOf(100.1f * (i + 1)));
+            dataY.setData(String.valueOf(55 * (i+1)));
+       /*     switch (i) {
+                case 0:
+                    dataY.setData("55");
+                    break;
+                case 1:
+                    dataY.setData("69");
+                    break;
+                case 2:
+                    dataY.setData("83");
+                    break;
+                case 3:
+                    dataY.setData("97");
+                    break;
+                case 4:
+                    dataY.setData("111");
+                    break;
+                case 5:
+                    dataY.setData("125");
+                    break;
+            }*/
+
             dataYList.add(dataY);
         }
         lacv.setYData(dataYList);
@@ -57,26 +78,37 @@ public class CurveCharViewActivity extends Activity {
         linePath.setColor(R.color.orange);
         List<Coordinate> coordinateList = new ArrayList<Coordinate>();
         List<Integer> dataList = new ArrayList<>();
-        for (int k = 0; k < 4; k++) {
-
+        for (int k = 0; k < 6; k++) {
             switch (k) {
                 case 0:
-                    dataList.add(100);
+                    //dataList.add(55);
+                    dataList.add(160);
                     break;
                 case 1:
-                    dataList.add(284);
+                    //dataList.add(66);
+                    dataList.add(269);
                     break;
                 case 2:
-                    dataList.add(154);
+                    //dataList.add(77);
+                    dataList.add(520);
                     break;
                 case 3:
-                    dataList.add(336);
+                    //dataList.add(62);
+                    dataList.add(790);
+                    break;
+                case 4:
+                    //dataList.add(99);
+                    dataList.add(233);
+                    break;
+                case 5:
+                    //dataList.add(88);
+                    dataList.add(333);
                     break;
             }
         }
         for (Integer order120Item : dataList) {
             Coordinate coordinate = new Coordinate();
-            coordinate.setValY(new BigDecimal(order120Item.toString()));
+            coordinate.setValY(order120Item);
             coordinateList.add(coordinate);
         }
         linePath.setCoordinateList(coordinateList);
@@ -93,7 +125,7 @@ public class CurveCharViewActivity extends Activity {
                 textView.setBackgroundResource(R.drawable.turn_point_pop_bg);
                 textView.setPadding(10, 10, 10, 15);
                 textView.setGravity(Gravity.CENTER);
-                textView.setText(coordinate.getValY().toString());
+                textView.setText(""+coordinate.getValY());
                 RelativeLayout.LayoutParams rlPopLp = (RelativeLayout.LayoutParams) rlPop.getLayoutParams();
                 textView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
                 int rlPopMeasuredHeight = textView.getMeasuredHeight();

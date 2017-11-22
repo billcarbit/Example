@@ -39,7 +39,7 @@ public class CurveCharView extends ViewGroup {
     private int mXDataMarginScale = 10;//X轴数据与刻度的距离
     private int mYDataMarginScale = 30;//Y轴数据与刻度的距离
     private List<PathLine> mLinePathList = new ArrayList<PathLine>();
-    private BigDecimal mMaxValueY = new BigDecimal("1");
+    private int mMaxValueY;
     private int mScaleXMarginLeftAndRight = 100;
     private int mTurnPointRadius;
     private int mTurnPointSelectedRadius;//选中后的拐点半径
@@ -497,21 +497,27 @@ public class CurveCharView extends ViewGroup {
      * @param max
      * @return 所在Y轴画布上的位置
      */
-    private float convertValueToY(BigDecimal value, BigDecimal max, LineY yLine) {
+    private float convertValueToY(float value, float max, LineY yLine) {
         int lengthY = yLine.getLength();
         int originY = yLine.getPaddingTop() + lengthY;
-        if (max.intValue() == 0) {
+        if (max == 0) {
             return originY;
         }
         List<ScaleY> scaleYList = yLine.getScaleYList();
         if (scaleYList == null || scaleYList.size() == 0) {
             return originY;
         }
-        BigDecimal multiplyVal = value.subtract(new BigDecimal(scaleYList.get(0).getDataY().getData()));
-        float percent = multiplyVal.divide(max, 2, BigDecimal.ROUND_HALF_UP).floatValue();
+        int orginY = Integer.valueOf(scaleYList.get(0).getDataY().getData());
+        float multiplyVal = value - orginY;
+        // BigDecimal multiplyVal = value.subtract(new BigDecimal(scaleYList.get(0).getDataY().getData()));
+        //float percent = multiplyVal.divide(max, 5, BigDecimal.ROUND_HALF_UP).floatValue();
+        float percent = multiplyVal / max;
+        float perValPx = (float)lengthY / (float) (max - orginY);
         float y = getHeight() -
-                (lengthY * percent + yLine.getPaddingBottom());
-        return y;
+                (multiplyVal * perValPx + yLine.getPaddingBottom());
+        float y2 = yLine.getPaddingTop() + (max - value) * perValPx;
+         Log.e("WN", "convertValueToY: lengthY=" + lengthY + ",percent=" + percent + ",multiplyVal=" + multiplyVal + ",value=" + value + ",max=" + max + ",y=" + y+",heightVal="+multiplyVal * perValPx);
+        return y2;
     }
 
     public void setYData(List<DataY> yDataList) {
@@ -530,7 +536,7 @@ public class CurveCharView extends ViewGroup {
         List<ScaleY> scaleYList = lineY.getScaleYList();
         if (scaleYList != null && scaleYList.size() > 0) {
             ScaleY scaleY = scaleYList.get(scaleYList.size() - 1);
-            mMaxValueY = new BigDecimal(scaleY.getDataY().getData());
+            mMaxValueY = Integer.parseInt(scaleY.getDataY().getData());
         }
     }
 

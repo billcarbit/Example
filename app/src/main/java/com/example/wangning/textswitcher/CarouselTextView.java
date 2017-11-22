@@ -30,6 +30,11 @@ import java.util.TimerTask;
  */
 public class CarouselTextView extends LinearLayout implements ViewSwitcher.ViewFactory {
     private static final String TAG = "CarouselTextView";
+
+
+
+
+
     Context mContext;
     TextSwitcher switcher;
     int mIndex = 0; //下标
@@ -45,14 +50,13 @@ public class CarouselTextView extends LinearLayout implements ViewSwitcher.ViewF
                     }
                     switcher.setText(mDataList.get(mIndex));
                     mIndex++;
-                    mHandler.sendEmptyMessageDelayed(1,3000);
+                    mHandler.sendEmptyMessageDelayed(1, 3000);
                     break;
             }
         }
 
         ;
     };
-
 
     public CarouselTextView(Context context) {
         this(context, null);
@@ -66,7 +70,7 @@ public class CarouselTextView extends LinearLayout implements ViewSwitcher.ViewF
     }
 
     public void start() {
-        if(mDataList==null || mDataList.size()==0){
+        if (mDataList == null || mDataList.size() == 0) {
             return;
         }
         mHandler.removeMessages(1);
@@ -79,9 +83,10 @@ public class CarouselTextView extends LinearLayout implements ViewSwitcher.ViewF
 
     @Override
     public View makeView() {
+        Log.d(TAG, "makeView: ");
         TextView textView = new TextView(mContext);
         textView.setTextSize(13);
-        textView.setTextColor(mContext.getResources().getColor(R.color.colorAccent));
+        textView.setTextColor(mContext.getResources().getColor(R.color.orange));
         return textView;
     }
 

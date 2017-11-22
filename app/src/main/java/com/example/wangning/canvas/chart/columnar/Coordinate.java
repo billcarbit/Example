@@ -13,8 +13,8 @@ public class Coordinate {
     private float x;//在画布中的位置x
     private float y;//在画布中的位置y
 
-    private BigDecimal valX;//外部设置的横向的值
-    private BigDecimal valY;//外部设置的纵向的值
+    private float valX;//外部设置的横向的值
+    private float valY;//外部设置的纵向的值
 
     private float touchXStart;
     private float touchXEnd;
@@ -71,19 +71,20 @@ public class Coordinate {
         this.x = x;
     }
 
-    public BigDecimal getValX() {
+
+    public float getValX() {
         return valX;
     }
 
-    public void setValX(BigDecimal valX) {
+    public void setValX(float valX) {
         this.valX = valX;
     }
 
-    public BigDecimal getValY() {
+    public float getValY() {
         return valY;
     }
 
-    public void setValY(BigDecimal valY) {
+    public void setValY(float valY) {
         this.valY = valY;
     }
 

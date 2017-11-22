@@ -38,7 +38,7 @@ public class LineAreaChartView extends ViewGroup {
     private int mXDataMarginScale = 10;//X轴数据与刻度的距离
     private int mYDataMarginScale = 30;//Y轴数据与刻度的距离
     private List<PathLine> mLinePathList = new ArrayList<PathLine>();
-    private BigDecimal mMaxValueY = new BigDecimal("1");
+    private int mMaxValueY;
     private OnDataXClickListener mOnDataXClickListener;
 
 
@@ -416,17 +416,17 @@ public class LineAreaChartView extends ViewGroup {
      * @param max
      * @return 所在Y轴画布上的位置
      */
-    private float convertValueToY(BigDecimal value, BigDecimal max, LineY yLine) {
+    private float convertValueToY(float value, float max, LineY yLine) {
         int lengthY = yLine.getLength();
         float y = getHeight() -
-                (lengthY * value.divide(max, 2, BigDecimal.ROUND_HALF_UP).floatValue() + yLine.getPaddingBottom());
+                (lengthY * value/max + yLine.getPaddingBottom());
         return y;
     }
 
     private void setMaxValueY(LineY lineY) {
         List<ScaleY> scaleYList = lineY.getScaleYList();
         ScaleY scaleY = scaleYList.get(scaleYList.size() - 1);
-        mMaxValueY = new BigDecimal(scaleY.getDataY().getData());
+        mMaxValueY =Integer.parseInt(scaleY.getDataY().getData());
     }
 
     @Override
