@@ -31,7 +31,6 @@ public class DelEditTextActivity extends Activity {
     void initView() {
         et1 = (EditTextWithDel) findViewById(R.id.et1);
         et2 = (EditTextWithDel) findViewById(R.id.et2);
-
     }
 
     void initData() {

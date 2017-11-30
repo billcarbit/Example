@@ -3,8 +3,11 @@ package com.example.wangning.listview;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 
 import com.example.wangning.R;
 
@@ -17,12 +20,13 @@ import java.util.List;
 public class ListViewActivity extends Activity {
     private static final String TAG = "ListViewActivity";
     ListView lv;
-
+    ScrollView scrollView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listview);
         lv = (ListView) findViewById(R.id.lv);
+        scrollView = (ScrollView) findViewById(R.id.scrollView);
 
         List<String> list = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
@@ -31,7 +35,7 @@ public class ListViewActivity extends Activity {
         MyAdapter myAdapter = new MyAdapter(this,list);
         lv.setAdapter(myAdapter);
 
-        lv.setOnScrollListener(new AbsListView.OnScrollListener() {
+       /* lv.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 Log.e(TAG, "onScrollStateChanged: scrollState="+scrollState );
@@ -43,6 +47,6 @@ public class ListViewActivity extends Activity {
                         "visibleItemCount=" + visibleItemCount
                         + ",totalItemCount=" + totalItemCount);
             }
-        });
+        });*/
     }
 }

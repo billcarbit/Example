@@ -94,6 +94,8 @@ public class CurveCharView extends ViewGroup {
         mLineX.setPaddingRight(70);
         mLineY.setPaddingTop(70);
         mLineY.setPaddingBottom(dp2px(26));
+        //得出Y轴长度
+        mLineY.setLength(canvas.getHeight() - mLineY.getPaddingBottom() - mLineY.getPaddingTop());
         drawCoordinateAxis(canvas, mLineX, mLineY);
         drawPathLine(canvas, mLinePathList, mLineX, mLineY);
         drawGraticule(canvas, mLineX, mLineY);//画平行于X轴的标线
@@ -382,8 +384,7 @@ public class CurveCharView extends ViewGroup {
      */
     private void drawYLineScale(Canvas canvas, Paint paint, Paint linePaint, LineY yLine) {
         List<ScaleY> scaleYList = yLine.getScaleYList();
-        //得出Y轴长度
-        yLine.setLength(canvas.getHeight() - yLine.getPaddingBottom() - yLine.getPaddingTop());
+
 
   /*      //将Y轴分成 scaleYList.size() 等分，得出每个刻度长度
         int perLength = scaleYList.size() == 0

@@ -21,8 +21,12 @@ public class ExampleUnitTest {
     public void json() throws Exception {
         JSONObject jsonA = (JSONObject) JSONObject.toJSON(new A());
         B b = JSONObject.toJavaObject(jsonA, B.class);
-        System.out.print("jsonA=" + jsonA.toJSONString());
-        System.out.print("b=" + b.a);
+        System.out.println("jsonA=" + jsonA.toJSONString());
+        System.out.println("b=" + b.a);
+
+        int cx = 0;
+        float fd = 0.000000000000f;
+        System.out.println("fd=" + (fd == 0));
     }
 
     static class A {
