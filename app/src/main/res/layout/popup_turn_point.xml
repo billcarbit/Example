@@ -7,6 +7,7 @@
     android:orientation="vertical"
     android:paddingLeft="7dp"
     android:paddingTop="2dp"
+    android:id="@+id/ll_pop"
     android:paddingBottom="7dp"
     android:paddingRight="7dp">
 

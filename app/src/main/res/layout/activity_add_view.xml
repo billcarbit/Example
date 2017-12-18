@@ -7,7 +7,7 @@
     <com.example.wangning.addview.SalesItemView
         android:id="@+id/salesItemView"
         android:layout_width="wrap_content"
-        android:layout_height="400dp" />
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/btn"
@@ -15,4 +15,9 @@
         android:layout_height="wrap_content"
         android:text="获取json" />
 
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_kaiguan_green"/>
 </LinearLayout>

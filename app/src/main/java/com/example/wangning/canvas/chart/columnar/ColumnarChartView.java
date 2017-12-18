@@ -129,7 +129,7 @@ public class ColumnarChartView extends ViewGroup {
             float originX = lineX.getPaddingLeft() + lineY.getWidth() / 2 + spacing + columnarWidth / 2;
             for (int i = 0; i < coordinateList.size(); i++) {
                 Coordinate coordinate = coordinateList.get(i);
-                float y = convertValueToY(coordinate.getValY(), mMaxValueY, lineY);
+                float y = convertValueToY(Float.parseFloat(coordinate.getValY()), mMaxValueY, lineY);
                 coordinate.setY(y);
                 circleCenterPaint.setColor(
                         coordinate.isSelected()
@@ -170,7 +170,7 @@ public class ColumnarChartView extends ViewGroup {
             float originX = lineX.getPaddingLeft() + lineY.getWidth() / 2 + spacing + columnarWidth / 2;
             for (int i = 0; i < coordinateList.size(); i++) {
                 Coordinate coordinate = coordinateList.get(i);
-                float y = convertValueToY(coordinate.getValY(), mMaxValueY, lineY);
+                float y = convertValueToY(Float.parseFloat(coordinate.getValY()), mMaxValueY, lineY);
                 coordinate.setY(y);
                 if (i == 0) {
                     path.moveTo(originX, y);//将画笔移动至起点

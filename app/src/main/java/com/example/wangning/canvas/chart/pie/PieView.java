@@ -64,7 +64,7 @@ public class PieView extends ViewGroup {
     protected void onDraw(Canvas canvas) {
         canvas.translate(getWidth() / 2, getHeight() / 2);
         for (LineSign lineSign : mLineSigns) {
-            if(lineSign.getPercent()==0.0f){
+            if (lineSign.getPercent() == 0.0f) {
                 continue;
             }
             drawArc(canvas, lineSign.getLineColor(), mStartAngle, 360 * lineSign.getPercent(), mRadius);
@@ -304,7 +304,7 @@ public class PieView extends ViewGroup {
     }
 
     private String getFloatingValueText(LineSign lineSign) {
-        if (lineSign.getIncreaseNum() == 0) {
+        if (lineSign.getIncreaseNum() == 0 && lineSign.getReduceNum() == 0) {
             return "";
         }
         return lineSign.isIncrease() ?

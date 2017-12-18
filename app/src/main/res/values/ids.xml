@@ -1608,5 +1608,6 @@
 
     <item name="McoySnapPageLayout_mPageTop" type="integer">0</item>
     <item name="McoySnapPageLayout_mPageBottom" type="integer">1</item>
+    <item type="id" name="myid">1</item>
 
 </resources>

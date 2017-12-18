@@ -19,6 +19,8 @@ import com.example.wangning.canvas.chart.columnar.Coordinate;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -39,7 +41,7 @@ public class CurveCharView extends ViewGroup {
     private int mXDataMarginScale = 10;//X轴数据与刻度的距离
     private int mYDataMarginScale = 30;//Y轴数据与刻度的距离
     private List<PathLine> mLinePathList = new ArrayList<PathLine>();
-    private int mMaxValueY;
+    private float mMaxValueY;
     private int mScaleXMarginLeftAndRight = 100;
     private int mTurnPointRadius;
     private int mTurnPointSelectedRadius;//选中后的拐点半径
@@ -150,7 +152,7 @@ public class CurveCharView extends ViewGroup {
             for (int i = 0; i < coordinateList.size() && i < lineX.getScaleXList().size(); i++) {
                 Coordinate coordinate = coordinateList.get(i);
                 float x = lineX.getScaleXList().get(i).getX() + lineY.getWidth() / 2 - dp2px(1);
-                float y = convertValueToY(coordinate.getValY(), mMaxValueY, lineY);
+                float y = convertValueToY(Float.parseFloat(coordinate.getValY()), mMaxValueY, lineY);
                 coordinate.setX(x);
                 coordinate.setY(y);
                 if (i == 0) {
@@ -351,7 +353,7 @@ public class CurveCharView extends ViewGroup {
                     i < lineX.getScaleXList().size(); i++) {
                 float originX = lineX.getScaleXList().get(i).getX();
                 Coordinate coordinate = coordinateList.get(i);
-                float y = convertValueToY(coordinate.getValY(), mMaxValueY, lineY);
+                float y = convertValueToY(Float.parseFloat(coordinate.getValY()), mMaxValueY, lineY);
                 coordinate.setY(y);
                 if (coordinate.isSelected()) {
                     circleCenterPaint.setColor(getResources().getColor(R.color.orange_ffa263));
@@ -511,7 +513,7 @@ public class CurveCharView extends ViewGroup {
         if (scaleYList == null || scaleYList.size() == 0) {
             return originY;
         }
-        int orginY = Integer.valueOf(scaleYList.get(0).getDataY().getData());
+        float orginY = Float.parseFloat(scaleYList.get(0).getDataY().getData());
         float perValPx = (float)lengthY / (float) (max - orginY);
         float multiplyVal = value - orginY;
         // BigDecimal multiplyVal = value.subtract(new BigDecimal(scaleYList.get(0).getDataY().getData()));
@@ -541,7 +543,7 @@ public class CurveCharView extends ViewGroup {
         List<ScaleY> scaleYList = lineY.getScaleYList();
         if (scaleYList != null && scaleYList.size() > 0) {
             ScaleY scaleY = scaleYList.get(scaleYList.size() - 1);
-            mMaxValueY = Integer.parseInt(scaleY.getDataY().getData());
+            mMaxValueY = Float.parseFloat(scaleY.getDataY().getData());
         }
     }
 

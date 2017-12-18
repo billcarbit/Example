@@ -11,20 +11,38 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.wangning.MainActivity">
 
-    <TextView
-        android:id="@+id/tv_yang"
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="￥" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="¥" />
+        android:background="@drawable/dc"
+        android:layout_weight="1"/>
 
-    <Button
-        android:id="@+id/btn"
+
+
+    <LinearLayout
+        android:id="@+id/ll_coo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="确定" />
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/load_finish"
+        android:src="@mipmap/ic_launcher" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"/>
+
 
 </LinearLayout>

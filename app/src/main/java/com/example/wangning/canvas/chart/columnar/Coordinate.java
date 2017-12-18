@@ -13,8 +13,8 @@ public class Coordinate {
     private float x;//在画布中的位置x
     private float y;//在画布中的位置y
 
-    private float valX;//外部设置的横向的值
-    private float valY;//外部设置的纵向的值
+    private String valX;//外部设置的横向的值
+    private String valY;//外部设置的纵向的值
 
     private float touchXStart;
     private float touchXEnd;
@@ -72,19 +72,19 @@ public class Coordinate {
     }
 
 
-    public float getValX() {
+    public String getValX() {
         return valX;
     }
 
-    public void setValX(float valX) {
+    public void setValX(String valX) {
         this.valX = valX;
     }
 
-    public float getValY() {
+    public String getValY() {
         return valY;
     }
 
-    public void setValY(float valY) {
+    public void setValY(String valY) {
         this.valY = valY;
     }
 

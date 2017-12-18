@@ -15,4 +15,6 @@
 
     <string name="load_finish">没有更多数据了</string>
     <string name="rmb_unit">￥0.00</string>
+
+    <string name="space_text" >%1$s/%2$s</string>
 </resources>

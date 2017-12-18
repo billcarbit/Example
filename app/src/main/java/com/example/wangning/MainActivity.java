@@ -1,72 +1,51 @@
 package com.example.wangning;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.widget.LinearLayout;
 
-import java.text.DecimalFormat;
 
 public class MainActivity extends Activity {
-    public final static String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = "MainActivity";
+    private final Handler mHandler = new Handler(new Handler.Callback() {
 
-    public static String formatTosepara(float data) {
-        DecimalFormat df = new DecimalFormat("#,##0.00");
-        return df.format(data);
-    }
+        @Override
+        public boolean handleMessage(Message msg) {
+            // TODO Auto-generated method stub
+            return false;
+        }
+    });
 
+    private final static Handler mHandler2 =new  MyHandler();
+
+    private final Thread thread = new Thread(){
+        @Override
+        public void run() {
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Log.e(TAG, "onCreate: " + formatTosepara(0.32f));
-
-        Button btn = (Button) findViewById(R.id.btn);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //tv_yang.setText(getString(R.string.rmb_unit));
-            }
-        });
+        LinearLayout ll_coo = (LinearLayout) findViewById(R.id.ll_coo);
+        View popLayout = LayoutInflater.from(this).inflate(R.layout.popup_turn_point, ll_coo);
+        View llPop = popLayout.findViewById(R.id.ll_pop);
+        Log.e(TAG, "onCreate: llPop=" + llPop);
+        mHandler.sendEmptyMessageDelayed(1,1);
+        mHandler2.sendEmptyMessageDelayed(1,1);
+        thread.start();
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent backIntent) {
-        Log.e(TAG, "onActivityResult: resultCode=" + resultCode + ",requestCode=" + requestCode);
-        switch (resultCode) {
-            case 2:
-                break;
-            default:
-                break;
+   private static class MyHandler extends  Handler{
+        @Override
+        public void handleMessage(Message msg) {
         }
     }
 
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.e(TAG, "onPause: " );
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.e(TAG, "onRestart: " );
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.e(TAG, "onResume: " );
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.e(TAG, "onStop: " );
-    }
 }

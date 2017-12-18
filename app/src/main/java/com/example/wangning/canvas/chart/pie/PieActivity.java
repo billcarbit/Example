@@ -40,8 +40,8 @@ public class PieActivity extends Activity {
                 lineSign.setLineColor(R.color.green_1dac91);
             }
             if (i == 2) {
-                lineSign.setReduceNum(33);
                 lineSign.setIncrease(false);
+                lineSign.setReduceNum(33);
                 lineSign.setPercent(0.3f);
                 lineSign.setLineColor(R.color.blue_00a5e6);
             }

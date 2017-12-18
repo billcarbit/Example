@@ -181,7 +181,7 @@ public class LineAreaChartView extends ViewGroup {
             path.moveTo(lineX.getPaddingLeft() + lineY.getWidth() / 2,
                     getHeight() - lineX.getPaddingBottom() - lineX.getWidth() / 2);//将画笔移动至坐标原点
             for (int i = 0; i < coordinateList.size() && i < lineX.getScaleXList().size(); i++) {
-                float y = convertValueToY(coordinateList.get(i).getValY(), mMaxValueY, lineY);
+                float y = convertValueToY(Float.parseFloat(coordinateList.get(i).getValY()), mMaxValueY, lineY);
                 float x = lineX.getScaleXList().get(i).getX() + lineY.getWidth() / 2;
                 path.lineTo(x, y);
             }
@@ -328,7 +328,7 @@ public class LineAreaChartView extends ViewGroup {
             circleCenterPaint.setStyle(Paint.Style.FILL);
 
             for (int i = 0; i < coordinateList.size() && i < lineX.getScaleXList().size(); i++) {
-                float y = convertValueToY(coordinateList.get(i).getValY(), mMaxValueY, lineY);
+                float y = convertValueToY(Float.parseFloat(coordinateList.get(i).getValY()), mMaxValueY, lineY);
                 float x = lineX.getScaleXList().get(i).getX() + lineY.getWidth() / 2;
                 canvas.drawCircle(x, y, 10, circlePaint);
                 canvas.drawCircle(x, y, 7, circleCenterPaint);

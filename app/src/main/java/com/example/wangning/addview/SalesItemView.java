@@ -25,11 +25,9 @@ public class SalesItemView extends LinearLayout
         implements View.OnClickListener {
 
     private static final String TAG = "SalesItemView";
-    RelativeLayout rlAddSales, rlContainer;
-    LinearLayout llItem2, llItem3;
+    RelativeLayout rlAddSales;
+    LinearLayout llContainer;
     Context mContext;
-    SwipeMenuLayout sml2, sml3;
-    TextView tvDel2, tvDel3;
     EditText et11, et12;
 
     public SalesItemView(Context context) {
@@ -49,52 +47,40 @@ public class SalesItemView extends LinearLayout
         int vId = v.getId();
         switch (vId) {
             case R.id.rl_add_sales:
-                View itemView = RelativeLayout.inflate(mContext, R.layout.layout_mansong_sales, null);
-                if (llItem2.getChildCount() == 0) {//如果第2行没有，加上
-                    llItem2.addView(itemView);
-                    sml2.setVisibility(VISIBLE);
-                } else if (llItem2.getChildCount() > 0 && llItem3.getChildCount() == 0) {//如果第2行有了，第3行没有，给第3行加,并隐藏添加按钮
-                    llItem3.addView(itemView);
-                    rlAddSales.setVisibility(GONE);
-                    sml3.setVisibility(VISIBLE);
+                View itemView = RelativeLayout.inflate(mContext, R.layout.item_sales_settings, null);
+                if (llContainer.getChildCount() < 2) {
+                    llContainer.addView(itemView, llContainer.getChildCount());
                 }
-                break;
-            case R.id.tv_del2:
-                llItem2.removeAllViews();
-                sml2.setVisibility(GONE);
-                sml2.quickClose();
-                rlAddSales.setVisibility(VISIBLE);
-                break;
-            case R.id.tv_del3:
-                llItem3.removeAllViews();
-                sml3.setVisibility(GONE);
-                sml3.quickClose();
-                rlAddSales.setVisibility(VISIBLE);
+                if (llContainer.getChildCount() == 2) {
+                    rlAddSales.setVisibility(GONE);
+                }
+                initDelListener();
                 break;
             default:
                 break;
         }
     }
 
-    void initView() {
-        sml2 = (SwipeMenuLayout) findViewById(R.id.sml2);
-        sml3 = (SwipeMenuLayout) findViewById(R.id.sml3);
-        tvDel2 = (TextView) findViewById(R.id.tv_del2);
-        tvDel3 = (TextView) findViewById(R.id.tv_del3);
+    void initDelListener() {
+        int childCount = llContainer.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            TextView tvDel = (TextView) llContainer.getChildAt(i).findViewById(R.id.tv_del);
+            tvDel.setOnClickListener(new DelClickListener(i));
+        }
+    }
 
+    void initView() {
         et11 = (EditText) findViewById(R.id.et11);
         et12 = (EditText) findViewById(R.id.et12);
-
         rlAddSales = (RelativeLayout) findViewById(R.id.rl_add_sales);
-        rlContainer = (RelativeLayout) findViewById(R.id.rl_container);
-        llItem2 = (LinearLayout) findViewById(R.id.ll_item2);
-        llItem3 = (LinearLayout) findViewById(R.id.ll_item3);
+        llContainer = (LinearLayout) findViewById(R.id.ll_container);
+
     }
 
     void initData() {
         rlAddSales.setOnClickListener(this);
-        tvDel2.setOnClickListener(this);
-        tvDel3.setOnClickListener(this);
+        et11.setText("10");
+        et11.setEnabled(false);
     }
 
     public JSONArray getInputData() {
@@ -104,10 +90,35 @@ public class SalesItemView extends LinearLayout
         JSONObject json1 = new JSONObject();
         json1.put("full", et11Val);
         json1.put("send", et12Val);
+        jsonArray.add(json1);
 
-
-
+        for (int i = 0; i < llContainer.getChildCount(); i++) {
+            EditText et1 = (EditText)llContainer.getChildAt(i).findViewById(R.id.et1);
+            EditText et2 = (EditText)llContainer.getChildAt(i).findViewById(R.id.et2);
+            JSONObject jo = new JSONObject();
+            jo.put("full", et1.getText().toString());
+            jo.put("send", et2.getText().toString());
+            jsonArray.add(jo);
+        }
 
         return jsonArray;
+    }
+
+    class DelClickListener implements View.OnClickListener {
+        int mPosition;
+
+        public DelClickListener(int position) {
+            mPosition = position;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mPosition < llContainer.getChildCount()) {
+                llContainer.removeViewAt(mPosition);
+            } else {
+                llContainer.removeAllViews();
+            }
+            rlAddSales.setVisibility(VISIBLE);
+        }
     }
 }

@@ -53,13 +53,13 @@ public class ColumnarActivity extends Activity {
             Coordinate coordinate = new Coordinate();
             switch (j) {
                 case 0:
-                    coordinate.setValY(10000);
+                    coordinate.setValY("10000");
                     break;
                 case 1:
-                    coordinate.setValY(20000);
+                    coordinate.setValY("20000");
                     break;
                 default:
-                    coordinate.setValY(25000);
+                    coordinate.setValY("25000");
                     break;
             }
             coordinateList.add(coordinate);

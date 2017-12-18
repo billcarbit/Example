@@ -76,7 +76,7 @@ public class LineAreaChartActivity extends Activity {
                 }
                 for (Integer order120Item : dataList) {
                     Coordinate coordinate = new Coordinate();
-                    coordinate.setValY(order120Item);
+                    coordinate.setValY(order120Item.toString());
                     coordinateList.add(coordinate);
                 }
                 linePath.setCoordinateList(coordinateList);
@@ -90,7 +90,7 @@ public class LineAreaChartActivity extends Activity {
                 }
                 for (Integer order120Item : dataList) {
                     Coordinate coordinate = new Coordinate();
-                    coordinate.setValY(order120Item);
+                    coordinate.setValY(order120Item.toString());
                     coordinateList.add(coordinate);
                 }
                 linePath.setCoordinateList(coordinateList);
@@ -104,7 +104,7 @@ public class LineAreaChartActivity extends Activity {
                 }
                 for (Integer order120Item : dataList) {
                     Coordinate coordinate = new Coordinate();
-                    coordinate.setValY(order120Item);
+                    coordinate.setValY(order120Item.toString());
                     coordinateList.add(coordinate);
                 }
                 linePath.setCoordinateList(coordinateList);
@@ -118,7 +118,7 @@ public class LineAreaChartActivity extends Activity {
                 }
                 for (Integer order120Item : dataList) {
                     Coordinate coordinate = new Coordinate();
-                    coordinate.setValY(order120Item);
+                    coordinate.setValY(order120Item.toString());
                     coordinateList.add(coordinate);
                 }
                 linePath.setCoordinateList(coordinateList);

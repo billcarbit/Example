@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * file explain
+ * 贝塞尔曲线
  *
  * @author wangning
  * @version 1.0 2017-09-18
@@ -43,7 +43,7 @@ public class CurveCharViewActivity extends Activity {
         lacv.setXData(dataXList);
         for (int i = 0; i < 6; i++) {
             DataY dataY = new DataY();
-           // dataY.setData(String.valueOf(55 * (i)));
+            // dataY.setData(String.valueOf(55 * (i)));
             switch (i) {
                 case 0:
                     dataY.setData("55");
@@ -61,7 +61,7 @@ public class CurveCharViewActivity extends Activity {
                     dataY.setData("111");
                     break;
                 case 5:
-                    dataY.setData("125");
+                    dataY.setData("125.3");
                     break;
             }
 
@@ -72,39 +72,39 @@ public class CurveCharViewActivity extends Activity {
         PathLine linePath = new PathLine();
         linePath.setColor(R.color.orange);
         List<Coordinate> coordinateList = new ArrayList<Coordinate>();
-        List<Integer> dataList = new ArrayList<>();
+        List<String> dataList = new ArrayList<>();
         for (int k = 0; k < 6; k++) {
-          //  dataList.add(50 * k);
+            //  dataList.add(50 * k);
             switch (k) {
                 case 0:
-                    dataList.add(55);
+                    dataList.add("55.10");
                     //dataList.add(160);
                     break;
                 case 1:
-                    dataList.add(66);
+                    dataList.add("66");
                     //dataList.add(269);
                     break;
                 case 2:
-                    dataList.add(77);
+                    dataList.add("77.89");
                     //dataList.add(520);
                     break;
                 case 3:
-                    dataList.add(62);
+                    dataList.add("62.45");
                     //dataList.add(790);
                     break;
                 case 4:
-                    dataList.add(99);
+                    dataList.add("99.11");
                     //dataList.add(233);
                     break;
                 case 5:
-                    dataList.add(88);
+                    dataList.add("88.55");
                     //dataList.add(333);
                     break;
             }
         }
-        for (Integer order120Item : dataList) {
+        for (String order120Item : dataList) {
             Coordinate coordinate = new Coordinate();
-            coordinate.setValY(order120Item);
+            coordinate.setValY(order120Item.toString());
             coordinateList.add(coordinate);
         }
         linePath.setCoordinateList(coordinateList);
