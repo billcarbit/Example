@@ -4,21 +4,16 @@ import android.animation.ValueAnimator;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
-import android.view.Gravity;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wangning.R;
 
 /**
- * file explain
- *
- * @author wangning
- * @version 1.0 2017-09-27
- * @since JDK 1.8
+ * Created by Administrator on 2017/12/26.
  */
+
 public class ProcessDialog extends Dialog {
 
     private AnimationDrawable animationDrawable;
