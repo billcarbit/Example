@@ -37,7 +37,7 @@ public class BannerActivity2 extends Activity {
         bannerView.startLoop(true);
         bannerView.setLoopInterval(2000);
         bannerView.setViewList(viewList);
-//        bannerView.setTransformAnim(true);
+       //bannerView.setTransformAnim(true);
     }
 
 }
