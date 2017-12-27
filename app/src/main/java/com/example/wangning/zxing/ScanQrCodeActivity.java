@@ -5,8 +5,12 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.wangning.R;
 
@@ -14,9 +18,11 @@ import com.example.wangning.R;
  * Created by Administrator on 2017/12/26.
  */
 
-public class ScanQrCodeActivity extends Activity {
+public class ScanQrCodeActivity extends Activity implements View.OnClickListener {
+    private static final String TAG = "ScanQrCodeActivity";
     SurfaceView sv;
     Camera camera;
+    Button btn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,16 +34,47 @@ public class ScanQrCodeActivity extends Activity {
 
     void initView() {
         sv = (SurfaceView) findViewById(R.id.sv);
-
-
+        btn = (Button) findViewById(R.id.btn);
     }
 
     void initData() {
+        btn.setOnClickListener(this);
+
         SurfaceHolder holder = sv.getHolder();
         holder.setFixedSize(176, 155);
         holder.setKeepScreenOn(true);
         holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         holder.addCallback(new TakePictureSurfaceCallback());
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        int vId = v.getId();
+        switch (vId) {
+            case R.id.btn:
+                camera.takePicture(new Camera.ShutterCallback() {
+                    @Override
+                    public void onShutter() {
+                        Log.e(TAG, "onShutter: " );
+                    }
+                }, new Camera.PictureCallback() {
+                    @Override
+                    public void onPictureTaken(byte[] data, Camera camera) {
+                        Log.e(TAG, "onPictureTaken: data="+data );
+                    }
+                }, new Camera.PictureCallback() {
+                    @Override
+                    public void onPictureTaken(byte[] data, Camera camera) {
+                        Log.e(TAG, "onPictureTaken: data="+data );
+                    }
+                });
+
+                break;
+            default:
+                break;
+
+        }
     }
 
     private final class TakePictureSurfaceCallback implements SurfaceHolder.Callback {
@@ -47,12 +84,10 @@ public class ScanQrCodeActivity extends Activity {
             try {
                 camera = Camera.open();
                 if (camera == null) {
-                    int cametacount = Camera.getNumberOfCameras();
-                    camera = Camera.open(cametacount - 1);
+                    camera = Camera.open(Camera.getNumberOfCameras() - 1);
                 }
-
                 Camera.Parameters params = camera.getParameters();
-                params.setJpegQuality(80);//照片质量
+                params.setJpegQuality(100);//照片质量
                 params.setPictureSize(1024, 768);//图片分辨率
                 params.setPreviewFrameRate(5);//预览帧率
 
@@ -72,6 +107,9 @@ public class ScanQrCodeActivity extends Activity {
                  * 开启预览
                  */
                 camera.startPreview();
+
+
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

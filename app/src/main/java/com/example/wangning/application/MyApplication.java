@@ -1,9 +1,14 @@
 package com.example.wangning.application;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.util.Log;
 
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.tencent.smtt.sdk.QbSdk;
 
 /**
@@ -20,6 +25,7 @@ public class MyApplication  extends Application {
         // 程序创建的时候执行
         Log.d(TAG, "onCreate");
         super.onCreate();
+        initImageLoader(this);
         //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
 
         QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
@@ -39,6 +45,25 @@ public class MyApplication  extends Application {
         //x5内核初始化接口
         QbSdk.initX5Environment(getApplicationContext(),  cb);
     }
+
+    public static void initImageLoader(Context context) {
+        // This configuration tuning is custom. You can tune every option, you may tune some of them,
+        // or you can create default configuration by
+        //  ImageLoaderConfiguration.createDefault(this);
+        // method.
+        ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
+        config.threadPriority(Thread.NORM_PRIORITY - 2);
+        config.denyCacheImageMultipleSizesInMemory();
+        config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
+        config.diskCacheSize(50 * 1024 * 1024); // 50 MiB
+        config.tasksProcessingOrder(QueueProcessingType.LIFO);
+        config.writeDebugLogs(); // Remove for release app
+
+        // Initialize ImageLoader with configuration.
+        ImageLoader.getInstance().init(config.build());
+    }
+
+
     @Override
     public void onTerminate() {
         // 程序终止的时候执行
