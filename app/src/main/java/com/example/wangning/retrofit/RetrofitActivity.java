@@ -40,7 +40,7 @@ public class RetrofitActivity extends Activity {
                 .create();
 
         final Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.github.com/")
+                .baseUrl("http://localhost:8080/")
                 //可以接收自定义的Gson，当然也可以不传
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
@@ -55,20 +55,20 @@ public class RetrofitActivity extends Activity {
 
 
     void httpRequest(Retrofit retrofit){
-        BlogService service = retrofit.create(BlogService.class);
+        MyFirstServlet service = retrofit.create(MyFirstServlet.class);
         Blog blog = new Blog();
         blog.setContent("新建的Blog");
         blog.setTitle("测试");
-        Call<Result<Blog>> call = service.createBlog(blog);
-        call.enqueue(new Callback<Result<Blog>>() {
+        Call<MyFirstServletResp> call = service.createBlog(blog);
+        call.enqueue(new Callback<MyFirstServletResp>() {
             @Override
-            public void onResponse(Call<Result<Blog>> call, Response<Result<Blog>> response) {
+            public void onResponse(Call<MyFirstServletResp> call, Response<MyFirstServletResp> response) {
                 // 已经转换为想要的类型了
-                Result<Blog> result = response.body();
+                MyFirstServletResp result = response.body();
                 Log.e(TAG, "onResponse: result="+result );
             }
             @Override
-            public void onFailure(Call<Result<Blog>> call, Throwable t) {
+            public void onFailure(Call<MyFirstServletResp> call, Throwable t) {
                 t.printStackTrace();
             }
         });
@@ -82,5 +82,11 @@ public class RetrofitActivity extends Activity {
     }
 
 
+    public interface MyFirstServlet {
+
+        @POST("/MyFirstServlet")
+        Call<MyFirstServletResp> createBlog(@Body Blog blog);
+
+    }
 
 }
