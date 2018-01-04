@@ -11,6 +11,7 @@
 
 
     <style name="add_dialog" parent="@android:style/Theme.Dialog">
+
         <item name="android:windowFrame">@null</item>
         <!-- 边框 -->
         <item name="android:windowIsFloating">true</item>
@@ -23,6 +24,7 @@
         <item name="android:backgroundDimAmount">0.5</item>
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:windowActionBarOverlay">true</item>
+
     </style>
 
     <style name="transparent_dialog" parent="@android:style/Theme.Dialog">
@@ -35,7 +37,7 @@
         <item name="android:windowIsFloating">true</item>
         <!--是否模糊-->
         <item name="android:backgroundDimEnabled">false</item>
-       <item name="android:paddingTop">50dp</item>
+        <item name="android:paddingTop">50dp</item>
     </style>
 
     <style name="loading_dialog" parent="@android:style/Theme.Dialog">
@@ -67,6 +69,12 @@
         <item name="@android:windowExitAnimation">@anim/dialog_slide_down_exit</item>
         //退出时的动画
     </style>
+
+    <style name="slide_up" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_slide_up_enter</item>
+        <item name="android:windowExitAnimation">@anim/dialog_slide_up_exit</item>
+    </style>
+
 
     <style name="sign_in_detail_dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>

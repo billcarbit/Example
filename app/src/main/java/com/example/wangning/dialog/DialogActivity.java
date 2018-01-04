@@ -18,36 +18,111 @@ import com.example.wangning.R;
  */
 public class DialogActivity extends Activity {
     private static final String TAG = "DialogActivity";
-    ProcessDialog dialog;
+    ProcessDialog processDialog;
+    SlideDownDialog slideDownDialog;
+    AddPhotoDialog addPhotoDialog;
+    Button btn1, btn2, btn3;
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dialog_del);
+        initView();
+        initData();
 
-        dialog = new ProcessDialog(this);
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+    }
+
+    void initView() {
+        btn1 = (Button) findViewById(R.id.btn1);
+        btn2 = (Button) findViewById(R.id.btn2);
+        btn3 = (Button) findViewById(R.id.btn3);
+
+    }
+
+    void initData() {
+        initProcessDialog();
+        initSlideDownDialog();
+        initAddPhotoDialog();
+    }
+
+    void initAddPhotoDialog() {
+        addPhotoDialog = new AddPhotoDialog(this);
+        addPhotoDialog.setCancelable(true);
+        addPhotoDialog.setCanceledOnTouchOutside(true);
+
+        addPhotoDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
-            public void onDismiss(DialogInterface dialog) {
-                finish();
+            public void onCancel(DialogInterface dialog) {
+                //addPhotoDialog.animationExit();
             }
         });
-        final Button btn = (Button) findViewById(R.id.btn);
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        addPhotoDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
-            public void onClick(View view) {
-                dialog.show();
-                dialog.setDuration(3000);
-                dialog.setFromPercent(0.0f);
-                dialog.setToPercent(1.0f);
-                dialog.notifyData();
+            public void onDismiss(DialogInterface dialog) {
+                Log.e(TAG, "onDismiss: " );
+            }
+        });
+
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addPhotoDialog.show();
+            }
+
+        });
+    }
+
+    void initSlideDownDialog() {
+        slideDownDialog = new SlideDownDialog(this, 0, 0);
+        slideDownDialog.setCancelable(true);
+        slideDownDialog.setCanceledOnTouchOutside(true);
+        slideDownDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                dialog.dismiss();
+            }
+        });
+        slideDownDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                //finish();
+            }
+        });
+
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                slideDownDialog.show();
             }
         });
 
 
     }
 
+    void initProcessDialog() {
+        processDialog = new ProcessDialog(this);
+
+        processDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                //finish();
+            }
+        });
+
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                processDialog.show();
+                processDialog.setDuration(3000);
+                processDialog.setFromPercent(0.0f);
+                processDialog.setToPercent(1.0f);
+                processDialog.notifyData();
+            }
+        });
+    }
 
     @Override
     public void onBackPressed() {
