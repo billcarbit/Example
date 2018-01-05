@@ -20,11 +20,19 @@
         android:max="100"
         android:progress="30"
         android:progressDrawable="@drawable/progressbar_special" />
-    
+
+
+    <ProgressBar
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/progress_circle_pic"
+        android:indeterminateDuration="1000"/>
+
     <TextView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/layer_drawable"/>
+        android:background="@drawable/layer_drawable" />
 
 </LinearLayout>
