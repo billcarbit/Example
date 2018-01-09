@@ -16,7 +16,7 @@ import java.util.List;
  */
 
 public class BannerActivity2 extends Activity {
-    private int[] imgs = {R.drawable.icon_guan, R.drawable.icon_kai,R.drawable.icon_xinzen2};
+    private int[] imgs = {R.drawable.banner_top,R.drawable.banner_top,R.drawable.banner_top};
     private List<View> viewList;
     BannerView bannerView;
 
@@ -29,11 +29,12 @@ public class BannerActivity2 extends Activity {
             ImageView image = new ImageView(this);
             image.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             //设置显示格式
-            image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            image.setScaleType(ImageView.ScaleType.FIT_XY);
             image.setImageResource(imgs[i]);
             viewList.add(image);
         }
         bannerView = (BannerView) findViewById(R.id.banner);
+        bannerView.setBottomDrawable(R.drawable.banner_point_select,R.drawable.banner_point);
         bannerView.startLoop(true);
         bannerView.setLoopInterval(2000);
         bannerView.setViewList(viewList);

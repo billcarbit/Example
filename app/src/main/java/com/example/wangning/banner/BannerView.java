@@ -58,7 +58,7 @@ public class BannerView extends FrameLayout {
             int curPos = bannerView.mViewPager.getCurrentItem();
             curPos = (curPos + 1) % bannerView.mViewPager.getAdapter().getCount();
             bannerView.mViewPager.setCurrentItem(curPos);
-            if (hasMessages(MSG_LOOP)){
+            if (hasMessages(MSG_LOOP)) {
                 removeMessages(MSG_LOOP);
             }
             sendEmptyMessageDelayed(MSG_LOOP, LOOP_INTERVAL);
@@ -121,7 +121,7 @@ public class BannerView extends FrameLayout {
         mViewPager.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()){
+                switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         if (mBannerHandler != null) {
                             if (mBannerHandler.hasMessages(MSG_LOOP)) {
@@ -184,7 +184,8 @@ public class BannerView extends FrameLayout {
                         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         layoutParams.rightMargin = getResources().getDimensionPixelOffset(R.dimen.dimen_9dp);
                         img.setLayoutParams(layoutParams);
-                        img.setBackgroundResource(R.drawable.banner_point);
+                        //img.setBackgroundResource(R.drawable.banner_point);
+                        img.setBackgroundResource(mNormalDrawable);
                         mLinearPosition.addView(img);
                     } else {
                         mLinearPosition.removeViewAt(0);
@@ -194,9 +195,11 @@ public class BannerView extends FrameLayout {
             int curPos = mViewPager.getCurrentItem();
             for (int i = 0; i < mLinearPosition.getChildCount(); i++) {
                 if (i == (curPos % viewSize)) {
-                    mLinearPosition.getChildAt(i).setBackgroundResource(R.drawable.banner_point_select);
+                    //mLinearPosition.getChildAt(i).setBackgroundResource(R.drawable.banner_point_select);
+                    mLinearPosition.getChildAt(i).setBackgroundResource(mSelectedDrawable);
                 } else {
-                    mLinearPosition.getChildAt(i).setBackgroundResource(R.drawable.banner_point);
+                    //mLinearPosition.getChildAt(i).setBackgroundResource(R.drawable.banner_point);
+                    mLinearPosition.getChildAt(i).setBackgroundResource(mNormalDrawable);
                 }
             }
         }
@@ -211,31 +214,36 @@ public class BannerView extends FrameLayout {
         }
     }
 
-    public void setTransformAnim (boolean flag){
-        if (flag){
+    private int mSelectedDrawable;
+    private int mNormalDrawable;
+
+    public void setBottomDrawable(int selectedResId, int normalResId) {
+        mSelectedDrawable = selectedResId;
+        mNormalDrawable = normalResId;
+    }
+
+    public void setTransformAnim(boolean flag) {
+        if (flag) {
             mViewPager.setPageTransformer(true, new ViewPager.PageTransformer() {
                 private static final float MIN_SCALE = 0.75f;
+
                 @Override
                 public void transformPage(View view, float position) {
-                    Log.e("WN", "transformPage: position="+position );
+                    Log.e("WN", "transformPage: position=" + position);
                     int pageWidth = view.getWidth();
-                    if (position < -1)
-                    { // [-Infinity,-1)
+                    if (position < -1) { // [-Infinity,-1)
                         // This page is way off-screen to the left.
                         view.setRotation(0);
 
-                    } else if (position <= 1)
-                    { // [-1,1]
+                    } else if (position <= 1) { // [-1,1]
                         // Modify the default slide transition to shrink the page as well
-                        if (position < 0)
-                        {
+                        if (position < 0) {
 
                             float mRot = (20f * position);
                             view.setPivotX(view.getMeasuredWidth() * 0.5f);
                             view.setPivotY(view.getMeasuredHeight());
                             view.setRotation(mRot);
-                        } else
-                        {
+                        } else {
 
                             float mRot = (20f * position);
                             view.setPivotX(view.getMeasuredWidth() * 0.5f);
@@ -247,8 +255,7 @@ public class BannerView extends FrameLayout {
 
                         // Fade the page relative to its size.
 
-                    } else
-                    { // (1,+Infinity]
+                    } else { // (1,+Infinity]
                         // This page is way off-screen to the right.
                         view.setRotation(0);
                     }
@@ -264,7 +271,7 @@ public class BannerView extends FrameLayout {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        if (mBannerHandler != null){
+        if (mBannerHandler != null) {
             mBannerHandler.removeMessages(MSG_LOOP);
             mBannerHandler = null;
         }
