@@ -16,7 +16,7 @@ import java.util.List;
  */
 
 public class BannerActivity2 extends Activity {
-    private int[] imgs = {R.drawable.banner_top,R.drawable.banner_top,R.drawable.banner_top};
+    private int[] imgs = {R.drawable.banner_top,R.drawable.guagua_bg};
     private List<View> viewList;
     BannerView bannerView;
 
