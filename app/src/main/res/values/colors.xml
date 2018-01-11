@@ -62,6 +62,7 @@
     <color name="orange_f76b1c">#66F76B1C</color>
     <color name="orange_ffa263">#ffa263</color>
     <color name="white_fdf6df">#66FDF6DF</color>
-
+    <color name="dark">#FF222222</color>
+    <color name="light">#FFEEEEEE</color>
 
 </resources>
