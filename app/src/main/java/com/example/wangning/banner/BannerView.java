@@ -26,7 +26,7 @@ import java.util.List;
  * Created by Administrator on 2017/12/27.
  */
 public class BannerView extends FrameLayout {
-
+    private static final String TAG = "BannerView";
     private static final int MSG_LOOP = 1000;
     private static long LOOP_INTERVAL = 5000;
     private LinearLayout mLinearPosition = null;
@@ -61,6 +61,7 @@ public class BannerView extends FrameLayout {
             if (hasMessages(MSG_LOOP)) {
                 removeMessages(MSG_LOOP);
             }
+            Log.e(TAG, "handleMessage: curPos=" + curPos);
             sendEmptyMessageDelayed(MSG_LOOP, LOOP_INTERVAL);
         }
     }
@@ -123,6 +124,7 @@ public class BannerView extends FrameLayout {
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
+                        Log.e(TAG, "onTouch: ACTION_DOWN");
                         if (mBannerHandler != null) {
                             if (mBannerHandler.hasMessages(MSG_LOOP)) {
                                 mBannerHandler.removeMessages(MSG_LOOP);
@@ -130,6 +132,13 @@ public class BannerView extends FrameLayout {
                         }
                         break;
                     case MotionEvent.ACTION_UP:
+                        Log.e(TAG, "onTouch: ACTION_UP");
+                        if (mBannerHandler != null) {
+                            mBannerHandler.sendEmptyMessageDelayed(MSG_LOOP, LOOP_INTERVAL);
+                        }
+                        break;
+                    case MotionEvent.ACTION_CANCEL:
+                        Log.e(TAG, "onTouch: ACTION_CANCEL");
                         if (mBannerHandler != null) {
                             mBannerHandler.sendEmptyMessageDelayed(MSG_LOOP, LOOP_INTERVAL);
                         }

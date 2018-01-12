@@ -2,9 +2,12 @@ package com.example.wangning.banner;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 
 import com.example.wangning.R;
 
@@ -16,10 +19,10 @@ import java.util.List;
  */
 
 public class BannerActivity2 extends Activity {
-    private int[] imgs = {R.drawable.banner_top,R.drawable.guagua_bg};
+    private static final String TAG = "BannerActivity2";
+    private int[] imgs = {R.drawable.banner_top,R.drawable.guagua_bg,R.drawable.banner_top,R.drawable.banner_top};
     private List<View> viewList;
     BannerView bannerView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
