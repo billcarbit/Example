@@ -148,4 +148,8 @@
 
     </style>
 
+    <style name="RadioButtonStyles">
+        <item name="android:button">@drawable/selector_radio_bg</item>
+    </style>
+
 </resources>
