@@ -3,10 +3,8 @@ package com.example.wangning.zxing;
 import android.app.Activity;
 import android.hardware.Camera;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -34,7 +32,7 @@ public class ScanQrCodeActivity extends Activity implements View.OnClickListener
 
     void initView() {
         sv = (SurfaceView) findViewById(R.id.sv);
-        btn = (Button) findViewById(R.id.btn);
+        btn = (Button) findViewById(R.id.btn_get_json);
     }
 
     void initData() {
@@ -52,7 +50,7 @@ public class ScanQrCodeActivity extends Activity implements View.OnClickListener
     public void onClick(View v) {
         int vId = v.getId();
         switch (vId) {
-            case R.id.btn:
+            case R.id.btn_get_json:
                 camera.takePicture(new Camera.ShutterCallback() {
                     @Override
                     public void onShutter() {

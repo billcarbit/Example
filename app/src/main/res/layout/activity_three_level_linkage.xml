@@ -5,7 +5,7 @@
     android:gravity="bottom"
     android:orientation="vertical">
     <Button
-        android:id="@+id/btn"
+        android:id="@+id/btn_get_json"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="弹出省市区对话框"/>

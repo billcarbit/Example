@@ -29,7 +29,7 @@ public class AnimateActivity extends Activity implements View.OnClickListener {
     }
 
     private void initView() {
-        mBtn = (Button) findViewById(R.id.btn);
+        mBtn = (Button) findViewById(R.id.btn_get_json);
         iv_bell = (ImageView) findViewById(R.id.iv_bell);
 
     }
@@ -45,7 +45,7 @@ public class AnimateActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn:
+            case R.id.btn_get_json:
                 SignDialog signDialog = new SignDialog(this);
                 signDialog.show();
                 break;

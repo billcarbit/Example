@@ -24,7 +24,7 @@ public class AddViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_view);
         final SalesItemView salesItemView = (SalesItemView) findViewById(R.id.salesItemView);
-        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_get_json).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 JSONArray jsonArray = salesItemView.getInputData();

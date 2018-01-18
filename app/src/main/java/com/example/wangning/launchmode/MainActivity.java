@@ -8,7 +8,6 @@ import android.widget.Button;
 
 import com.example.wangning.R;
 import com.example.wangning.glide.GlideActivity;
-import com.example.wangning.loading.LoadingDataDialog;
 
 public class MainActivity extends AppCompatActivity {
     public final static String TAG = MainActivity.class.getSimpleName();
@@ -18,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button btn = (Button) findViewById(R.id.btn);
+        Button btn = (Button) findViewById(R.id.btn_get_json);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

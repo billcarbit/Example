@@ -11,14 +11,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StatFs;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 
 import com.example.wangning.R;
@@ -26,7 +23,6 @@ import com.example.wangning.R;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/27.
@@ -52,7 +48,7 @@ public class CameraActivity extends Activity
 
     void initView() {
         sv = (SurfaceView) findViewById(R.id.sv);
-        btn = (Button) findViewById(R.id.btn);
+        btn = (Button) findViewById(R.id.btn_get_json);
         btn.setOnClickListener(this);
     }
 
@@ -66,7 +62,7 @@ public class CameraActivity extends Activity
     public void onClick(View v) {
         int vId = v.getId();
         switch (vId) {
-            case R.id.btn:
+            case R.id.btn_get_json:
                 //拍摄照片
                 camera.takePicture(shutterCallback, null, jpegCallback);
                 break;

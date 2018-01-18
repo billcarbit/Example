@@ -23,7 +23,7 @@ public class ThreeLevelLinkageActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_three_level_linkage);
         initData();
-        Button btn = (Button) findViewById(R.id.btn);
+        Button btn = (Button) findViewById(R.id.btn_get_json);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

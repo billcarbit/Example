@@ -21,7 +21,7 @@ public class SwipeMenuActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipemenu);
         final SwipeMenuLayout sml =  (SwipeMenuLayout)findViewById(R.id.sml);
-        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_get_json).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
