@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -114,38 +115,34 @@ public class ExampleUnitTest {
 
     @Test
     public void json() throws Exception {
-
-
         JSONObject jsonA = (JSONObject) JSONObject.toJSON(new A());
         B b = JSONObject.toJavaObject(jsonA, B.class);
         System.out.println("jsonA=" + jsonA.toJSONString());
-        System.out.println("b=" + b.a);
+        System.out.println("b=" + b.getA());
 
-        int cx = 0;
-        float fd = 0.000000000000f;
-        System.out.println("fd=" + (fd == 0));
+
     }
 
     static class A {
-        int a = 1;
+        String a;
 
-        public int getA() {
+        public String getA() {
             return a;
         }
 
-        public void setA(int a) {
+        public void setA(String a) {
             this.a = a;
         }
     }
 
     static class B {
-        boolean a;
+        String a;
 
-        public boolean isA() {
+        public String getA() {
             return a;
         }
 
-        public void setA(boolean a) {
+        public void setA(String a) {
             this.a = a;
         }
     }
