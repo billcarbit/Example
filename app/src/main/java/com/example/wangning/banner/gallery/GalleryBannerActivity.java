@@ -40,8 +40,7 @@ public class GalleryBannerActivity extends Activity {
             viewList.add(image);
         }
         bannerView.setBottomDrawable(R.drawable.banner_point_select,R.drawable.banner_point);
-        bannerView.startLoop(true);
-        bannerView.setLoopInterval(2000);
+        bannerView.startLoop(false);
         bannerView.setViewList(viewList);
     }
 

@@ -12,27 +12,15 @@ import java.util.List;
  */
 public class GalleryBannerAdapter extends PagerAdapter {
     private List<View> viewList;
-    private int size;
-    private final int cacheCount = 4;
-
 
     public GalleryBannerAdapter(List<View> viewList) {
         this.viewList = viewList;
-        size = viewList.size();
     }
 
 
     @Override
     public int getCount() {
-        if (viewList == null || viewList.size() == 0) {
-            return 0;
-        } else if (viewList.size() == 1) {
-            return 1;
-        } else if (viewList.size() == 2) {
-            return 2;
-        } else {
-            return Integer.MAX_VALUE;
-        }
+        return viewList.size();
     }
 
     @Override
@@ -45,12 +33,8 @@ public class GalleryBannerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        ViewGroup parent = (ViewGroup) viewList.get(position % size).getParent();
-        if (parent != null) {
-            parent.removeView(viewList.get(position % size));
-        }
-        container.addView(viewList.get(position % size));
-        return viewList.get(position % size);
+        container.addView(viewList.get(position));
+        return viewList.get(position);
     }
 
 
