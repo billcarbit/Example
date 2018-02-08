@@ -7,31 +7,11 @@
     android:clipChildren="false"
     android:gravity="center">
 
-    <RelativeLayout
+
+    <com.example.wangning.banner.gallery.GalleryBannerView
+        android:id="@+id/banner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" />
 
-        <com.example.wangning.banner.gallery.GalleryBannerView
-            android:id="@+id/banner"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="7dp"
-            android:layout_marginTop="7dp"
-            android:paddingLeft="9dp"
-            android:paddingRight="9dp"
-            android:paddingTop="2dp"
-            android:alpha="0.3"
-            android:paddingBottom="2dp"
-            android:background="@drawable/shape_bg_grey_r9"
-            android:textColor="@color/white"
-            android:textSize="11dp"
-            tools:text="3/28" />
-
-    </RelativeLayout>
 
 </RelativeLayout>

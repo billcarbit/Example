@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.wangning.R;
 import com.example.wangning.banner.BannerView;
@@ -29,6 +30,7 @@ public class GalleryBannerActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery_banner);
         GalleryBannerView bannerView = (GalleryBannerView)findViewById(R.id.banner);
+
         List<View> viewList = new ArrayList<View>();
         int imgs[] = new int[]{R.drawable.banner_top,R.drawable.banner_top,R.drawable.guagua_bg};
         for (int i = 0; i < imgs.length; i++) {
