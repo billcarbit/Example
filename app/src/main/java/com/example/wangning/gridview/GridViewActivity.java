@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,13 +45,8 @@ public class GridViewActivity extends Activity {
 
     void initData() {
         list = new ArrayList<String>();
-        for (int i = 0; i < 7; i++) {
-
-            if (i == 1) {
-                list.add("CWNCNWE0CNW0ECN0WEN0CNWE");
-            }else{
-                list.add("A" + i);
-            }
+        for (int i = 0; i < 3; i++) {
+            list.add("A" + i);
         }
         mAdapter = new MyAdapter();
         mGv.setAdapter(mAdapter);
@@ -75,6 +71,7 @@ public class GridViewActivity extends Activity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            Log.e("AAAAA", "getView: position=" + position + ",convertView=" + convertView + ",getItem(position)=" + getItem(position));
             ViewHolder vh;
             if (convertView == null) {
                 vh = new ViewHolder();
@@ -88,8 +85,10 @@ public class GridViewActivity extends Activity {
             return convertView;
         }
 
-        class ViewHolder {
-            TextView tv_name;
-        }
+
+    }
+
+    static class ViewHolder {
+        TextView tv_name;
     }
 }
