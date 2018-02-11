@@ -16,7 +16,7 @@
 
     <color name="sign_in_item_detail_bg">#40200A</color>
     <color name="sign_in_item_stroke">#FEFF6E</color>
-
+    <color name="blue0063f3">#0063f3</color>
     <!--文字颜色-->
     <color name="text_ff6600">#ff6600</color>
     <color name="text_222222">#222222</color>
