@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import org.junit.Test;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,6 +18,13 @@ import java.util.Set;
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
  */
 public class ExampleUnitTest {
+
+    @Test
+    public void readFile() throws Exception{
+        File file =  new File("D:\\need_replace");
+
+        System.out.println("file.isDirectory()=" + file.isDirectory());
+    }
 
     @Test
     public void createYList() throws Exception {

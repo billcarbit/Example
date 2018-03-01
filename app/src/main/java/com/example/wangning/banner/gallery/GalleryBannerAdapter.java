@@ -28,6 +28,8 @@ public class GalleryBannerAdapter extends PagerAdapter {
       /*  if (viewList.size() > cacheCount) {
             container.removeView(viewList.get(position % size));
         }*/
+
+        container.removeView(viewList.get(position));
     }
 
 
