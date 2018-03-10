@@ -19,9 +19,17 @@ import java.util.Set;
  */
 public class ExampleUnitTest {
 
+
     @Test
-    public void readFile() throws Exception{
-        File file =  new File("D:\\need_replace");
+    public void splitTest() throws Exception {
+        String dotString = "2,";
+        String [] array = dotString.split(",");
+        System.out.println("array.length=" +array.length+",array[0]="+array[0]);
+    }
+
+    @Test
+    public void readFile() throws Exception {
+        File file = new File("D:\\need_replace");
 
         System.out.println("file.isDirectory()=" + file.isDirectory());
     }
