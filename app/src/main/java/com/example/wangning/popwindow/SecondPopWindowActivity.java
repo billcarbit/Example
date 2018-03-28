@@ -24,7 +24,7 @@ public class SecondPopWindowActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-        TextView tv= (TextView)findViewById(R.id.tv_second);
+        TextView tv = (TextView) findViewById(R.id.tv_second);
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -35,21 +35,22 @@ public class SecondPopWindowActivity extends Activity {
                 mPopupWindow.setOutsideTouchable(true);
                 mPopupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(), (Bitmap) null));
 
-                mPopupWindow.showAtLocation(view, Gravity.CENTER,0,0);
-                WindowManager.LayoutParams  windowLp = getWindow().getAttributes();
-                windowLp.alpha=0.0f;
+                //mPopupWindow.showAtLocation(view, Gravity.CENTER,0,0);
+                mPopupWindow.showAsDropDown(view);
+                WindowManager.LayoutParams windowLp = getWindow().getAttributes();
+                windowLp.alpha = 0.4f;
                 getWindow().setAttributes(windowLp);
 
                 mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                     @Override
                     public void onDismiss() {
-                        WindowManager.LayoutParams  windowLp = getWindow().getAttributes();
-                        windowLp.alpha=1.0f;
+                        WindowManager.LayoutParams windowLp = getWindow().getAttributes();
+                        windowLp.alpha = 1.0f;
                         getWindow().setAttributes(windowLp);
                     }
                 });
 
-                TextView tvAll =  (TextView) popupView.findViewById(R.id.tv_all);
+                TextView tvAll = (TextView) popupView.findViewById(R.id.tv_all);
                 tvAll.setOnClickListener(new View.OnClickListener() {//全部
                     @Override
                     public void onClick(View view) {
@@ -57,7 +58,7 @@ public class SecondPopWindowActivity extends Activity {
                     }
                 });
 
-                TextView tvIncome =  (TextView) popupView.findViewById(R.id.tv_income);
+                TextView tvIncome = (TextView) popupView.findViewById(R.id.tv_income);
                 tvIncome.setOnClickListener(new View.OnClickListener() {//收入
                     @Override
                     public void onClick(View view) {
@@ -65,7 +66,7 @@ public class SecondPopWindowActivity extends Activity {
                     }
                 });
 
-                TextView tvOutcome =  (TextView) popupView.findViewById(R.id.tv_outcome);
+                TextView tvOutcome = (TextView) popupView.findViewById(R.id.tv_outcome);
                 tvOutcome.setOnClickListener(new View.OnClickListener() {//支出
                     @Override
                     public void onClick(View view) {
@@ -73,7 +74,7 @@ public class SecondPopWindowActivity extends Activity {
                     }
                 });
 
-                TextView tvOutdate =  (TextView) popupView.findViewById(R.id.tv_outdate);
+                TextView tvOutdate = (TextView) popupView.findViewById(R.id.tv_outdate);
                 tvOutdate.setOnClickListener(new View.OnClickListener() {//过期
                     @Override
                     public void onClick(View view) {

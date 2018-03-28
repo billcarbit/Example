@@ -3,12 +3,14 @@ package com.example.wangning.expandablelist;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wangning.R;
 
@@ -38,6 +40,24 @@ public class ExpandableListActivity extends Activity {
 
         initData();
         mainlistview.setAdapter(new MyAdapter());
+        mainlistview.setEnabled(true);
+        mainlistview.expandGroup(0);
+        mainlistview.expandGroup(1);
+        mainlistview.expandGroup(2);
+        mainlistview.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                Log.e("AA", "onGroupClick: groupPosition=" + groupPosition);
+                return true;
+            }
+        });
+        mainlistview.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                Log.e("AA", "onChildClick: groupPosition=" + groupPosition + ",childPosition=" + childPosition);
+                return false;
+            }
+        });
     }
 
     // 初始化数据

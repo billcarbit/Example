@@ -59,7 +59,7 @@ public class EditTextWithDel extends EditText {
         setDrawable();
     }
 
-    //设置删除图片  
+    //设置删除图片
     private void setDrawable() {
         if (length() < 1) {
             setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
@@ -71,34 +71,37 @@ public class EditTextWithDel extends EditText {
     int Dx = 0;
     int Dy = 0;
     Rect rect1 = new Rect();
+
     // 处理删除事件
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            Dx = (int) event.getRawX();
-            Dy = (int) event.getRawY();
-            getGlobalVisibleRect(rect1);
-            rect1.left = rect1.right -50- imgInable.getIntrinsicWidth();
+            Dx = (int) event.getX();//(int) event.getRawX();
+            Dy = (int) event.getY();//(int) event.getRawY();
+            Log.e(TAG, "ACTION_DOWN: Dx=" + Dx + ",Dy=" + Dy);
+            //getGlobalVisibleRect(rect1);
+            getLocalVisibleRect(rect1);
+            rect1.left = rect1.right - imgInable.getIntrinsicWidth();
         }
 
         if (imgInable != null && event.getAction() == MotionEvent.ACTION_UP) {
-            int eventX = (int) event.getRawX();
-            int eventY = (int) event.getRawY();
+            int eventX = (int) event.getX();//(int) event.getRawX();
+            int eventY = (int) event.getY();//(int) event.getRawY();
             Log.e(TAG, "eventX = " + eventX + "; eventY = " + eventY);
             Rect rect = new Rect();
-            getGlobalVisibleRect(rect);
+            //getGlobalVisibleRect(rect);
+            getLocalVisibleRect(rect);
+            Log.e(TAG, "getGlobalVisibleRect,rect.left = " + rect.left + ",rect.right=" + rect.right + "," +
+                    "imgInable.getIntrinsicWidth()=" + imgInable.getIntrinsicWidth()
+                    + ",rect.top=" + rect.top + "，rect.bottom=" + rect.bottom);
+            rect.left = rect.right - imgInable.getIntrinsicWidth();
 
-            rect.left = rect.right -50- imgInable.getIntrinsicWidth();
-
-            if (rect.contains(eventX, eventY)&&rect1.contains(Dx, Dy))
+            Log.e(TAG, "ACTION_UP: rect.contains(eventX, eventY)=" + rect.contains(eventX, eventY)
+                    + ",rect1.contains(Dx, Dy)=" + rect1.contains(Dx, Dy));
+            if (rect.contains(eventX, eventY) && rect1.contains(Dx, Dy))
                 setText("");
         }
         return super.onTouchEvent(event);
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-    }
-
-}  
+}

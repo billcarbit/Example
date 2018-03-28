@@ -6,6 +6,10 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wangning.R;
 
@@ -18,7 +22,7 @@ import com.example.wangning.R;
  */
 public class DelEditTextActivity extends Activity {
     private static final String TAG = "DelEditTextActivity";
-    EditTextWithDel et1,et2;
+    EditTextWithDel et1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +34,23 @@ public class DelEditTextActivity extends Activity {
 
     void initView() {
         et1 = (EditTextWithDel) findViewById(R.id.et1);
-        et2 = (EditTextWithDel) findViewById(R.id.et2);
     }
 
     void initData() {
         MyTextWatcher myTextWatcher = new MyTextWatcher();
         et1.addTextChangedListener(myTextWatcher);
-        et2.addTextChangedListener(myTextWatcher);
+        et1.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                // TODO Auto-generated method stub
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+
+                    Toast.makeText(DelEditTextActivity.this, "呵呵", Toast.LENGTH_SHORT).show();
+                    // search pressed and perform your functionality.
+                }
+                return false;
+            }
+        });
     }
 
 
@@ -53,10 +67,8 @@ public class DelEditTextActivity extends Activity {
         @Override
         public void afterTextChanged(Editable s) {
             String et1Str = et1.getText().toString();
-            String et2Str = et2.getText().toString();
 
             if (TextUtils.isEmpty(et1Str)
-                    || TextUtils.isEmpty(et2Str)
                     ) {
             } else {
             }
