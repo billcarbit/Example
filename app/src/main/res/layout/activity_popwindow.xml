@@ -5,16 +5,17 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/btn_popupwin"
+        android:id="@+id/btn_normal_popupwin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="弹出popWindow" />
+        android:layout_marginTop="50dp"
+        android:text="普通popWindow" />
 
 
     <Button
-        android:id="@+id/btn_popupwin2"
+        android:id="@+id/btn_animate_pw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="弹出popWindow2" />
+        android:text="数字动画的popupwindow" />
 
 </LinearLayout>
