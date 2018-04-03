@@ -6,6 +6,7 @@
     <color name="other_shallow_grey">#e5e5e5</color>
     <color name="white_f2f2f2">#f2f2f2</color>
     <color name="white">#ffffff</color>
+    <color name="orange_f5561f">#f5561f</color>
     <color name="text_dark">#222222</color>
     <color name="divider_ddd">#ddd</color>
     <color name="other_background_color">#F6F6F8</color>
@@ -26,7 +27,7 @@
     <color name="bg_white_middle">#fafafb</color>
     <color name="orange">#ff6600</color>
     <color name="divider_ccc">#ccc</color>
-
+    <color name="white_eee">#eeeeee</color>
     <color name="bg_light_middle">#b2000000</color> <!--黑色70%透明度-->
 
     <color name="bg_transparency_50">#80000000</color>
@@ -47,8 +48,10 @@
     <color name="red_dba38f">#dba38f</color>
     <color name="cyan_8ab8be">#8ab8be</color>
     <color name="red_cf6e6b">#cf6e6b</color>
-
+    <color name="green_4eeaa6">#4eeaa6</color>
+    <color name="orange_4eeaa6">#f8b026</color>
     <color name="red_f05a4a">#f05a4a</color>
+    <color name="red_f3352c">#f3352c</color>
     <color name="red_ff4221">#ff4221</color>
     <color name="green_1dac91">#1dac91</color>
     <color name="green_00b11e">#00b11e</color>
