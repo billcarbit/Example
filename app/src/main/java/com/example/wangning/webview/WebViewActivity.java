@@ -35,8 +35,10 @@ public class WebViewActivity extends Activity {
       /*  webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(this, "nativeMethod");*/
         //webView.loadUrl("file:///android_asset/index.html");
-        webView.loadUrl("https://www.baidu.com");
-        webView.setWebViewClient(new WebViewClient(){
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl("http://172.16.19.98:9000/ovu-park-wx/activity-detail.html?activityId=8e471bc0dc1a43d19f5e6f46831b6904");
+
+        /*        webView.setWebViewClient(new WebViewClient(){
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
@@ -64,7 +66,7 @@ public class WebViewActivity extends Activity {
             }
 
 
-        });
+        });*/
     }
 
     @JavascriptInterface
@@ -75,6 +77,18 @@ public class WebViewActivity extends Activity {
         }else{
             startActivity(new Intent(this,BActivity.class));
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        webView.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        webView.onPause();
     }
 
     @Override

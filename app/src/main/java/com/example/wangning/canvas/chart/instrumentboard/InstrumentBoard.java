@@ -45,7 +45,6 @@ public class InstrumentBoard extends ViewGroup {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         setWillNotDraw(false);
-        invalidate();
     }
 
     @Override
@@ -58,7 +57,7 @@ public class InstrumentBoard extends ViewGroup {
         drawWhiteCenter(canvas);
         drawOrangeDotCenter(canvas);
         drawDotCenterHalo(canvas);
-        drawIndicator(canvas);
+        drawIndicator(canvas, currentVal);
     }
 
     private final static int ruleInnerPadding = 60;
@@ -193,31 +192,19 @@ public class InstrumentBoard extends ViewGroup {
     /**
      * 绘制指针
      */
-    private void drawIndicator(Canvas canvas) {
+    private void drawIndicator(Canvas canvas, float currentVal) {
         float indicatorRadius = RADIUS - STROKE_WIDTH / 2 - mIndicatorPadding;
         float beginAngle = 135;
         float percent = currentVal / maxVal;
         float sweepAngle = (360 - 90) * percent;
         float topX = (float) (indicatorRadius * Math.cos((beginAngle + sweepAngle) * Math.PI / 180));
         float topY = (float) (indicatorRadius * Math.sin((beginAngle + sweepAngle) * Math.PI / 180));
-
         float bottomAngle1 = beginAngle + sweepAngle - Indicator.TWO_SIDES_ANGLE;
-        Log.e("AAA", "drawIndicator: bottomAngle1=" + bottomAngle1);
         float bottomX1 = (float) (Indicator.DOT_RADIUS * Math.cos((bottomAngle1) * Math.PI / 180));
         float bottomY1 = (float) (Indicator.DOT_RADIUS * Math.sin((bottomAngle1) * Math.PI / 180));
-
-        float bottomX1_1 = (float) (RADIUS * Math.cos((bottomAngle1) * Math.PI / 180));
-        float bottomY1_1 = (float) (RADIUS * Math.sin((bottomAngle1) * Math.PI / 180));
-
         float bottomAngle2 = beginAngle + sweepAngle + Indicator.TWO_SIDES_ANGLE;
         float bottomX2 = (float) (Indicator.DOT_RADIUS * Math.cos((bottomAngle2) * Math.PI / 180));
         float bottomY2 = (float) (Indicator.DOT_RADIUS * Math.sin((bottomAngle2) * Math.PI / 180));
-
-        float bottomX2_2 = (float) (RADIUS * Math.cos((bottomAngle2) * Math.PI / 180));
-        float bottomY2_2 = (float) (RADIUS * Math.sin((bottomAngle2) * Math.PI / 180));
-
-        Log.e("AAA", "drawIndicator: bottomAngle2=" + bottomAngle2);
-
         Paint paint = new Paint();
         paint.setColor(getResources().getColor(Indicator.COLOR));
         paint.setStrokeWidth(Indicator.WIDTH);
@@ -229,17 +216,6 @@ public class InstrumentBoard extends ViewGroup {
         path.lineTo(bottomX2, bottomY2);
         path.lineTo(topX, topY);
         canvas.drawPath(path, paint);
-
-
-    /*    canvas.drawLine(topX,topY,bottomX1,bottomY1,paint);
-        canvas.drawLine(topX,topY,bottomX2,bottomY2,paint);*/
- /*       paint.setColor(getResources().getColor(R.color.black));
-        canvas.drawLine(0, 0, bottomX1_1, bottomY1_1, paint);
-        paint.setColor(getResources().getColor(R.color.blue0063f3));
-        canvas.drawLine(0, 0, bottomX2_2, bottomY2_2, paint);
-        paint.setColor(getResources().getColor(R.color.orange));
-        canvas.drawLine(0, 0, topX, topY, paint);*/
-
     }
 
     public void setMaxVal(float maxVal) {

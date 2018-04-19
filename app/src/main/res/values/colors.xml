@@ -27,11 +27,11 @@
     <color name="bg_white_middle">#fafafb</color>
     <color name="orange">#ff6600</color>
     <color name="divider_ccc">#ccc</color>
-    <color name="white_eee">#eeeeee</color>
+    <color name="white_eee">#eeeeee</color>    <color name="transparent">#00000000</color>
     <color name="bg_light_middle">#b2000000</color> <!--黑色70%透明度-->
 
     <color name="bg_transparency_50">#80000000</color>
-    <color name="transparent">#00000000</color>
+
 
     <color name="palatinate_blue">#103FFB</color>
     <color name="muddy_waters">#A97946</color>
