@@ -48,7 +48,7 @@ public class ExpandableListActivity extends Activity {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                 Log.e("AA", "onGroupClick: groupPosition=" + groupPosition);
-                return true;
+                return false;
             }
         });
         mainlistview.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {

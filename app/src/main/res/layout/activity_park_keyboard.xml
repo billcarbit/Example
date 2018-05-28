@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/writebankcard_mobilebar"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="52dp"
         android:layout_alignParentTop="true"
         android:background="#FFFFFF">
@@ -23,8 +24,8 @@
 
         <EditText
             android:id="@+id/writebankcard_mobileedit"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="60dp"
             android:layout_toRightOf="@id/mobileText"
@@ -43,11 +44,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:background="#e6e6e6"
+        android:background="@color/gray"
         android:focusable="true"
+        android:keyBackground="@color/blue0063f3"
         android:focusableInTouchMode="true"
-        android:keyTextColor="#000000"
-        android:keyTextSize="31dp"
+        android:keyTextColor="@color/white"
+        android:keyTextSize="16dp"
         android:labelTextSize="23.04sp"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:paddingRight="15dp"
         android:shadowRadius="0" />
 </LinearLayout>

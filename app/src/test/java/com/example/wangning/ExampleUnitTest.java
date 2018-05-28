@@ -21,7 +21,12 @@ import java.util.Set;
  */
 public class ExampleUnitTest {
 
-
+    @Test
+    public void regexTest() throws Exception {
+        String regex = "^(?=.*\\d)(?=.*[a-zA-Z]).{8,}$";
+        boolean result = "12345678".matches(regex);
+        System.out.println("result="+result);
+    }
     @Test
     public void splitTest() throws Exception {
         String dotString = "2,";
