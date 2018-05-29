@@ -2,13 +2,16 @@ package com.example.wangning;
 
 import com.alibaba.fastjson.JSONObject;
 
+import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,6 +20,54 @@ import java.util.Set;
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
  */
 public class ExampleUnitTest {
+
+    @Test
+    public void regexTest() throws Exception {
+        String regex = "^(?=.*\\d)(?=.*[a-zA-Z]).{8,}$";
+        boolean result = "12345678".matches(regex);
+        System.out.println("result="+result);
+    }
+    @Test
+    public void splitTest() throws Exception {
+        String dotString = "2,";
+        String[] array = dotString.split(",");
+        System.out.println("array.length=" + array.length + ",array[0]=" + array[0]);
+    }
+
+    @Test
+    public void dateRange() throws Exception {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate = sdf.parse("2018-4-12");
+        Date endDate = sdf.parse("2018-4-12");
+        System.out.println("getGapCount="+getGapCount(startDate, endDate));
+    }
+
+
+    public static int getGapCount(Date startDate, Date endDate) {
+        Calendar fromCalendar = Calendar.getInstance();
+        fromCalendar.setTime(startDate);
+        fromCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        fromCalendar.set(Calendar.MINUTE, 0);
+        fromCalendar.set(Calendar.SECOND, 0);
+        fromCalendar.set(Calendar.MILLISECOND, 0);
+
+        Calendar toCalendar = Calendar.getInstance();
+        toCalendar.setTime(endDate);
+        toCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        toCalendar.set(Calendar.MINUTE, 0);
+        toCalendar.set(Calendar.SECOND, 0);
+        toCalendar.set(Calendar.MILLISECOND, 0);
+
+        return (int) ((toCalendar.getTime().getTime() - fromCalendar.getTime().getTime()) / (1000 * 60 * 60 * 24));
+    }
+
+
+    @Test
+    public void readFile() throws Exception {
+        File file = new File("D:\\need_replace");
+
+        System.out.println("file.isDirectory()=" + file.isDirectory());
+    }
 
     @Test
     public void createYList() throws Exception {

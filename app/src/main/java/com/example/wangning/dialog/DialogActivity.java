@@ -21,7 +21,8 @@ public class DialogActivity extends Activity {
     ProcessDialog processDialog;
     SlideDownDialog slideDownDialog;
     AddPhotoDialog addPhotoDialog;
-    Button btn1, btn2, btn3;
+    ProgressBarDialog mProgressBarDialog;
+    Button btn1, btn2, btn3, btn4;
 
     @Override
 
@@ -38,13 +39,26 @@ public class DialogActivity extends Activity {
         btn1 = (Button) findViewById(R.id.btn1);
         btn2 = (Button) findViewById(R.id.btn2);
         btn3 = (Button) findViewById(R.id.btn3);
-
+        btn4 = (Button) findViewById(R.id.btn4);
     }
 
     void initData() {
         initProcessDialog();
         initSlideDownDialog();
         initAddPhotoDialog();
+        initNormalDialog();
+    }
+
+    void initNormalDialog() {
+        mProgressBarDialog = new ProgressBarDialog(this);
+        mProgressBarDialog.setCancelable(true);
+        mProgressBarDialog.setCanceledOnTouchOutside(true);
+        btn4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mProgressBarDialog.show();
+            }
+        });
     }
 
     void initAddPhotoDialog() {
@@ -62,7 +76,7 @@ public class DialogActivity extends Activity {
         addPhotoDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                Log.e(TAG, "onDismiss: " );
+                Log.e(TAG, "onDismiss: ");
             }
         });
 

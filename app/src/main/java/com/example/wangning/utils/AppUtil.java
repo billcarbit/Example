@@ -1,3 +1,4 @@
+
 package com.example.wangning.utils;
 
 import android.app.Activity;
@@ -14,9 +15,11 @@ import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -31,32 +34,6 @@ import java.util.zip.ZipFile;
 
 public class AppUtil {
 
-
-    /**
-     * uri转path
-     */
-    public static String getRealFilePath(final Context context, final Uri uri) {
-        if (null == uri) return null;
-        final String scheme = uri.getScheme();
-        String data = null;
-        if (scheme == null)
-            data = uri.getPath();
-        else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
-            data = uri.getPath();
-        } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
-            Cursor cursor = context.getContentResolver().query(uri, new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
-            if (null != cursor) {
-                if (cursor.moveToFirst()) {
-                    int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-                    if (index > -1) {
-                        data = cursor.getString(index);
-                    }
-                }
-                cursor.close();
-            }
-        }
-        return data;
-    }
 
     /**
      * 调用系统分享
@@ -537,6 +514,46 @@ public class AppUtil {
             return intent.getBundleExtra(type);
         }
         return bundle;
+    }
+
+
+    /**
+     * uri转path
+     */
+    public static String getRealFilePath(final Context context, final Uri uri) {
+        if (null == uri) return null;
+        final String scheme = uri.getScheme();
+        String data = null;
+        if (scheme == null)
+            data = uri.getPath();
+        else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
+            data = uri.getPath();
+        } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
+            Cursor cursor = context.getContentResolver().query(uri, new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
+            if (null != cursor) {
+                if (cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                    if (index > -1) {
+                        data = cursor.getString(index);
+                    }
+                }
+                cursor.close();
+            }
+        }
+        return data;
+    }
+
+
+    public static Uri file2Uri(Context context, File file) {
+        Uri takePhotoUri;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            takePhotoUri = FileProvider.getUriForFile(context,
+                    context.getApplicationContext().getPackageName() + ".provider",
+                    file);
+        } else {
+            takePhotoUri = Uri.fromFile(file);
+        }
+        return takePhotoUri;
     }
 
 

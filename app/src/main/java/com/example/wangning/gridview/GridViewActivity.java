@@ -45,7 +45,7 @@ public class GridViewActivity extends Activity {
 
     void initData() {
         list = new ArrayList<String>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 5; i++) {
             list.add("A" + i);
         }
         mAdapter = new MyAdapter();

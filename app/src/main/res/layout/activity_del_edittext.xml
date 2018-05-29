@@ -3,17 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/other_background_color"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="50dp">
+
 
     <com.example.wangning.edittext.EditTextWithDel
         android:id="@+id/et1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:imeOptions="actionSearch"
+        android:singleLine="true"
         android:textSize="20dp" />
-    <com.example.wangning.edittext.EditTextWithDel
-        android:id="@+id/et2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp" />
+
+
 
 </LinearLayout>

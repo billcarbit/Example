@@ -152,4 +152,15 @@
         <item name="android:button">@drawable/selector_radio_bg</item>
     </style>
 
+    <declare-styleable name="VerticalRollingTextView">
+        <!--文字颜色-->
+        <attr name="android:textColor" />
+        <!--文字大小-->
+        <attr name="android:textSize" />
+        <!--滚动动画时长-->
+        <attr name="android:duration" />
+        <!--两次动画之间的间隔-->
+        <attr name="animInterval" format="integer" />
+    </declare-styleable>
+
 </resources>
