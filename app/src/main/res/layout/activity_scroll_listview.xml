@@ -35,6 +35,7 @@
                 android:gravity="center"
                 android:text="33333"
                 android:textSize="50dp" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
@@ -43,10 +44,12 @@
                 android:textSize="50dp" />
 
 
-            <ListView
+            <com.example.wangning.scrollview.MaxSpecListView
                 android:id="@+id/lv"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:divider="@color/divider_ccc"
+                android:dividerHeight="10dp" />
 
 
         </LinearLayout>

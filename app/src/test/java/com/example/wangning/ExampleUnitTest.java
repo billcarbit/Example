@@ -25,8 +25,9 @@ public class ExampleUnitTest {
     public void regexTest() throws Exception {
         String regex = "^(?=.*\\d)(?=.*[a-zA-Z]).{8,}$";
         boolean result = "12345678".matches(regex);
-        System.out.println("result="+result);
+        System.out.println("result=" + result);
     }
+
     @Test
     public void splitTest() throws Exception {
         String dotString = "2,";
@@ -39,7 +40,7 @@ public class ExampleUnitTest {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date startDate = sdf.parse("2018-4-12");
         Date endDate = sdf.parse("2018-4-12");
-        System.out.println("getGapCount="+getGapCount(startDate, endDate));
+        System.out.println("getGapCount=" + getGapCount(startDate, endDate));
     }
 
 
