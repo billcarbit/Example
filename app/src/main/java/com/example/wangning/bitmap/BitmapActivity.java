@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -20,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.wangning.R;
+
 import com.example.wangning.permission.PermissionListener;
 import com.example.wangning.utils.AppUtil;
 
@@ -41,19 +43,32 @@ public class BitmapActivity extends Activity
     private static final String TAG = "BitmapActivity";
     final static int CODE_OPEN_PHOTO_ALBUM = 0x1;//从手机相册中选择
     final static int CODE_TAKE_PHOTO = 0x2;//拍摄
-    Button btn_pick, btn_take_photo;
+    Button btnPick, btnTakePhoto;
     ImageView iv;
+
+    /*拍照的照片存储位置*/
+    private static final File PHOTO_DIR = new File(Environment.getExternalStorageDirectory() + "/DCIM/Camera");
+    private File mCurrentPhotoFile;//照相机拍照得到的图片
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bitmap);
-        btn_pick = (Button) findViewById(R.id.btn_pick);
-        btn_take_photo = (Button) findViewById(R.id.btn_take_photo);
+        initView();
+        initListener();
+    }
 
+    private void initView() {
+        btnPick = (Button) findViewById(R.id.btn_pick);
+        btnTakePhoto = (Button) findViewById(R.id.btn_take_photo);
         iv = (ImageView) findViewById(R.id.iv);
-        btn_pick.setOnClickListener(this);
-        btn_take_photo.setOnClickListener(this);
+    }
+
+    private void initListener() {
+        btnPick.setOnClickListener(this);
+        btnTakePhoto.setOnClickListener(this);
+        btnPick.setOnClickListener(this);
+        btnTakePhoto.setOnClickListener(this);
 
         requestRuntimePermissions(new String[]{
                 Manifest.permission.CAMERA,
@@ -76,8 +91,6 @@ public class BitmapActivity extends Activity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
-        if (resultCode != RESULT_OK)
-            return;
         switch (requestCode) {
             case CODE_TAKE_PHOTO:
                 Log.e(TAG, "onActivityResult: mCurrentPhotoFile=" + mCurrentPhotoFile);
@@ -89,45 +102,11 @@ public class BitmapActivity extends Activity
 
                 break;
             case CODE_OPEN_PHOTO_ALBUM:
-                //返回后，裁剪图片并输出
-                long beginTime = System.currentTimeMillis();
                 Uri uri = data.getData();
-                Log.e(TAG, "onActivityResult:,CODE_OPEN_PHOTO_ALBUM， uri=" + uri);
-                String realPath = AppUtil.getRealFilePath(this, uri);
-                Log.e(TAG, "onActivityResult:,CODE_OPEN_PHOTO_ALBUM， realPath=" + realPath);
-                Bitmap photoBmp = null;
-                try {
-                    photoBmp = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Bitmap bm = Bitmap.createScaledBitmap(photoBmp, photoBmp.getWidth() / 5, photoBmp.getHeight() / 5, true);
-                save(bm);
-                long endTime = System.currentTimeMillis();
-                Log.e(TAG, "onActivityResult: endTime-beginTime=" + (endTime - beginTime));
+                BitmapCompressUtils.compressByResolution(this, AppUtil.getRealFilePath(this,uri),100,100);
                 break;
             default:
                 break;
-        }
-    }
-
-    private void save(Bitmap btImage) {
-        FileOutputStream out = null;
-        File file = new File(Environment.getExternalStorageDirectory(), System.currentTimeMillis() + ".jpg");
-        try {
-            out = new FileOutputStream(file);
-            btImage.compress(Bitmap.CompressFormat.JPEG, 100, out);
-            // btImage.recycle();
-            System.out.println("___________保存的__sd___下_______________________");
-            iv.setImageBitmap(btImage);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            out.flush();
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -148,19 +127,16 @@ public class BitmapActivity extends Activity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.d(TAG, "onSaveInstanceState");
+        Log.e(TAG, "onSaveInstanceState");
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        Log.d(TAG, "onRestoreInstanceState");
+        Log.e(TAG, "onRestoreInstanceState");
     }
 
 
-    /*拍照的照片存储位置*/
-    private static final File PHOTO_DIR = new File(Environment.getExternalStorageDirectory() + "/DCIM/Camera");
-    private File mCurrentPhotoFile;//照相机拍照得到的图片
 
     /**
      * 拍照获取图片
@@ -193,7 +169,6 @@ public class BitmapActivity extends Activity
         intent.putExtra(MediaStore.EXTRA_OUTPUT, AppUtil.file2Uri(this, f));
         return intent;
     }
-
 
     /**
      * 获取调用相册的Intent
