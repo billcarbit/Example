@@ -2,6 +2,7 @@ package com.example.wangning;
 
 import com.alibaba.fastjson.JSONObject;
 
+import org.json.JSONArray;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,6 +21,14 @@ import java.util.Set;
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
  */
 public class ExampleUnitTest {
+
+
+    @Test
+    public void jsonTest() throws Exception {
+        String jsonArray = "[{\"sortingId\":\"0794f424fa9c4788bb0e5c9bd19a7ed8\",\"sortingName\":\"金融服务\"}]";
+        JSONArray jsonArray1= new JSONArray(jsonArray);
+        System.out.println("result=" + jsonArray1.length());
+    }
 
     @Test
     public void regexTest() throws Exception {

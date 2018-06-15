@@ -31,7 +31,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
@@ -40,7 +39,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".banner.youth.YouthBannerActivity">
+        <activity android:name=".flowlayout.FlowLayoutActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
