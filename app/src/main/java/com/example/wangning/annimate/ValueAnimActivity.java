@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
+import android.view.animation.OvershootInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,6 +40,8 @@ public class ValueAnimActivity extends Activity
     SlideDownAnim slideDownAnim;
     LinearLayout ll_tran;
     TextView tv_value_change;
+    TextView tv_jump;
+    ImageView iv_bell;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +54,16 @@ public class ValueAnimActivity extends Activity
         tv_xiahua = (TextView) findViewById(R.id.tv_xiahua);
         ll_tran = (LinearLayout) findViewById(R.id.ll_tran);
         tv_value_change = (TextView) findViewById(R.id.tv_value_change);
+        tv_jump = (TextView) findViewById(R.id.tv_jump);
+        iv_bell = (ImageView) findViewById(R.id.iv_bell);
 
         tv_rotate.setOnClickListener(this);
         rl_number.setOnClickListener(this);
         tv_xiahua.setOnClickListener(this);
         tv_value_change.setOnClickListener(this);
+        tv_jump.setOnClickListener(this);
+        iv_bell.setOnClickListener(this);
+
         slideDownAnim = new SlideDownAnim();
         rotateAnim = new RotateAnim(tv_rotate);
 
@@ -85,6 +94,12 @@ public class ValueAnimActivity extends Activity
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.iv_bell:
+                ObjectAnimator rotationAnimator = ObjectAnimator.ofFloat(iv_bell, "rotation", 0, 5, 0, -10, 0,7,0,-7,0,10,0,-2);
+                rotationAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+                rotationAnimator.setDuration(1200);
+                rotationAnimator.start();
+                break;
             case R.id.tv_rotate:
                 rotateAnim.toggleRotate(500, 0, -90);
                 break;
@@ -107,6 +122,14 @@ public class ValueAnimActivity extends Activity
                         });
 
                 valueAnimator.start();
+                break;
+            case R.id.tv_jump:
+                TranslateAnimation animation = new TranslateAnimation(0, 0, 0, 10);
+                animation.setInterpolator(new OvershootInterpolator());
+                animation.setDuration(100);
+                animation.setRepeatCount(3);
+                animation.setRepeatMode(Animation.REVERSE);
+                tv_jump.startAnimation(animation);
                 break;
             default:
                 break;
