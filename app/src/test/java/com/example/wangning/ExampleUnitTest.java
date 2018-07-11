@@ -5,6 +5,7 @@ import android.util.Xml;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.UTF8Decoder;
 
+import org.json.JSONArray;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,6 +26,14 @@ import java.util.Set;
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
  */
 public class ExampleUnitTest {
+
+
+    @Test
+    public void jsonTest() throws Exception {
+        String jsonArray = "[{\"sortingId\":\"0794f424fa9c4788bb0e5c9bd19a7ed8\",\"sortingName\":\"金融服务\"}]";
+        JSONArray jsonArray1= new JSONArray(jsonArray);
+        System.out.println("result=" + jsonArray1.length());
+    }
 
     @Test
     public void chinese() throws Exception {
@@ -79,8 +88,9 @@ public class ExampleUnitTest {
     public void regexTest() throws Exception {
         String regex = "^(?=.*\\d)(?=.*[a-zA-Z]).{8,}$";
         boolean result = "12345678".matches(regex);
-        System.out.println("result="+result);
+        System.out.println("result=" + result);
     }
+
     @Test
     public void splitTest() throws Exception {
         String dotString = "2,";
@@ -93,7 +103,7 @@ public class ExampleUnitTest {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date startDate = sdf.parse("2018-4-12");
         Date endDate = sdf.parse("2018-4-12");
-        System.out.println("getGapCount="+getGapCount(startDate, endDate));
+        System.out.println("getGapCount=" + getGapCount(startDate, endDate));
     }
 
 

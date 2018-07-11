@@ -22,7 +22,8 @@ public class DialogActivity extends Activity {
     SlideDownDialog slideDownDialog;
     AddPhotoDialog addPhotoDialog;
     ProgressBarDialog mProgressBarDialog;
-    Button btn1, btn2, btn3, btn4;
+    Button btn1, btn2, btn3, btn4,btn_pic;
+    ImageDialog imageDialog;
 
     @Override
 
@@ -40,6 +41,8 @@ public class DialogActivity extends Activity {
         btn2 = (Button) findViewById(R.id.btn2);
         btn3 = (Button) findViewById(R.id.btn3);
         btn4 = (Button) findViewById(R.id.btn4);
+        btn_pic = (Button) findViewById(R.id.btn_pic);
+
     }
 
     void initData() {
@@ -47,6 +50,19 @@ public class DialogActivity extends Activity {
         initSlideDownDialog();
         initAddPhotoDialog();
         initNormalDialog();
+        initImageDialog();
+    }
+
+    void initImageDialog() {
+        imageDialog = new ImageDialog(this);
+        imageDialog.setCancelable(true);
+        imageDialog.setCanceledOnTouchOutside(true);
+        btn_pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     void initNormalDialog() {

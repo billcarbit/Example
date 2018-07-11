@@ -17,10 +17,10 @@ import java.util.List;
  */
 public class MyAdapter extends BaseAdapter {
 
-    List<String> mData;
+    List<Item> mData;
     private Context mContext;
 
-    public MyAdapter(Context context, List<String> data) {
+    public MyAdapter(Context context, List<Item> data) {
         mContext = context;
         mData = data;
     }
@@ -31,7 +31,7 @@ public class MyAdapter extends BaseAdapter {
     }
 
     @Override
-    public String getItem(int position) {
+    public Item getItem(int position) {
         return mData.get(position);
     }
 
@@ -42,16 +42,31 @@ public class MyAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder vh;
-        if (convertView == null) {
-            vh = new ViewHolder();
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item, null);
-            vh.text = (TextView) convertView.findViewById(R.id.title);
-            convertView.setTag(vh);
-        } else {
-            vh = (ViewHolder) convertView.getTag();
+        int currentType = getItemViewType(position);//当前类型
+        if(currentType==0){
+            ViewHolder vh;
+            if (convertView == null) {
+                vh = new ViewHolder();
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.item, null);
+                vh.text = (TextView) convertView.findViewById(R.id.title);
+                convertView.setTag(vh);
+            } else {
+                vh = (ViewHolder) convertView.getTag();
+            }
+            vh.text.setText(getItem(position).getText());
+        }else if(currentType==1){
+            ViewHolder vh;
+            if (convertView == null) {
+                vh = new ViewHolder();
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.item2, null);
+                vh.text = (TextView) convertView.findViewById(R.id.title);
+                convertView.setTag(vh);
+            } else {
+                vh = (ViewHolder) convertView.getTag();
+            }
+            vh.text.setText(getItem(position).getText());
         }
-        vh.text.setText(getItem(position));
+
         return convertView;
     }
 
@@ -59,4 +74,26 @@ public class MyAdapter extends BaseAdapter {
         public TextView text;
         public ImageView image;
     }
+
+
+
+    @Override
+    public int getViewTypeCount() {
+        return 2;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if(mData.get(position).getType()==0){//当前JavaBean对象的类型
+            return 0;//学生类型
+        }else if(mData.get(position).getType()==1){
+            return 1;//老师类型
+        }else {
+            return 100;
+        }
+    }
+
+
+
+
 }

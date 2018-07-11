@@ -21,6 +21,7 @@ public class ListViewActivity extends Activity {
     private static final String TAG = "ListViewActivity";
     ListView lv;
     ScrollView scrollView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,11 +29,15 @@ public class ListViewActivity extends Activity {
         lv = (ListView) findViewById(R.id.lv);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
 
-        List<String> list = new ArrayList<>();
+        List<Item> list = new ArrayList<>();
+        Item item;
         for (int i = 0; i < 20; i++) {
-            list.add("ITEM_" + i);
+            item = new Item();
+            item.setText("ITEM_" + i);
+            item.setType(i % 2);
+            list.add(item);
         }
-        MyAdapter myAdapter = new MyAdapter(this,list);
+        MyAdapter myAdapter = new MyAdapter(this, list);
         lv.setAdapter(myAdapter);
 
        /* lv.setOnScrollListener(new AbsListView.OnScrollListener() {

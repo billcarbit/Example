@@ -12,8 +12,10 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.example.wangning.R;
+import com.example.wangning.ToastUtils;
 
 import javax.security.auth.login.LoginException;
 
@@ -32,11 +34,10 @@ public class WebViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
         webView = (WebView)findViewById(R.id.webView);
-      /*  webView.getSettings().setJavaScriptEnabled(true);
-        webView.addJavascriptInterface(this, "nativeMethod");*/
-        //webView.loadUrl("file:///android_asset/index.html");
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("http://172.16.19.98:9000/ovu-park-wx/activity-detail.html?activityId=8e471bc0dc1a43d19f5e6f46831b6904");
+        webView.addJavascriptInterface(this, "nativeMethod");
+        webView.loadUrl("file:///android_asset/index.html");
+        //webView.loadUrl("http://172.16.19.98:9000/ovu-park-wx/activity-detail.html?activityId=8e471bc0dc1a43d19f5e6f46831b6904");
 
         /*        webView.setWebViewClient(new WebViewClient(){
             @Override
@@ -73,9 +74,9 @@ public class WebViewActivity extends Activity {
     public void toActivity(String activityName) {
         //此处应该定义常量对应，同时提供给web页面编写者
         if(TextUtils.equals(activityName, "a")){
-            startActivity(new Intent(this,AActivity.class));
+            ToastUtils.show(getApplicationContext(),"AAAA");
         }else{
-            startActivity(new Intent(this,BActivity.class));
+            ToastUtils.show(getApplicationContext(),"BBBBBBBBBBBBBB");
         }
     }
 
