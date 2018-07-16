@@ -22,6 +22,6 @@ public class LabelPlanShopView extends LinearLayout {
 
     public LabelPlanShopView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        LayoutInflater.from(context).inflate(R.layout.view_label_plan_shop,this);
+        LayoutInflater.from(context).inflate(R.layout.view_label_plan_shop, this);
     }
 }
