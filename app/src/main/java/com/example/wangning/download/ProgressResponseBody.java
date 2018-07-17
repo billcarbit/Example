@@ -1,12 +1,21 @@
 package com.example.wangning.download;
 
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.RecoverySystem;
 import android.util.Log;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.RandomAccessFile;
 
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
@@ -82,6 +91,7 @@ public class ProgressResponseBody extends ResponseBody {
 
             @Override
             public long read(Buffer sink, long byteCount) throws IOException {
+
                 long bytesRead = super.read(sink, byteCount);
                 totalBytesRead += bytesRead != -1 ? bytesRead : 0;
 
@@ -96,4 +106,19 @@ public class ProgressResponseBody extends ResponseBody {
 
 
     }
+
+    private void output(InputStream inputStream) throws IOException {
+        OutputStream out = new FileOutputStream(Environment.getExternalStorageDirectory());
+        byte buf[] = new byte[1024];
+        int len;
+        while ((len = inputStream.read(buf)) > 0) {
+            out.write(buf, 0, len);
+        }
+        out.close();
+        inputStream.close();
+    }
+
+
 }
+
+

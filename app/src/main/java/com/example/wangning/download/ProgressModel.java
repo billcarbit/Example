@@ -10,7 +10,7 @@ public class ProgressModel implements Parcelable {
 
     private long currentBytes;
     private long contentLength;
-    private boolean done = false;
+    private boolean done;
 
     public ProgressModel(long currentBytes, long contentLength, boolean done) {
         this.currentBytes = currentBytes;
