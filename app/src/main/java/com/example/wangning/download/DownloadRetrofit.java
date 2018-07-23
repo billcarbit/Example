@@ -11,9 +11,9 @@ import retrofit2.http.Streaming;
  */
 public interface DownloadRetrofit {
     @GET("download/app-release0716.apk")
-    Call<ResponseBody> downloadApk(@Header("Range")String range);
+    Call<ResponseBody> downloadApk();
 
     @GET("download/dwdw11.txt")
-    Call<ResponseBody> downloadTxt();
+    Call<ResponseBody> downloadTxt(@Header("Range")String range);
 
 }

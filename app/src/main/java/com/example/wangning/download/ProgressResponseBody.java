@@ -10,11 +10,13 @@ import android.util.Log;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
 
 import okhttp3.MediaType;
@@ -24,6 +26,7 @@ import okio.BufferedSource;
 import okio.ForwardingSource;
 import okio.Okio;
 import okio.Source;
+import retrofit2.Response;
 
 /**
  * Created by Administrator on 2018/7/16.
@@ -92,6 +95,7 @@ public class ProgressResponseBody extends ResponseBody {
             @Override
             public long read(Buffer sink, long byteCount) throws IOException {
 
+
                 long bytesRead = super.read(sink, byteCount);
                 totalBytesRead += bytesRead != -1 ? bytesRead : 0;
 
@@ -100,25 +104,32 @@ public class ProgressResponseBody extends ResponseBody {
                 msg.obj = new ProgressModel(totalBytesRead, contentLength(), totalBytesRead == contentLength());
                 myHandler.sendMessage(msg);
                 Log.i(TAG, "currentBytes==" + totalBytesRead + "==contentLength==" + contentLength());
+
+                Buffer sink2 = sink.clone();
+                output(sink2.inputStream(), file);
+
                 return bytesRead;
             }
         };
-
-
     }
 
-    private void output(InputStream inputStream) throws IOException {
-        OutputStream out = new FileOutputStream(Environment.getExternalStorageDirectory());
+    File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/d.apk");
+
+    private int seek = 0;
+
+    private void output(InputStream inputStream, File outputFile) throws IOException {
+        FileOutputStream out = new FileOutputStream(outputFile,true);
+
         byte buf[] = new byte[1024];
         int len;
         while ((len = inputStream.read(buf)) > 0) {
+            seek = seek + len;
+            Log.e(TAG, "output: seek=" + seek);
             out.write(buf, 0, len);
         }
         out.close();
         inputStream.close();
     }
-
-
 }
 
 
