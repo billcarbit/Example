@@ -35,8 +35,9 @@ public class WebViewActivity extends Activity {
         setContentView(R.layout.activity_webview);
         webView = (WebView)findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.addJavascriptInterface(this, "nativeMethod");
-        webView.loadUrl("file:///android_asset/index.html");
+        //webView.addJavascriptInterface(this, "nativeMethod");
+        //webView.loadUrl("file:///android_asset/index.html");
+        webView.loadUrl("http://121.196.213.55:8023/showScreen/show-6s/main.html#/app/home");
         //webView.loadUrl("http://172.16.19.98:9000/ovu-park-wx/activity-detail.html?activityId=8e471bc0dc1a43d19f5e6f46831b6904");
 
         /*        webView.setWebViewClient(new WebViewClient(){

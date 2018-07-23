@@ -10,6 +10,7 @@ import android.view.View;
 import com.example.wangning.R;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -73,19 +74,16 @@ public class DownloadActivity extends AppCompatActivity implements ProgressListe
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    ByteString byteString = response.body().source().readByteString();
-                    byte[] byteArray = response.body().source().readByteArray();
-                    byte[] byteArray2 = response.body().source().buffer().readByteArray();
+                    ByteString byteString = null;
+                    //byteString = response.body().source().readByteString();
+                    //byte[] byteArray = response.body().source().readByteArray();
+                    //byte[] byteArray2 = response.body().source().buffer().readByteArray();
                     InputStream inputStream = response.body().source().inputStream();
-                    Log.e("startDownload", "onResponse: byteString=" + byteString);
-                    Log.e("startDownload", "onResponse: byteArray=" + byteArray.toString());
-                    Log.e("startDownload", "onResponse: byteArray2=" + byteArray2.toString());
-                    Log.e("startDownload", "onResponse: inputStream=" + inputStream);
-                    Log.e("startDownload", "onResponse: response.message=" + response.message());
-                    writeResponseBodyToDisk(response.body());
-                } catch (IOException e) {
+                    writeFile2Disk(response,file);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
+
             }
 
             @Override
@@ -100,7 +98,7 @@ public class DownloadActivity extends AppCompatActivity implements ProgressListe
         Log.e("ASASA", "onProgress: currentBytes=" + currentBytes + ",contentLength=" + contentLength + ",done=" + done);
     }
 
-    File file = new File(Environment.getExternalStorageDirectory() + "/my_text.txt");
+    File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/dwdw11.txt");
 
 
     private void output(String content) {
@@ -158,6 +156,7 @@ public class DownloadActivity extends AppCompatActivity implements ProgressListe
                 long fileSizeDownloaded = 0;
 
                 inputStream = body.byteStream();
+                Log.e("sasas", "writeResponseBodyToDisk: sasa=" + inputStream.read());
                 outputStream = new FileOutputStream(file);
 
                 while (true) {
@@ -192,4 +191,37 @@ public class DownloadActivity extends AppCompatActivity implements ProgressListe
             return false;
         }
     }
+
+    public static void writeFile2Disk(Response<ResponseBody> response, File file){
+        OutputStream os =null;
+        InputStream is = response.body().byteStream();
+        try {
+            os = new FileOutputStream(file);
+            int len ;
+            byte [] buff = new byte[1024];
+            while((len=is.read(buff))!=-1){
+                os.write(buff,0,len);
+            }
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+        } catch(IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(os!=null){
+                try {
+                    os.close();
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(is!=null){
+                try {
+                    is.close();
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 }

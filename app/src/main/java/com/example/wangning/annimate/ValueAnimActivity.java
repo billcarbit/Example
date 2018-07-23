@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
@@ -42,6 +43,7 @@ public class ValueAnimActivity extends Activity
     TextView tv_value_change;
     TextView tv_jump;
     ImageView iv_bell;
+    ImageView iv_alpha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class ValueAnimActivity extends Activity
         tv_value_change = (TextView) findViewById(R.id.tv_value_change);
         tv_jump = (TextView) findViewById(R.id.tv_jump);
         iv_bell = (ImageView) findViewById(R.id.iv_bell);
+        iv_alpha = (ImageView) findViewById(R.id.iv_alpha);
 
         tv_rotate.setOnClickListener(this);
         rl_number.setOnClickListener(this);
@@ -63,6 +66,8 @@ public class ValueAnimActivity extends Activity
         tv_value_change.setOnClickListener(this);
         tv_jump.setOnClickListener(this);
         iv_bell.setOnClickListener(this);
+        iv_alpha.setOnClickListener(this);
+
 
         slideDownAnim = new SlideDownAnim();
         rotateAnim = new RotateAnim(tv_rotate);
@@ -95,7 +100,7 @@ public class ValueAnimActivity extends Activity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_bell:
-                ObjectAnimator rotationAnimator = ObjectAnimator.ofFloat(iv_bell, "rotation", 0, 5, 0, -10, 0,7,0,-7,0,10,0,-2);
+                ObjectAnimator rotationAnimator = ObjectAnimator.ofFloat(iv_bell, "rotation", 0, 5, 0, -10, 0, 7, 0, -7, 0, 10, 0, -2);
                 rotationAnimator.setRepeatCount(ObjectAnimator.INFINITE);
                 rotationAnimator.setDuration(1200);
                 rotationAnimator.start();
@@ -130,6 +135,25 @@ public class ValueAnimActivity extends Activity
                 animation.setRepeatCount(3);
                 animation.setRepeatMode(Animation.REVERSE);
                 tv_jump.startAnimation(animation);
+                break;
+            case R.id.iv_alpha:
+                ObjectAnimator translateAnimation = ObjectAnimator.ofFloat(iv_alpha, "translationY", -iv_alpha.getHeight(), 0);
+                translateAnimation.setDuration(1000);
+                translateAnimation.start();
+       /*         ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(iv_alpha, "scaleX", 5, 1);
+                scaleXAnimator.setDuration(1000);
+
+                ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(iv_alpha, "scaleY", 5, 1);
+                scaleYAnimator.setDuration(1000);
+
+                ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(iv_alpha,"alpha" , 0, 1);
+                alphaAnimator.setDuration(2000);
+
+                AnimatorSet animatorSet = new AnimatorSet();
+                animatorSet.play(scaleXAnimator).with(scaleYAnimator).with(alphaAnimator).with(translateAnimation);
+                animatorSet.start();*/
+
+
                 break;
             default:
                 break;
