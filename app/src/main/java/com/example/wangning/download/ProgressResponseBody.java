@@ -36,12 +36,15 @@ public class ProgressResponseBody extends ResponseBody {
     public static final String TAG = ProgressResponseBody.class.getName();
     private ResponseBody responseBody;
     private ProgressListener mListener;
+    private RetrofitDownloader mRetrofitDownloader;
     private BufferedSource bufferedSource;
     private Handler myHandler;
 
-    public ProgressResponseBody(ResponseBody body, ProgressListener listener) {
+
+    public ProgressResponseBody(ResponseBody body, RetrofitDownloader retrofitDownloader) {
         responseBody = body;
-        mListener = listener;
+        mListener = retrofitDownloader;
+        mRetrofitDownloader = retrofitDownloader;
         if (myHandler == null) {
             myHandler = new MyHandler();
         }
@@ -58,8 +61,11 @@ public class ProgressResponseBody extends ResponseBody {
             switch (msg.what) {
                 case UPDATE:
                     ProgressModel progressModel = (ProgressModel) msg.obj;
-                    if (mListener != null)
+                    if (mListener != null) {
                         mListener.onProgress(progressModel.getCurrentBytes(), progressModel.getContentLength(), progressModel.isDone());
+                    }
+                    break;
+                default:
                     break;
 
             }
@@ -80,7 +86,6 @@ public class ProgressResponseBody extends ResponseBody {
 
     @Override
     public BufferedSource source() {
-
         if (bufferedSource == null) {
             bufferedSource = Okio.buffer(mySource(responseBody.source()));
         }
@@ -94,8 +99,6 @@ public class ProgressResponseBody extends ResponseBody {
 
             @Override
             public long read(Buffer sink, long byteCount) throws IOException {
-
-
                 long bytesRead = super.read(sink, byteCount);
                 totalBytesRead += bytesRead != -1 ? bytesRead : 0;
 
@@ -105,31 +108,14 @@ public class ProgressResponseBody extends ResponseBody {
                 myHandler.sendMessage(msg);
                 Log.i(TAG, "currentBytes==" + totalBytesRead + "==contentLength==" + contentLength());
 
-                Buffer sink2 = sink.clone();
-                output(sink2.inputStream(), file);
+                mRetrofitDownloader.output(sink.clone().inputStream());
 
                 return bytesRead;
             }
         };
     }
 
-    File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/d.apk");
 
-    private int seek = 0;
-
-    private void output(InputStream inputStream, File outputFile) throws IOException {
-        FileOutputStream out = new FileOutputStream(outputFile,true);
-
-        byte buf[] = new byte[1024];
-        int len;
-        while ((len = inputStream.read(buf)) > 0) {
-            seek = seek + len;
-            Log.e(TAG, "output: seek=" + seek);
-            out.write(buf, 0, len);
-        }
-        out.close();
-        inputStream.close();
-    }
 }
 
 

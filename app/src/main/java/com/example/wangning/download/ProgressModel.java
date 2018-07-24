@@ -3,6 +3,8 @@ package com.example.wangning.download;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import okio.Buffer;
+
 /**
  * Created by Administrator on 2018/7/16.
  */
@@ -17,6 +19,7 @@ public class ProgressModel implements Parcelable {
         this.contentLength = contentLength;
         this.done = done;
     }
+
 
     public long getCurrentBytes() {
         return currentBytes;
@@ -63,12 +66,12 @@ public class ProgressModel implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeLong(currentBytes);
         parcel.writeLong(contentLength);
-        parcel.writeByte((byte) (done==true?1:0));
+        parcel.writeByte((byte) (done == true ? 1 : 0));
     }
 
     protected ProgressModel(Parcel parcel) {
         currentBytes = parcel.readLong();
         contentLength = parcel.readLong();
-        done = parcel.readByte()!=0;
+        done = parcel.readByte() != 0;
     }
 }

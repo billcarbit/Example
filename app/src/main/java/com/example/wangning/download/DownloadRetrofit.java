@@ -13,6 +13,10 @@ public interface DownloadRetrofit {
     @GET("download/app-release0716.apk")
     Call<ResponseBody> downloadApk();
 
+    @GET("download/app-release0716.apk")
+    Call<ResponseBody> downloadApk(@Header("Range")String range);
+
+
     @GET("download/dwdw11.txt")
     Call<ResponseBody> downloadTxt(@Header("Range")String range);
 
