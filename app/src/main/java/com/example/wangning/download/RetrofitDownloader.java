@@ -31,26 +31,32 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Administrator on 2018/7/24.
  */
 public class RetrofitDownloader implements ProgressListener {
-
-
     private static final String BASE_URL = "http://localhost:8080/hello/";
     private Call<ResponseBody> mDownloadCall;
     private File outputFile;
-    ;
     private int seek = 0;
     private long mContentLength;
     private ProgressResponseBody mProgressResponseBody;
     private Activity mActivity;
 
     private OkHttpClient okHttpClient = new OkHttpClient.Builder()
-            .connectTimeout(5, TimeUnit.SECONDS)
-            .readTimeout(5, TimeUnit.SECONDS)
-            .writeTimeout(5, TimeUnit.SECONDS)
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
+            .addInterceptor(new Interceptor() {
+                @Override
+                public okhttp3.Response intercept(Chain chain) throws IOException {
+                    okhttp3.Response response = chain.proceed(chain.request());
+                    Log.e("addInterceptor", "intercept: response="+response.toString());
+                    mProgressResponseBody = new ProgressResponseBody(response.body(), RetrofitDownloader.this);
+                    return response.newBuilder().body(mProgressResponseBody).build();
+                }
+            })
             .addNetworkInterceptor(new Interceptor() {
                 @Override
                 public okhttp3.Response intercept(Chain chain) throws IOException {
                     okhttp3.Response response = chain.proceed(chain.request());
-                    Log.e("intercept", "intercept: response=");
+                    Log.e("addNetworkInterceptor", "intercept: response="+response.toString());
                     mProgressResponseBody = new ProgressResponseBody(response.body(), RetrofitDownloader.this);
                     return response.newBuilder().body(mProgressResponseBody).build();
                 }
@@ -64,7 +70,7 @@ public class RetrofitDownloader implements ProgressListener {
 
     public RetrofitDownloader(Activity activity) {
         mActivity = activity;
-        outputFile = new File(activity.getCacheDir() + "/ovupark.apk");
+        outputFile = new File(activity.getExternalCacheDir() + "/IDE.exe");
         Log.e("AA", "RetrofitDownloader: " + outputFile.getPath().toString());
         verifyStoragePermissions(activity);
     }
@@ -92,7 +98,8 @@ public class RetrofitDownloader implements ProgressListener {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     String length = response.headers().get("Content-Length");
-                    Log.e("AAA", "onResponse: length=" + length);
+                    Log.e("startNewDownload", "thread="+Thread.currentThread().getName()+",onResponse: length=" + length);
+                    installApk();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -124,7 +131,8 @@ public class RetrofitDownloader implements ProgressListener {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     String length = response.headers().get("Content-Length");
-                    Log.e("AAA", "onResponse: length=" + length);
+                    Log.e("continueDownload", "thread="+Thread.currentThread().getName()+",onResponse: length=" + length);
+                    installApk();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -150,9 +158,7 @@ public class RetrofitDownloader implements ProgressListener {
         if (mContentLength == 0) {
             mContentLength = contentLength;
         }
-        if (done) {
-            installApk();
-        }
+
         Log.e("ASASA", "onProgress: currentBytes=" + currentBytes + ",contentLength=" + contentLength + ",done=" + done);
     }
 

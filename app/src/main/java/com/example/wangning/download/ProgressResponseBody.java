@@ -70,8 +70,6 @@ public class ProgressResponseBody extends ResponseBody {
 
             }
         }
-
-
     }
 
     @Override
@@ -106,6 +104,7 @@ public class ProgressResponseBody extends ResponseBody {
                 msg.what = UPDATE;
                 msg.obj = new ProgressModel(totalBytesRead, contentLength(), totalBytesRead == contentLength());
                 myHandler.sendMessage(msg);
+
                 Log.i(TAG, "currentBytes==" + totalBytesRead + "==contentLength==" + contentLength());
 
                 mRetrofitDownloader.output(sink.clone().inputStream());
