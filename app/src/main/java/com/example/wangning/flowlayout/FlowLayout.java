@@ -48,7 +48,6 @@ public class FlowLayout extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        Log.e("dddd", "onLayout: " );
         int mViewGroupWidth = getMeasuredWidth();  //容器宽度
 
         int mPainterPosX = 0;  //当前绘图X
@@ -74,9 +73,9 @@ public class FlowLayout extends ViewGroup {
         }
 
         //计算出高度
-        LayoutParams lp = getLayoutParams();
+  /*      LayoutParams lp = getLayoutParams();
         lp.height = height * mRowCount;
-        setLayoutParams(lp);
+        setLayoutParams(lp);*/
 
     }
 

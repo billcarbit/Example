@@ -1,52 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:apps="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_show"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="dialog"/>
-
-    <com.example.wangning.flowlayout.FlowLayout
-
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:apps="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <Button
+        <EditText
+            android:id="@+id/et"
             android:layout_width="wrap_content"
+            android:text="1111"
+            android:layout_height="wrap_content" />
+
+
+   <!--     <com.example.wangning.flowlayout.FlowLayout
+            android:id="@+id/fl"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="1132132" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="s" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3213123213123123121" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1321312222222222222222" />
+            android:background="@color/blue0063f3"
+            apps:h_spacing="10"
+            apps:v_spacing="0">
 
 
-    </com.example.wangning.flowlayout.FlowLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/colorAccent"/>
+        </com.example.wangning.flowlayout.FlowLayout>-->
 
 
-</LinearLayout>
+    </LinearLayout>
