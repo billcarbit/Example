@@ -13,7 +13,7 @@
             android:layout_height="wrap_content" />
 
 
-   <!--     <com.example.wangning.flowlayout.FlowLayout
+        <com.example.wangning.flowlayout.FlowLayout
             android:id="@+id/fl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
             apps:v_spacing="0">
 
 
-        </com.example.wangning.flowlayout.FlowLayout>-->
+        </com.example.wangning.flowlayout.FlowLayout>
 
 
     </LinearLayout>

@@ -22,12 +22,12 @@ public class FlowLayoutActivity extends Activity {
         EditText et = (EditText) findViewById(R.id.et);
         et.setText("AA");
         et.setSelection(et.length());
-/*        FlowLayout fl = (FlowLayout) findViewById(R.id.fl);
+        FlowLayout fl = (FlowLayout) findViewById(R.id.fl);
         for (int i = 0; i < 30; i++) {
             View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_children, null);
             TextView textView = (TextView) view.findViewById(R.id.second_textview);
             textView.setText("A" + i);
             fl.addView(view);
-        }*/
+        }
     }
 }
