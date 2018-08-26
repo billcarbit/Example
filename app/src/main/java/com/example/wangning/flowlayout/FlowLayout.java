@@ -17,13 +17,14 @@ import java.util.List;
  */
 public class FlowLayout extends ViewGroup {
 
+    private static final String TAG = "FlowLayout";
+
     private int mHSpacing;//水平间距
     private int mVSpacing;//垂直间距
-    private int mRowCount = 1;
 
 
     public FlowLayout(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public FlowLayout(Context context, AttributeSet attrs) {
@@ -36,18 +37,62 @@ public class FlowLayout extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int childCount = getChildCount();
-        View childView;
-        for (int i = 0; i < childCount; i++) {
-            childView = getChildAt(i);
-            measureChild(childView, widthMeasureSpec, heightMeasureSpec);
+        int sizeWidth = MeasureSpec.getSize(widthMeasureSpec);
+        int modeWidth = MeasureSpec.getMode(widthMeasureSpec);
+        int sizeHeight = MeasureSpec.getSize(heightMeasureSpec);
+        int modeHeight = MeasureSpec.getMode(heightMeasureSpec);
+
+        // wrap_content
+        int width = 0;
+        int height = 0;
+
+        int lineWidth = 0;
+        int lineHeight = 0;
+
+        int cCount = getChildCount();
+
+        for (int i = 0; i < cCount; i++) {
+            View child = getChildAt(i);
+            if (child.getVisibility() == View.GONE) {
+                if (i == cCount - 1) {
+                    width = Math.max(lineWidth, width);
+                    height += lineHeight;
+                }
+                continue;
+            }
+            measureChild(child, widthMeasureSpec, heightMeasureSpec);
+            MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
+
+            int childWidth = child.getMeasuredWidth() + lp.leftMargin
+                    + lp.rightMargin;
+            int childHeight = child.getMeasuredHeight() + lp.topMargin
+                    + lp.bottomMargin;
+
+            if (lineWidth + childWidth > sizeWidth - getPaddingLeft() - getPaddingRight()) {
+                width = Math.max(width, lineWidth);
+                lineWidth = childWidth;
+                height = height + lineHeight + mVSpacing;
+                lineHeight = childHeight;
+            } else {
+                lineWidth = lineWidth + childWidth + mHSpacing;
+                lineHeight = Math.max(lineHeight, childHeight);
+            }
+            if (i == cCount - 1) {
+                width = Math.max(lineWidth, width);
+                height += lineHeight;
+            }
         }
+        setMeasuredDimension(
+                //
+                modeWidth == MeasureSpec.EXACTLY ? sizeWidth : width + getPaddingLeft() + getPaddingRight(),
+                modeHeight == MeasureSpec.EXACTLY ? sizeHeight : height + getPaddingTop() + getPaddingBottom()//
+        );
 
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        Log.e(TAG, "onLayout: ");
         int mViewGroupWidth = getMeasuredWidth();  //容器宽度
 
         int mPainterPosX = 0;  //当前绘图X
@@ -64,7 +109,6 @@ public class FlowLayout extends ViewGroup {
             if (mPainterPosX + width > mViewGroupWidth) {
                 mPainterPosX = 0;
                 mPainterPosY = mPainterPosY + height + mVSpacing;
-                mRowCount++;
             }
             //位置摆放
             childView.layout(mPainterPosX, mPainterPosY, mPainterPosX + width, mPainterPosY + height);
@@ -72,12 +116,21 @@ public class FlowLayout extends ViewGroup {
             mPainterPosX += width + mHSpacing;
         }
 
-        //计算出高度
-  /*      LayoutParams lp = getLayoutParams();
-        lp.height = height * mRowCount;
-        setLayoutParams(lp);*/
 
     }
 
+    @Override
+    public LayoutParams generateLayoutParams(AttributeSet attrs) {
+        return new MarginLayoutParams(getContext(), attrs);
+    }
 
+    @Override
+    protected LayoutParams generateDefaultLayoutParams() {
+        return new MarginLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+    }
+
+    @Override
+    protected LayoutParams generateLayoutParams(LayoutParams p) {
+        return new MarginLayoutParams(p);
+    }
 }
