@@ -10,18 +10,19 @@ import android.view.View;
  */
 public class RecyclerViewOnScrollListener extends RecyclerView.OnScrollListener {
     private OnLoadMoreListener mOnLoadMoreListener;
+
     public RecyclerViewOnScrollListener() {
         super();
     }
 
     public RecyclerViewOnScrollListener(OnLoadMoreListener listener) {
         super();
-        mOnLoadMoreListener=listener;
+        mOnLoadMoreListener = listener;
     }
 
     @Override
     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-        if(!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE){
+        if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
             mOnLoadMoreListener.loadMore();
         }
     }
@@ -31,7 +32,7 @@ public class RecyclerViewOnScrollListener extends RecyclerView.OnScrollListener 
         super.onScrolled(recyclerView, dx, dy);
     }
 
-   interface OnLoadMoreListener{
-       void loadMore();
-   }
+    interface OnLoadMoreListener {
+        void loadMore();
+    }
 }

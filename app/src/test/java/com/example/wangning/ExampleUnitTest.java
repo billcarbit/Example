@@ -29,9 +29,16 @@ public class ExampleUnitTest {
 
 
     @Test
+    public void math() throws Exception {
+        int result = 4 % 2;
+        System.out.println("result=" +result);
+    }
+
+
+    @Test
     public void jsonTest() throws Exception {
         String jsonArray = "[{\"sortingId\":\"0794f424fa9c4788bb0e5c9bd19a7ed8\",\"sortingName\":\"金融服务\"}]";
-        JSONArray jsonArray1= new JSONArray(jsonArray);
+        JSONArray jsonArray1 = new JSONArray(jsonArray);
         System.out.println("result=" + jsonArray1.length());
     }
 
@@ -39,11 +46,11 @@ public class ExampleUnitTest {
     public void chinese() throws Exception {
         String gbk = "iteye问答频道编码转换问题";
 
-        String iso = new String(gbk.getBytes("UTF-8"),"ISO-8859-1");
+        String iso = new String(gbk.getBytes("UTF-8"), "ISO-8859-1");
 
         System.out.println(iso);
 
-        String utf8 = new String(iso.getBytes("ISO-8859-1"),"UTF-8");
+        String utf8 = new String(iso.getBytes("ISO-8859-1"), "UTF-8");
         System.out.println(utf8);
 
         System.out.println(getUTF8StringFromGBKString(gbk));
@@ -78,10 +85,6 @@ public class ExampleUnitTest {
         }
         return utfBytes;
     }
-
-
-
-
 
 
     @Test

@@ -8,12 +8,7 @@
     tools:context="com.example.wangning.MainActivity">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/orange">
 
-    </LinearLayout>
 
     <TextView
         android:id="@+id/tv"
@@ -21,6 +16,11 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:background="@color/blue_00a5e6" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/icon_banking"/>
 
 
 </RelativeLayout>

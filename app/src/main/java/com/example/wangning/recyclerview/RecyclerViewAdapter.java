@@ -1,6 +1,8 @@
 package com.example.wangning.recyclerview;
 
 import android.app.Activity;
+import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,24 +21,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_FOOTER = 1;
 
-    private Activity mActivity;
+    private Context mContext;
     private List<String> mList;
-    private LayoutInflater mInflater;
 
-    public RecyclerViewAdapter(Activity activity, List<String> stringList) {
-        mActivity = activity;
+    public RecyclerViewAdapter(Context context, List<String> stringList) {
+        mContext = context;
         mList = stringList;
-        mInflater = LayoutInflater.from(mActivity);
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case TYPE_FOOTER:
-                return new LoadMoreViewHolder(mInflater.inflate(
+                return new LoadMoreViewHolder(LayoutInflater.from(mContext).inflate(
                         R.layout.activity_item_load_more, parent, false));
             default:
-                return new NormalViewHolder(mInflater.inflate(
+                return new NormalViewHolder(LayoutInflater.from(mContext).inflate(
                         R.layout.item_recyclerview, parent, false));
         }
     }
@@ -93,5 +93,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
         abstract void update(int position);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
+        if (manager instanceof GridLayoutManager) {
+            final GridLayoutManager g = (GridLayoutManager) manager;
+            g.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    return TYPE_FOOTER == getItemViewType(position) ? g.getSpanCount() : 1;
+                }
+            });
+        }
     }
 }

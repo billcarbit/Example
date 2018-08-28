@@ -36,12 +36,12 @@ public class LetterSearchActivity extends Activity {
         mRvAdapter = new RvAdapter(this,mList);
         mRecyclerView.setAdapter(mRvAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        DividerItemDecoration2 ddd = new DividerItemDecoration2(this,
+      /*  DividerItemDecoration2 ddd = new DividerItemDecoration2(this,
                 DividerItemDecoration.VERTICAL_LIST, new ColorDrawable(Color.parseColor("#dddddd")));
         ddd.setHeight(10);
         ddd.setWidth(10);
         ddd.setDividerRight(30);
-        mRecyclerView.addItemDecoration(ddd);
+        mRecyclerView.addItemDecoration(ddd);*/
     }
 
     private void addData() {
