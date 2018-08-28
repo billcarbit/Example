@@ -41,7 +41,11 @@
         android:theme="@style/AppTheme">
 
         <activity
+<<<<<<< HEAD
             android:name=".recyclerview.RecyclerViewActivity"
+=======
+            android:name=".datepicker.MonthPikerActivity"
+>>>>>>> 6ad34de2c64d26c585b5710b84f2ca866d75f0d0
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
