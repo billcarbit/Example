@@ -47,5 +47,6 @@ dependencies {
     compile 'com.contrarywind:Android-PickerView:3.2.7'
     compile "com.xiaosu:VerticalRollingTextView:1.2.0"
     compile 'com.youth.banner:banner:1.4.10'  //最新版本
+    compile 'com.belerweb:pinyin4j:2.5.1'
 }
 

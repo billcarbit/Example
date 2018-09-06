@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.widget.LinearLayout;
 
 import com.example.wangning.R;
 
@@ -48,12 +50,15 @@ public class RecyclerViewActivity extends Activity implements RecyclerViewOnScro
     private void initRecyclerView() {
         mRecyclerViewAdapter = new RecyclerViewAdapter(this, mList);
         mRecyclerView.addOnScrollListener(new RecyclerViewOnScrollListener(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(OrientationHelper.HORIZONTAL);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         // 绑定recyclerView
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
         //设置Item增加、移除动画
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        DividerItemDecoration divider = new DividerItemDecoration();
-        mRecyclerView.addItemDecoration(divider);
+      /*  DividerItemDecoration divider = new DividerItemDecoration();
+        mRecyclerView.addItemDecoration(divider);*/
     }
 
     private void addData() {
@@ -64,7 +69,7 @@ public class RecyclerViewActivity extends Activity implements RecyclerViewOnScro
 
     @Override
     public void loadMore() {
-       // addData();
-       // mRecyclerViewAdapter.notifyDataSetChanged();
+        // addData();
+        // mRecyclerViewAdapter.notifyDataSetChanged();
     }
 }
