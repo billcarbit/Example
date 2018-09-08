@@ -32,7 +32,7 @@ public class RecyclerViewOnScrollListener extends RecyclerView.OnScrollListener 
         super.onScrolled(recyclerView, dx, dy);
     }
 
-    interface OnLoadMoreListener {
+    public interface OnLoadMoreListener {
         void loadMore();
     }
 }
