@@ -26,17 +26,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TextView tv = (TextView) findViewById(R.id.tv);
-        SpannableStringBuilder style = new SpannableStringBuilder("AAAA");
-        style.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.blue0063f3)), 0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        tv.setText(style);
 
-        tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, EditTextActivity.class));
-            }
-        });
     }
 
 

@@ -50,15 +50,15 @@ public class RecyclerViewActivity extends Activity implements RecyclerViewOnScro
     private void initRecyclerView() {
         mRecyclerViewAdapter = new RecyclerViewAdapter(this, mList);
         mRecyclerView.addOnScrollListener(new RecyclerViewOnScrollListener(this));
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(OrientationHelper.HORIZONTAL);
+        LinearLayoutManager linearLayoutManager = new GridLayoutManager(this,2);
+        linearLayoutManager.setOrientation(OrientationHelper.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         // 绑定recyclerView
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
         //设置Item增加、移除动画
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-      /*  DividerItemDecoration divider = new DividerItemDecoration();
-        mRecyclerView.addItemDecoration(divider);*/
+        CommonItemDecoration divider = new CommonItemDecoration(20,20);
+        mRecyclerView.addItemDecoration(divider);
     }
 
     private void addData() {

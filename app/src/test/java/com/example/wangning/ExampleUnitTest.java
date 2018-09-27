@@ -30,7 +30,7 @@ public class ExampleUnitTest {
 
     @Test
     public void math() throws Exception {
-        int result = 4 % 2;
+        int result =Integer.parseInt("09");
         System.out.println("result=" +result);
     }
 
