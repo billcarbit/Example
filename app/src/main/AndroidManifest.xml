@@ -41,8 +41,8 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".MainActivity"
-            android:windowSoftInputMode="stateAlwaysVisible"
+
+            android:name=".coordinator.CoordinatorLayoutActivity2"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
