@@ -13,8 +13,9 @@ buildscript {
 
 allprojects {
     repositories {
+       // maven { url "https://maven.google.com" }
+        maven { url 'https://dl.google.com/dl/android/maven2/' }
         jcenter()
-        maven { url "https://jitpack.io" }
     }
 }
 

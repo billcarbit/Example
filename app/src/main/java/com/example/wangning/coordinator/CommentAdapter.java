@@ -97,8 +97,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
         @Override
         public void update(int position) {
             tv_head.setText(mList.get(position).getContent());
-
-
         }
     }
 
@@ -119,9 +117,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
         // 最后一个item设置为footerView
         if (position == getItemCount() - 1) {
             return TYPE_FOOTER;
-        } else if (position % 2 == 0) {
-            return TYPE_REPLAY;
-        } else {
+        }else{
             return TYPE_ITEM;
         }
 
@@ -129,7 +125,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 
     @Override
     public int getItemCount() {
-        return 2 * mList.size() + 2;
+        return mList.size() + 1;
     }
 
     abstract class MyViewHolder extends RecyclerView.ViewHolder {

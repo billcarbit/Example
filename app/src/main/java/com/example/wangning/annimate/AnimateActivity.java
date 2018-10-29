@@ -4,8 +4,12 @@ import android.app.Activity;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.wangning.R;
 
@@ -17,9 +21,9 @@ import com.example.wangning.R;
  * @since JDK 1.8
  */
 public class AnimateActivity extends Activity implements View.OnClickListener {
-    private Button mBtn;
-    private ImageView iv_bell;
-    private AnimationDrawable animationDrawable;
+    private ImageView iv_scale;
+    private TextView tv_scale;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,25 +33,35 @@ public class AnimateActivity extends Activity implements View.OnClickListener {
     }
 
     private void initView() {
-        mBtn = (Button) findViewById(R.id.btn_get_json);
-        iv_bell = (ImageView) findViewById(R.id.iv_bell);
-
+        iv_scale = (ImageView) findViewById(R.id.iv_scale);
+        tv_scale = findViewById(R.id.tv_scale);
     }
 
     private void initData() {
-        mBtn.setOnClickListener(this);
+        initListener();
+        ScaleAnimation scaleAnimation = (ScaleAnimation) AnimationUtils.loadAnimation(this, R.anim.scale);
+        iv_scale.startAnimation(scaleAnimation);
+    }
 
-        iv_bell.setImageResource(R.drawable.bell_anim);
-        animationDrawable = (AnimationDrawable) iv_bell.getDrawable();
-        animationDrawable.start();
+    private void initListener() {
+        iv_scale.setOnClickListener(this);
+        tv_scale.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_get_json:
-                SignDialog signDialog = new SignDialog(this);
-                signDialog.show();
+            case R.id.iv_scale:
+                final ScaleAnimation animation = new ScaleAnimation(Animation.RELATIVE_TO_SELF, 1.4f,
+                        Animation.RELATIVE_TO_SELF, 1.4f);
+                animation.setDuration(2000);//设置动画持续时间
+                iv_scale.setAnimation(animation);
+                break;
+            case R.id.tv_scale:
+                final ScaleAnimation animation1 = new ScaleAnimation(Animation.RELATIVE_TO_SELF, 1.4f,
+                        Animation.RELATIVE_TO_SELF, 1.4f);
+                animation1.setDuration(1000);//设置动画持续时间
+                tv_scale.setAnimation(animation1);
                 break;
             default:
                 break;

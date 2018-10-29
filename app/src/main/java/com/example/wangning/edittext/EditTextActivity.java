@@ -3,6 +3,7 @@ package com.example.wangning.edittext;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -24,14 +25,8 @@ public class EditTextActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edittext);
-        RelativeLayout rl = (RelativeLayout) findViewById(R.id.rl);
-        rl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
+        et_1 = findViewById(R.id.et_1);
+        et_1.setFilters(new InputFilter[]{new MaxInputFilter(2)});
     }
 
 

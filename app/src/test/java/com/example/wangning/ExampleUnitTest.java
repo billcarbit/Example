@@ -30,8 +30,9 @@ public class ExampleUnitTest {
 
     @Test
     public void math() throws Exception {
-        int result =Integer.parseInt("09");
-        System.out.println("result=" +result);
+        int result =Integer.parseInt("11");
+        int result2 =result / 10;
+        System.out.println("result2=" +result2);
     }
 
 

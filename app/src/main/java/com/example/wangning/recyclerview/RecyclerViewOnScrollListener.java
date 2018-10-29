@@ -1,6 +1,7 @@
 package com.example.wangning.recyclerview;
 
 import android.content.Context;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,7 @@ public class RecyclerViewOnScrollListener extends RecyclerView.OnScrollListener 
 
     @Override
     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+        Log.e("AAA", "onScrollStateChanged: newState=" + newState);
         if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
             mOnLoadMoreListener.loadMore();
         }
@@ -29,7 +31,9 @@ public class RecyclerViewOnScrollListener extends RecyclerView.OnScrollListener 
 
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-        super.onScrolled(recyclerView, dx, dy);
+        Log.e("AAA", "onScrolled: dx=" + dx + ",dy=" + dy);
+        boolean reachBottom = !recyclerView.canScrollVertically(1);
+        Log.e("BBBB", "onScrolled: reachBottom =" + reachBottom);
     }
 
     public interface OnLoadMoreListener {

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:addStatesFromChildren="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.design.widget.CoordinatorLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fitsSystemWindows="false">
+
+                <android.support.design.widget.AppBarLayout
+                    android:id="@+id/appbar_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fitsSystemWindows="false"
+                    app:elevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:fitsSystemWindows="false"
+                        android:orientation="vertical"
+                        app:layout_scrollFlags="scroll">
+
+
+                        <TextView
+                            android:id="@+id/tv_msg_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="15dp"
+                            android:text="习近平：新时代的领路人"
+                            android:textColor="#ff222222"
+                            android:textSize="22sp" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:orientation="horizontal"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp">
+
+                            <TextView
+                                android:id="@+id/tv_creator"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="泰康人寿"
+                                android:textColor="#ff999999"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/tv_create_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="28dp"
+                                android:text="2017-11-14  09:59"
+                                android:textColor="#ff999999"
+                                android:textSize="14sp" />
+
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="32dp"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:text="2017年10月18日上午，习近平站在人民大会堂万人大礼堂的讲台前作中共十九大报告，历时近3个半小时。"
+                            android:textColor="#ff222222"
+                            android:textSize="15sp" />
+
+                        <com.example.wangning.flowlayout.FlowLayout
+                            android:id="@+id/fl_photos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="15dp"
+                            app:h_spacing="5"
+                            app:v_spacing="5">
+
+
+                        </com.example.wangning.flowlayout.FlowLayout>
+
+                    </LinearLayout>
+
+                </android.support.design.widget.AppBarLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+            </android.support.design.widget.CoordinatorLayout>
+
+
+        </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>
