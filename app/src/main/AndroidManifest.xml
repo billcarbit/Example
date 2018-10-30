@@ -41,7 +41,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".coordinator.CoordinatorLayoutActivity2"
+            android:name=".launchmode.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible"
             android:theme="@style/Theme.AppCompat">
