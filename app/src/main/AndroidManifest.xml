@@ -41,7 +41,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".launchmode.MainActivity"
+            android:name=".upload.UploadActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible"
             android:theme="@style/Theme.AppCompat">
