@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.util.Log;
 
+import com.example.wangning.utils.SPUtils;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -25,6 +26,7 @@ public class MyApplication  extends Application {
         // 程序创建的时候执行
         Log.d(TAG, "onCreate");
         super.onCreate();
+        SPUtils.init(this);
         initImageLoader(this);
         //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
 

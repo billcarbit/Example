@@ -1,10 +1,15 @@
 package com.example.wangning.utils;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.io.IOException;
 
 /**
  * Created by Administrator on 2017/12/26.
@@ -32,5 +37,17 @@ public class ImageUtils {
     }
     public static void displayImage(String url, ImageView iv, DisplayImageOptions options) {
         ImageLoader.getInstance().displayImage(url, iv, options);
+    }
+
+
+    public static Bitmap getScaledBitmap(Context context, Uri uri) {
+        Bitmap photoBmp = null;
+        try {
+            photoBmp = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Bitmap bm = Bitmap.createScaledBitmap(photoBmp, 100, 100, true);
+        return bm;
     }
 }

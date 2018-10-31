@@ -1,23 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
 
     <LinearLayout
+        android:id="@+id/ll_tabs"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal">
 
-
-        <ImageView
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleType="centerInside"
-            android:src="@drawable/bg_part1" />
+            android:padding="15dp"
+            android:background="@color/orange"
+            android:gravity="center_horizontal"
+            android:text="AAAAAA"
+            android:textColor="@color/black"
+            android:textSize="15dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="BBBBBB"
+            android:background="@color/green_00b6aa"
+            android:padding="15dp"
+            android:textColor="@color/black"
+            android:textSize="15dp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="CCCCCC"
+            android:background="@color/red_cf6e6b"
+            android:textColor="@color/black"
+            android:padding="15dp"
+            android:textSize="15dp" />
 
 
     </LinearLayout>
 
-</ScrollView>
+    <View
+        android:id="@+id/v_indicator"
+        android:layout_width="30dp"
+        android:layout_height="5dp"
+        android:background="@drawable/shape_rect_h5_w10" />
+
+
+</LinearLayout>

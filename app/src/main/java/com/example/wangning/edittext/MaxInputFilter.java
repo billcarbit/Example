@@ -6,10 +6,6 @@ import android.util.Log;
 
 /**
  * 限制输入最大值的过滤器
- *
- * @author shuaiqiangqiang
- * @version 1.0 2016-11-29
- * @since JDK 1.7
  */
 public class MaxInputFilter implements InputFilter {
 

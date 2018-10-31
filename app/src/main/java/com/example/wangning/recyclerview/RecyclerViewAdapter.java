@@ -71,8 +71,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
         @Override
-        public void update(int position) {
+        public void update(final int position) {
             tv_head.setText(mList.get(position));
+            tv_head.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnItemClickListener != null) {
+                        mOnItemClickListener.onItemClick(position);
+                    }
+                }
+            });
         }
     }
 
@@ -107,5 +115,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 }
             });
         }
+    }
+
+    private OnItemClickListener mOnItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mOnItemClickListener = listener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
     }
 }

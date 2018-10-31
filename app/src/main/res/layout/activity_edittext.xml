@@ -6,20 +6,16 @@
     android:orientation="vertical">
 
 
-    <RelativeLayout
-        android:id="@+id/rl"
+    <EditText
+        android:id="@+id/et_1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textSize="15dp"
+        android:focusable="true"
+        android:inputType="numberDecimal"
+        android:hint="搜索">
 
-        <EditText
-            android:id="@+id/et_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="@drawable/shape_bg_grey_r9"
-            android:hint="搜索">
-
-        </EditText>
-    </RelativeLayout>
+    </EditText>
 
 </LinearLayout>

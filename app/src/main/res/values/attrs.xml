@@ -75,4 +75,11 @@
     </declare-styleable>
 
 
+    <declare-styleable name="searchedit">
+        <attr name="imagewidth" format="dimension" />
+        <attr name="textSize_1" format="dimension" />
+        <attr name="textColor_1" format="color" />
+    </declare-styleable>
+
+
 </resources>
