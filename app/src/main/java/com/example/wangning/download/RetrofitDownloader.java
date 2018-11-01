@@ -31,7 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Administrator on 2018/7/24.
  */
 public class RetrofitDownloader implements ProgressListener {
-    private static final String BASE_URL = "http://localhost:8080/hello/";
+    private static final String BASE_URL = "http://localhost:8080/";
     private Call<ResponseBody> mDownloadCall;
     private File outputFile;
     private int seek = 0;

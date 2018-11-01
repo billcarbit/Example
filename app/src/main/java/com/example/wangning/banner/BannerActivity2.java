@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 
 import com.example.wangning.R;
+import com.example.wangning.banner.gallery.GalleryBannerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class BannerActivity2 extends Activity {
     private static final String TAG = "BannerActivity2";
     private int[] imgs = {R.drawable.banner_top,R.drawable.guagua_bg,R.drawable.banner_top,R.drawable.banner_top};
     private List<View> viewList;
-    BannerView bannerView;
+    GalleryBannerView bannerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,14 +33,14 @@ public class BannerActivity2 extends Activity {
             ImageView image = new ImageView(this);
             image.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             //设置显示格式
-            image.setScaleType(ImageView.ScaleType.FIT_XY);
+            image.setScaleType(ImageView.ScaleType.CENTER_CROP);
             image.setImageResource(imgs[i]);
             viewList.add(image);
         }
-        bannerView = (BannerView) findViewById(R.id.banner);
+        bannerView = (GalleryBannerView) findViewById(R.id.banner);
         bannerView.setBottomDrawable(R.drawable.banner_point_select,R.drawable.banner_point);
-        bannerView.startLoop(true);
-        bannerView.setLoopInterval(2000);
+        bannerView.startLoop(false);
+        //bannerView.setLoopInterval(2000);
         bannerView.setViewList(viewList);
        //bannerView.setTransformAnim(true);
     }

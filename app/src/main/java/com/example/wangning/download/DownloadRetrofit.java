@@ -11,7 +11,7 @@ import retrofit2.http.Streaming;
  */
 public interface DownloadRetrofit {
     @Streaming
-    @GET("download/ideaIU-2017.3.exe")
+    @GET("download/export")
     Call<ResponseBody> downloadApk();
 
     @Streaming
