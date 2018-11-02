@@ -3,50 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_vp_container"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:clipChildren="false"
-    android:background="@color/white">
+    android:layout_height="390dp"
+    android:gravity="center"
+    android:clipChildren="false">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clipChildren="false"
-        android:layout_centerInParent="true"/>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clipChildren="true">
-
-        <View
-            android:layout_width="44dp"
-            android:layout_height="18dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="7dp"
-            android:layout_marginTop="7dp"
-            android:alpha="0.18"
-            android:background="@drawable/shape_bg_grey_r9"
-            android:paddingBottom="2dp"
-            android:paddingLeft="9dp"
-            android:paddingRight="9dp"
-            android:paddingTop="2dp" />
-
-        <TextView
-            android:id="@+id/tv_page_index"
-            android:layout_width="44dp"
-            android:layout_height="18dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="7dp"
-            android:layout_marginTop="7dp"
-            android:paddingBottom="2dp"
-            android:paddingLeft="9dp"
-            android:paddingRight="9dp"
-            android:paddingTop="2dp"
-            android:textColor="@color/white"
-            android:textSize="11dp"
-            tools:text="3/28" />
-    </RelativeLayout>
-
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:clipChildren="false" />
 
 </RelativeLayout>

@@ -21,7 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.example.wangning.R;
-import com.example.wangning.utils.AppUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -47,6 +46,7 @@ public class GalleryBannerView extends FrameLayout {
 
     public GalleryBannerView(Context context) {
         this(context, null);
+
     }
 
     public GalleryBannerView(Context context, AttributeSet attrs) {
@@ -75,9 +75,9 @@ public class GalleryBannerView extends FrameLayout {
         int height = rlVpContainer.getMeasuredHeight();
         Log.e(TAG, "initViewPager: height=" + height + ",width=" + width);
         //设置ViewPager的布局
-        sideWidth = AppUtil.dp2px(mContext, 30);
+        sideWidth = (int) (((375 - 339) / 4) / 375.0f * width);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                AppUtil.dp2px(mContext, 300),//(int) (width * 339 / 375.0),
+                (int) (width * 339 / 375.0),
                 height);
         /**** 重要部分  ******/
         //clipChild用来定义他的子控件是否要在他应有的边界内进行绘制。 默认情况下，clipChild被设置为true。 也就是不允许进行扩展绘制。
@@ -88,10 +88,10 @@ public class GalleryBannerView extends FrameLayout {
         //设置ViewPager切换效果，即实现画廊效果
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         //设置预加载数量
-        mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setOffscreenPageLimit(3);
         //设置每页之间的左右间隔
 
-        mViewPager.setPageMargin(sideWidth);// TODO: 2018/1/11
+        mViewPager.setPageMargin(0);// TODO: 2018/1/11
 
         //将容器的触摸事件反馈给ViewPager
         rlVpContainer.setOnTouchListener(new View.OnTouchListener() {
@@ -104,6 +104,22 @@ public class GalleryBannerView extends FrameLayout {
 
         });
 
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                updateLinearPosition();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         mViewPager.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -241,17 +257,32 @@ public class GalleryBannerView extends FrameLayout {
         @Override
         public void transformPage(View view, float position) {
             if (position < -1) {
-                Log.e(TAG, "transformPage: position <－１," + position);
                 view.setScaleY(MIN_SCALE);
             } else if (position <= 1) //a页滑动至b页 ； a页从 0.0 ~ -1 ；b页从1 ~ 0.0
             { // [-1,1]
-                Log.e(TAG, "transformPage: position [-1,1]," + position);
                 float scaleFactor = MIN_SCALE + (1 - Math.abs(position)) * (MAX_SCALE - MIN_SCALE);
                 view.setScaleY(scaleFactor);
             } else { // (1,+Infinity]
-                Log.e(TAG, "transformPage: position ＞　１," + position);
                 view.setScaleY(MIN_SCALE);
             }
+
+        /*    float scaleFactor = Math.max(MIN_SCALE, 1 - Math.abs(position));
+            float rotate = 60 * Math.abs(position);
+            if (position < -1) {
+
+            } else if (position < 0) {
+                page.setScaleX(scaleFactor);
+                page.setScaleY(scaleFactor);
+                page.setRotationY(rotate);
+            } else if (position >= 0 && position < 1) {
+                page.setScaleX(scaleFactor);
+                page.setScaleY(scaleFactor);
+                page.setRotationY(-rotate);
+            } else if (position >= 1) {
+                page.setScaleX(scaleFactor);
+                page.setScaleY(scaleFactor);
+                page.setRotationY(-rotate);
+            }*/
         }
     }
 
