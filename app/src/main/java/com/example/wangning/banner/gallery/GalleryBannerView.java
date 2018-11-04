@@ -88,10 +88,10 @@ public class GalleryBannerView extends FrameLayout {
         //设置ViewPager切换效果，即实现画廊效果
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         //设置预加载数量
-        mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setOffscreenPageLimit(3);
         //设置每页之间的左右间隔
 
-        mViewPager.setPageMargin(sideWidth);// TODO: 2018/1/11
+        mViewPager.setPageMargin(0);// TODO: 2018/1/11
 
         //将容器的触摸事件反馈给ViewPager
         rlVpContainer.setOnTouchListener(new View.OnTouchListener() {
@@ -265,6 +265,24 @@ public class GalleryBannerView extends FrameLayout {
             } else { // (1,+Infinity]
                 view.setScaleY(MIN_SCALE);
             }
+
+        /*    float scaleFactor = Math.max(MIN_SCALE, 1 - Math.abs(position));
+            float rotate = 60 * Math.abs(position);
+            if (position < -1) {
+
+            } else if (position < 0) {
+                page.setScaleX(scaleFactor);
+                page.setScaleY(scaleFactor);
+                page.setRotationY(rotate);
+            } else if (position >= 0 && position < 1) {
+                page.setScaleX(scaleFactor);
+                page.setScaleY(scaleFactor);
+                page.setRotationY(-rotate);
+            } else if (position >= 1) {
+                page.setScaleX(scaleFactor);
+                page.setScaleY(scaleFactor);
+                page.setRotationY(-rotate);
+            }*/
         }
     }
 

@@ -48,7 +48,7 @@ public class Uploader {
             // create RequestBody instance from file
             RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
             //一定要加("AttachmentKey\"; filename=\"" +，不然失败
-            params.put("AttachmentKey\"; " + "index=" + i + ";" + "filename=\"" + file.getName(), requestFile);
+            params.put("fileName222\"; " + "index=" + i + ";" + "filename=\"" + file.getName(), requestFile);
         }
 
         // create upload service client
