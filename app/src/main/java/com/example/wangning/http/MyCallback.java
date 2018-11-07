@@ -2,6 +2,7 @@ package com.example.wangning.http;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 
 import com.example.wangning.R;
@@ -52,6 +53,10 @@ public abstract class MyCallback<T extends Result> implements Callback<T> {
 
     @Override
     public void onFailure(Call<T> call, Throwable t) {
+        if (call != null && call.isCanceled()) {
+            Log.e("AAAA", "onFailure: call.isCanceled");
+            return;
+        }
         if (!NetWorkUtils.isNetworkConnected(mContext)) {
             ToastUtils.show(mContext, "请检查网络");
             onFail(null, CODE_NETWORK_DISCONNECT);

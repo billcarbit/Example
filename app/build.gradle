@@ -9,10 +9,21 @@ android {
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.1"
+        flavorDimensions "versionCode"
 
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
+        }
+
+        productFlavors {
+
+            normal {
+            }
+
+            wangning222 {
+                applicationId 'com.example.wangning222'
+            }
         }
 
 
