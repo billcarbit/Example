@@ -40,7 +40,7 @@ public class Fragment2 extends Fragment {
     }
 
     private void initData() {
-        String a = (String) getArguments().get("a");
+        String a = getArguments().getString("a");
         Log.e(TAG, "initData: a=" + a);
         tv.setText(a);
     }

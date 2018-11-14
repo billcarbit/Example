@@ -35,7 +35,7 @@ public class TextActivity extends Activity {
         setContentView(R.layout.activity_text);
 
         TextView tv_diff_size = (TextView) findViewById(R.id.tv_diff_size);
-        String text = MoneyUtils.rahToStrWanYuan(null);
+        String text = MoneyUtils.rahToStrWanYuan(new BigDecimal("2121"));
         Log.e(TAG, "onCreate: text="+text );
         SpannableString s = new SpannableString(text);
         if(text.endsWith("万") || text.endsWith("元")){

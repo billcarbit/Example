@@ -41,7 +41,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".http.HttpActivity"
+            android:name=".textview.SpannableStringActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat">
             <intent-filter>

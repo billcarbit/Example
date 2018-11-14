@@ -59,9 +59,9 @@ public class MainFragmentActivity extends FragmentActivity
 
 
     private void initData() {
+        Bundle bundle = new Bundle();
         for (int i = 0; i < 10; i++) {
             Fragment2 fragment = new Fragment2();
-            Bundle bundle = new Bundle();
             bundle.putString("a", String.valueOf(i));
             fragment.setArguments(bundle);
             fragmentList.add(fragment);
