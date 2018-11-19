@@ -22,6 +22,9 @@ import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
 
+/**
+ * 识别图片二维码
+ */
 public class RecognizeQRCodeActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
