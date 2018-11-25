@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,8 +19,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,9 +33,35 @@ public class ExampleUnitTest {
 
     @Test
     public void math() throws Exception {
-        int result =Integer.parseInt("11");
-        int result2 =result / 10;
-        System.out.println("result2=" +result2);
+        int result = Integer.parseInt("11");
+        int result2 = result / 10;
+        System.out.println("result2=" + result2);
+    }
+
+    @Test
+    public void object2MapTest() throws Exception {
+        Hello hello = new Hello();
+        Map<String, Object> map = object2Map(hello);
+        System.out.println("map=" + (map.get("aaa") == null));
+    }
+
+
+    public static Map<String, Object> object2Map(Object obj) {
+        Map<String, Object> map = new HashMap<>();
+        if (obj == null) {
+            return map;
+        }
+        Class clazz = obj.getClass();
+        Field[] fields = clazz.getDeclaredFields();
+        try {
+            for (Field field : fields) {
+                field.setAccessible(true);
+                map.put(field.getName(), field.get(obj));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return map;
     }
 
 

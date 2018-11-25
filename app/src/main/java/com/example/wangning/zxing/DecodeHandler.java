@@ -40,7 +40,6 @@ import java.util.Map;
 final class DecodeHandler extends Handler {
 
   private static final String TAG = DecodeHandler.class.getSimpleName();
-
   private final CaptureActivity activity;
   private final MultiFormatReader multiFormatReader;
   private boolean running = true;

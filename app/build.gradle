@@ -9,10 +9,21 @@ android {
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.1"
+        flavorDimensions "versionCode"
 
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
+        }
+
+        productFlavors {
+
+            normal {
+            }
+
+            wangning222 {
+                applicationId 'com.example.wangning222'
+            }
         }
 
 
@@ -33,7 +44,6 @@ dependencies {
     implementation 'com.android.support:support-v4:26+'
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.github.bumptech.glide:glide:3.6.1'
-    implementation 'com.lsh.bankcardnum:banknumformatlibrary:1.0.0'
     implementation 'com.alibaba:fastjson:1.2.31'
     testImplementation 'com.alibaba:fastjson:1.2.31'
     implementation 'com.squareup.retrofit2:retrofit:2.2.0'
@@ -45,9 +55,11 @@ dependencies {
     implementation files('libs/universal-image-loader-1.9.5-javadoc.jar')
     implementation files('libs/universal-image-loader-1.9.5-sources.jar')
     implementation 'com.contrarywind:Android-PickerView:3.2.7'
-    implementation "com.xiaosu:VerticalRollingTextView:1.2.0"
-    implementation 'com.youth.banner:banner:1.4.10'  //最新版本
+    implementation 'com.xiaosu:VerticalRollingTextView:1.2.0'
+    implementation 'com.youth.banner:banner:1.4.10'
+    //最新版本
     implementation 'com.belerweb:pinyin4j:2.5.1'
     implementation project(path: ':moudle1')
+
 }
 
