@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import jygc.com.moudle1.AAAAA;
 
 
 public class MainActivity extends Activity {
@@ -27,7 +26,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new AAAAA();
 
     }
 
