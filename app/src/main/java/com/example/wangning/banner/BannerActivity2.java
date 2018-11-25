@@ -34,19 +34,18 @@ public class BannerActivity2 extends Activity {
         setContentView(R.layout.activity_banner2);
         viewList = new ArrayList<View>();
         for (int i = 0; i < imgs.length; i++) {
-    /*        View view = LayoutInflater.from(this).inflate(R.layout.fragment_banner, null);
+            View view = LayoutInflater.from(this).inflate(R.layout.fragment_banner, null);
             ImageView image =  view.findViewById(R.id.iv);
             image.setScaleType(ImageView.ScaleType.FIT_XY);
             image.setImageResource(imgs[i]);
             viewList.add(view);
-*/
 
-            ImageView image = new ImageView(this);
+      /*      ImageView image = new ImageView(this);
             image.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             //设置显示格式
             image.setScaleType(ImageView.ScaleType.FIT_XY);
             image.setImageResource(imgs[i]);
-            viewList.add(image);
+            viewList.add(image);*/
 
         }
         bannerView = (GalleryBannerView) findViewById(R.id.banner);

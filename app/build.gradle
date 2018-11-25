@@ -5,7 +5,7 @@ android {
     buildToolsVersion '28.0.3'
 
     defaultConfig {
-        applicationId "com.example.wangning"
+        applicationId "com.example.ewe"
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
@@ -48,5 +48,6 @@ dependencies {
     implementation "com.xiaosu:VerticalRollingTextView:1.2.0"
     implementation 'com.youth.banner:banner:1.4.10'  //最新版本
     implementation 'com.belerweb:pinyin4j:2.5.1'
+    implementation project(path: ':moudle1')
 }
 
