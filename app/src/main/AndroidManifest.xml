@@ -41,7 +41,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".location.LocationActivity"
+            android:name=".calendar.CalendarActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat">
             <intent-filter>
