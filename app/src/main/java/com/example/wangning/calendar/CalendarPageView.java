@@ -2,6 +2,7 @@ package com.example.wangning.calendar;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -11,7 +12,6 @@ import android.widget.FrameLayout;
 import com.example.wangning.R;
 import com.example.wangning.calendar.algorithm.CalenderManager;
 import com.example.wangning.calendar.algorithm.DayItem;
-import com.example.wangning.recyclerview.CommonItemDecoration;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,14 +20,15 @@ import java.util.List;
 /**
  * 日历页面
  */
-public class CalendarPageView extends FrameLayout {
+public class CalendarPageView extends FrameLayout implements OnDateItemClickListener {
 
     private RecyclerView mRecyclerView;
     private CalendarAdapter mCalendarAdapter;
     private List<DayItem> mList = new ArrayList<>();
     private String currentMonth;
+    private String mYearMonth;//yyyy-MM
 
-
+    private OnDateItemClickListener mOnDateItemClickListener;
 
     public CalendarPageView(@NonNull Context context) {
         this(context, null);
@@ -47,6 +48,7 @@ public class CalendarPageView extends FrameLayout {
         mRecyclerView.setLayoutManager(gridLayoutManager);
         // 绑定recyclerView
         mRecyclerView.setAdapter(mCalendarAdapter);
+        mCalendarAdapter.setOnDateItemClickListener(this);
         GridItemDecoration divider = new GridItemDecoration();
         mRecyclerView.addItemDecoration(divider);
     }
@@ -71,4 +73,25 @@ public class CalendarPageView extends FrameLayout {
     public void setCurrentMonth(String currentMonth) {
         this.currentMonth = currentMonth;
     }
+
+    public String getYearMonth() {
+        return mYearMonth;
+    }
+
+    public void setYearMonth(String yearMonth) {
+        mYearMonth = yearMonth;
+    }
+
+
+    @Override
+    public void onDateItemClick(DayItem item) {
+        if (mOnDateItemClickListener != null) {
+            mOnDateItemClickListener.onDateItemClick(item);
+        }
+    }
+
+    public void setOnDateItemClickListener(OnDateItemClickListener listener) {
+        mOnDateItemClickListener = listener;
+    }
+
 }

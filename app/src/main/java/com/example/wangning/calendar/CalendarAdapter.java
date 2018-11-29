@@ -59,16 +59,30 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
         }
 
         @Override
-        void update(int position) {
-            DayItem item = mList.get(position);
+        void update(final int position) {
+            final DayItem item = mList.get(position);
             if (item.isSigned()) {
                 rlBg.setBackground(mContext.getResources().getDrawable(R.drawable.shape_stroke_ffebac6c_circle_w30_h30));
-            }else{
+            } else {
                 rlBg.setBackground(null);
             }
             tvDay.setEnabled(item.isEnable());
             tvDay.setText(item.getText());
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnItemClickListener != null) {
+                        mOnItemClickListener.onDateItemClick(item);
+                    }
+                }
+            });
         }
+    }
+
+    private OnDateItemClickListener mOnItemClickListener;
+
+    public void setOnDateItemClickListener(OnDateItemClickListener listener) {
+        mOnItemClickListener = listener;
     }
 
 }
