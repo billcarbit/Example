@@ -2,7 +2,6 @@ package com.example.wangning.calendar;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -16,6 +15,7 @@ import com.example.wangning.calendar.algorithm.DayItem;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 日历页面
@@ -24,10 +24,9 @@ public class CalendarPageView extends FrameLayout implements OnDateItemClickList
 
     private RecyclerView mRecyclerView;
     private CalendarAdapter mCalendarAdapter;
-    private List<DayItem> mList = new ArrayList<>();
-    private String currentMonth;
+    private List<DayItem> mDayList = new ArrayList<>();
+    private String monthTitle;
     private String mYearMonth;//yyyy-MM
-
     private OnDateItemClickListener mOnDateItemClickListener;
 
     public CalendarPageView(@NonNull Context context) {
@@ -43,7 +42,7 @@ public class CalendarPageView extends FrameLayout implements OnDateItemClickList
 
 
     private void initRecyclerView() {
-        mCalendarAdapter = new CalendarAdapter(getContext(), mList);
+        mCalendarAdapter = new CalendarAdapter(getContext(), mDayList);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 7);
         mRecyclerView.setLayoutManager(gridLayoutManager);
         // 绑定recyclerView
@@ -54,24 +53,29 @@ public class CalendarPageView extends FrameLayout implements OnDateItemClickList
     }
 
 
-    public void createData(Date date) {
+    /**
+     * 根据年月，创建具体日期
+     *
+     * @param date      年月
+     * @param statusMap 服务端返回的具体日期状态
+     */
+    public void createData(Date date, Map<String, DayItem> statusMap) {
         CalenderManager calenderManager = new CalenderManager(date);
-        calenderManager.createCurrMonthDate();
+        calenderManager.createCurrMonthDate(statusMap);
         calenderManager.createLastMonthDate();
         calenderManager.createPreMonthDate();
         List<DayItem> dayItemList = calenderManager.combineAll();
-
-        mList.addAll(dayItemList);
+        mDayList.clear();
+        mDayList.addAll(dayItemList);
         mCalendarAdapter.notifyDataSetChanged();
     }
 
-
-    public String getCurrentMonth() {
-        return currentMonth;
+    public String getMonthTitle() {
+        return monthTitle;
     }
 
-    public void setCurrentMonth(String currentMonth) {
-        this.currentMonth = currentMonth;
+    public void setMonthTitle(String monthTitle) {
+        this.monthTitle = monthTitle;
     }
 
     public String getYearMonth() {

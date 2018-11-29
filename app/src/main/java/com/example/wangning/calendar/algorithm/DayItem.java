@@ -7,23 +7,14 @@ public class DayItem {
     private String text;
     private String date;
     private boolean enable;
-    private boolean signed;//签到
-    private boolean signError;//考勤异常
+    private int status;//状态(1:正常 2:未签到 3:异常)
 
-    public boolean isSignError() {
-        return signError;
+    public int getStatus() {
+        return status;
     }
 
-    public void setSignError(boolean signError) {
-        this.signError = signError;
-    }
-
-    public boolean isSigned() {
-        return signed;
-    }
-
-    public void setSigned(boolean signed) {
-        this.signed = signed;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public boolean isEnable() {

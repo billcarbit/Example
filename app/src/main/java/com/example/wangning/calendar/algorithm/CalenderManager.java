@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class CalenderManager {
 
     public List<DayItem> mPreMonthDayList = new ArrayList();//当前日历页面中，上月日期列表
-    public List<DayItem> mCurrMonthDayList = new ArrayList();//当前日历页面中，当月日期列表
+    public List<DayItem> mCurrMonthDayList = new ArrayList();//当前日历页面中，当月日期列表,由外部传入引用
     public List<DayItem> mLastMonthDayList = new ArrayList();//当前日历页面中，下月日期列表
 
     public SimpleDateFormat sdfYMD = new SimpleDateFormat("yyyy-MM-dd");
@@ -30,6 +31,9 @@ public class CalenderManager {
     }
 
 
+    public void setCurrMonthDayList(List<DayItem> currMonthDayList) {
+        mCurrMonthDayList = currMonthDayList;
+    }
 
     /**
      * 获取给定日期的当月最大天数
@@ -92,7 +96,6 @@ public class CalenderManager {
     }
 
 
-
     /**
      * 创建当月日历中，上一个月的日期
      */
@@ -137,7 +140,7 @@ public class CalenderManager {
         }
     }
 
-    public void createCurrMonthDate() {
+    public void createCurrMonthDate(Map<String, DayItem> statusMap) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(mCurrentDate);
         int amount = calendar.getActualMaximum(calendar.DAY_OF_MONTH);//获取本月最大天数
@@ -152,9 +155,24 @@ public class CalenderManager {
             } else {
                 dayItem.setDate(ymDate + (i + 1));
             }
+            fillStatus(dayItem, statusMap);
             dayItem.setEnable(true);
             mCurrMonthDayList.add(dayItem);
         }
+    }
+
+    /**
+     * 将从服务端获取的状态，赋值给每个天对象
+     *
+     * @param item
+     * @param statusMap
+     */
+    private void fillStatus(DayItem item, Map<String, DayItem> statusMap) {
+        DayItem dayItem = statusMap.get(item.getDate());
+        if (dayItem == null) {
+            return;
+        }
+        item.setStatus(dayItem.getStatus());
     }
 
 
@@ -167,13 +185,12 @@ public class CalenderManager {
             e.printStackTrace();
         }
         CalenderManager calenderManager = new CalenderManager(date);
-        calenderManager.createCurrMonthDate();
         calenderManager.createLastMonthDate();
         calenderManager.createPreMonthDate();
 
         List<DayItem> dayItemList = calenderManager.combineAll();
         for (DayItem item : dayItemList) {
-            System.out.println(item.getText()+","+item.getDate());
+            System.out.println(item.getText() + "," + item.getDate());
         }
 
     }

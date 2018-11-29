@@ -61,10 +61,19 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
         @Override
         void update(final int position) {
             final DayItem item = mList.get(position);
-            if (item.isSigned()) {
-                rlBg.setBackground(mContext.getResources().getDrawable(R.drawable.shape_stroke_ffebac6c_circle_w30_h30));
-            } else {
-                rlBg.setBackground(null);
+            switch (item.getStatus()) {
+                case 1://签到了
+                    rlBg.setBackground(mContext.getResources().getDrawable(R.drawable.shape_stroke_ffebac6c_circle_w30_h30));
+                    break;
+                case 2://未签到
+                    rlBg.setBackground(null);
+                    break;
+                case 3://签到异常
+                    // TODO: 2018/11/29
+                    break;
+                default:
+                    rlBg.setBackground(null);
+                    break;
             }
             tvDay.setEnabled(item.isEnable());
             tvDay.setText(item.getText());
