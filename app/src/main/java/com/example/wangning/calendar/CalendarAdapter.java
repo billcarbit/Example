@@ -51,11 +51,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
 
         private TextView tvDay;
         private RelativeLayout rlBg;
+        private RelativeLayout rlSelectBg;
 
         public NormalViewHolder(View itemView) {
             super(itemView);
             tvDay = itemView.findViewById(R.id.tv_day);
             rlBg = itemView.findViewById(R.id.rl_bg);
+            rlSelectBg = itemView.findViewById(R.id.rl_select_bg);
         }
 
         @Override
@@ -69,17 +71,26 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
                     rlBg.setBackground(null);
                     break;
                 case 3://签到异常
-                    // TODO: 2018/11/29
+                    rlBg.setBackground(mContext.getResources().getDrawable(R.drawable.calendar_pic_undone));
                     break;
                 default:
                     rlBg.setBackground(null);
                     break;
             }
+            if (item.isSelected()) {//如果选中，则置灰
+                rlSelectBg.setBackground(mContext.getResources().getDrawable(R.drawable.shape_oval_solid_ffeeeeee_w30_h30));
+            } else {
+                rlSelectBg.setBackground(null);
+            }
             tvDay.setEnabled(item.isEnable());
+            itemView.setEnabled(item.isEnable());
             tvDay.setText(item.getText());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    clearAllSelection();
+                    item.setSelected(true);
+                    notifyDataSetChanged();
                     if (mOnItemClickListener != null) {
                         mOnItemClickListener.onDateItemClick(item);
                     }
@@ -94,4 +105,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
         mOnItemClickListener = listener;
     }
 
+
+    private void clearAllSelection() {
+        if (mList == null) {
+            return;
+        }
+        for (DayItem item : mList) {
+            item.setSelected(false);
+        }
+    }
 }

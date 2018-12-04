@@ -70,6 +70,10 @@ public class CalendarPageView extends FrameLayout implements OnDateItemClickList
         mCalendarAdapter.notifyDataSetChanged();
     }
 
+    public CalendarAdapter getCalendarAdapter() {
+        return mCalendarAdapter;
+    }
+
     public String getMonthTitle() {
         return monthTitle;
     }

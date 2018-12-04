@@ -9,14 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.wangning.R;
 import com.example.wangning.calendar.algorithm.DayItem;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,6 +36,8 @@ public class CalendarView extends LinearLayout implements OnDateItemClickListene
     private SimpleDateFormat sdfYMD = new SimpleDateFormat("yyyy-MM-dd");
     private OnDateItemClickListener mOnDateItemClickListener;
     private Map<String, DayItem> mSourceDateStatusMap = new HashMap();//存放服务端返回的状态对象
+    private TextView tvTitleTag;
+
 
     public CalendarView(Context context) {
         super(context);
@@ -48,42 +48,33 @@ public class CalendarView extends LinearLayout implements OnDateItemClickListene
         LayoutInflater.from(context).inflate(R.layout.layout_calendar, this);
         mViewPager = findViewById(R.id.vp);
         tvMonth = findViewById(R.id.tv_month);
+        tvTitleTag = findViewById(R.id.tv_title_tag);
         mMyPagerAdapter = new MyPagerAdapter(mCalendarPageViewList);
         mViewPager.setAdapter(mMyPagerAdapter);//给ViewPager设置适配器
         mViewPager.addOnPageChangeListener(new OnPageChangeListenerImpl());
     }
 
+    public void notifyDaySelected() {
+        mCalendarPageViewList.get(mViewPager.getCurrentItem()).getCalendarAdapter().notifyDataSetChanged();
 
-    /**
-     * 创建上一个月的日历页面对象
-     *
-     * @param ymDate
-     */
-    private void createPrevMonthCalendarPage(String ymDate) {
-        CalendarPageView calendarPageView = new CalendarPageView(getContext());
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat sdfYM = new SimpleDateFormat("yyyy-MM");
-        try {
-            calendar.setTime(sdfYM.parse(ymDate));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        calendar.add(Calendar.MONTH, -1);//上一个月
-        calendarPageView.createData(calendar.getTime(), mSourceDateStatusMap);
-        calendarPageView.setMonthTitle(sdfM.format(calendar.getTime()));
-        String itemYMDate = sdfYM.format(calendar.getTime());
-        calendarPageView.setYearMonth(itemYMDate);
-        calendarPageView.setOnDateItemClickListener(this);
-        mCalendarPageViewList.add(0, calendarPageView);
-        mMyPagerAdapter.notifyDataSetChanged();
-        mViewPager.setCurrentItem(1);
     }
 
+
+    public void initDateRange(Date currentDate, int yearRange) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.YEAR, -3);
+        Date begin = calendar.getTime();
+        calendar = Calendar.getInstance();
+        calendar.add(Calendar.YEAR, 3);
+        Date end = calendar.getTime();
+        initDateRange(begin, end);
+        Log.e("AAA", "onCreate: before=" + begin + ",after=" + end);
+    }
 
     /**
      * 初始化日历数据
      */
-    public void fillData(Date beginDate, Date endDate) {
+    public void initDateRange(Date beginDate, Date endDate) {
         CalendarPageView calendarPageView;
         Calendar calendar = Calendar.getInstance();
         Date currentDate = calendar.getTime();
@@ -110,6 +101,13 @@ public class CalendarView extends LinearLayout implements OnDateItemClickListene
         mMyPagerAdapter.notifyDataSetChanged();
         mViewPager.setCurrentItem(currentYMIndex);//默认选中当前月份
         tvMonth.setText(mCalendarPageViewList.get(currentYMIndex).getMonthTitle());
+    }
+
+    /**
+     * 设置已签到天数
+     */
+    public void setSignedDayCount(String count) {
+        tvTitleTag.setText("共签到" + count + "天");
     }
 
 
@@ -148,16 +146,9 @@ public class CalendarView extends LinearLayout implements OnDateItemClickListene
 
         @Override
         public void onPageSelected(int position) {
-            Log.e("AAA", "onPageSelected: position=" + position);
             if (mOnMonthLoadListener != null) {
-                if (position == 0) {
-                    mOnMonthLoadListener.onPrevMonthLoad(getFirstYMDate());
-                    createPrevMonthCalendarPage(getFirstYMDate());
-                } else if (position == mCalendarPageViewList.size() - 1) {
-                    mOnMonthLoadListener.onNextMonthLoad(getLastYMDate());
-                } else {
-                    mOnMonthLoadListener.onCurrentMonthLoad();
-                }
+                CalendarPageView calendarPageView = mCalendarPageViewList.get(position);
+                mOnMonthLoadListener.onCurrentMonthLoad(calendarPageView.getYearMonth());
             }
             tvMonth.setText(mCalendarPageViewList.get(position).getMonthTitle());
         }
@@ -189,17 +180,13 @@ public class CalendarView extends LinearLayout implements OnDateItemClickListene
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            if (position < container.getChildCount()) {
-                View childView = container.getChildAt(position);
-                // TODO: 2018/11/29  
-            }
             container.addView(mViewList.get(position));//添加页卡
             return mViewList.get(position);
         }
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            //container.removeView(mViewList.get(position));//删除页卡
+            container.removeView(mViewList.get(position));//删除页卡
         }
 
     }
@@ -235,11 +222,7 @@ public class CalendarView extends LinearLayout implements OnDateItemClickListene
     }
 
     public interface OnMonthLoadListener {
-        void onPrevMonthLoad(String firstYMDate);
-
-        void onNextMonthLoad(String lastYMDate);
-
-        void onCurrentMonthLoad();
+        void onCurrentMonthLoad(String ymDate);
     }
 
 

@@ -7,7 +7,16 @@ public class DayItem {
     private String text;
     private String date;
     private boolean enable;
+    private boolean isSelected;
     private int status;//状态(1:正常 2:未签到 3:异常)
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     public int getStatus() {
         return status;

@@ -17,23 +17,32 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="23dp"
             android:src="@drawable/arrow_small_grey_left" />
+
 
         <TextView
             android:id="@+id/tv_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:textColor="#ff222222"
             android:textSize="14sp"
             tools:text="10月" />
 
+        <TextView
+            android:id="@+id/tv_title_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textColor="#ffaaaaaa"
+            android:textSize="12sp"
+            tools:text="共签到18天" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="23dp"
             android:src="@drawable/arrow_small_grey_right" />
 
 
@@ -49,8 +58,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="日"
-            android:gravity="center"
             android:textColor="#ff222222"
             android:textSize="16sp" />
 
@@ -58,8 +67,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="一"
-            android:gravity="center"
             android:textColor="#ff222222"
             android:textSize="16sp" />
 
@@ -67,8 +76,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="二"
-            android:gravity="center"
             android:textColor="#ff222222"
             android:textSize="16sp" />
 
@@ -76,9 +85,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="三"
-            android:gravity="center"
-            android:layout_weight="1"
             android:textColor="#ff222222"
             android:textSize="16sp" />
 
@@ -86,9 +95,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="四"
-            android:gravity="center"
-            android:layout_weight="1"
             android:textColor="#ff222222"
             android:textSize="16sp" />
 
@@ -96,18 +105,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="五"
-            android:gravity="center"
-            android:layout_weight="1"
             android:textColor="#ff222222"
             android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="六"
-            android:gravity="center"
             android:layout_weight="1"
+            android:gravity="center"
+            android:text="六"
             android:textColor="#ff222222"
             android:textSize="16sp" />
 

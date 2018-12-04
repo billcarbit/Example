@@ -5,25 +5,31 @@
     android:gravity="center"
     android:orientation="vertical">
 
-
     <RelativeLayout
-        android:id="@+id/rl_bg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_stroke_ffebac6c_circle_w30_h30">
+        android:id="@+id/rl_select_bg"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/shape_oval_solid_ffeeeeee_w30_h30">
 
-
-        <TextView
-            android:id="@+id/tv_day"
+        <RelativeLayout
+            android:id="@+id/rl_bg"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="1"
-            android:textColor="@drawable/selector_calendar_item"
-            android:textSize="14sp" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/calendar_pic_undone">
 
+
+            <TextView
+                android:id="@+id/tv_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="11"
+                android:textColor="@drawable/selector_calendar_item"
+                android:textSize="14sp" />
+
+
+        </RelativeLayout>
 
     </RelativeLayout>
-
-
 </LinearLayout>
