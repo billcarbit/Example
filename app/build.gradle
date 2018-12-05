@@ -13,17 +13,8 @@ android {
         flavorDimensions "versionCode"
 
         ndk {
-            abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
-        }
-
-        productFlavors {
-
-            normal {
-            }
-
-            wangning222 {
-                applicationId 'com.example.wangning222'
-            }
+            //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","x86_64"
         }
 
 
@@ -69,6 +60,11 @@ dependencies {
     implementation 'com.youth.banner:banner:1.4.10'
     //最新版本
     implementation 'com.belerweb:pinyin4j:2.5.1'
+    implementation 'com.amap.api:location:latest.integration'
+
+    implementation 'com.amap.api:3dmap:5.0.0'
+    implementation 'com.amap.api:location:3.3.0'
+    implementation 'com.amap.api:search:5.0.0'
 
 }
 

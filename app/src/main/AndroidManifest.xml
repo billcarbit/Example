@@ -40,8 +40,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="c024df025881963eba21fb9f4bfb0ab5"/>
+
+
         <activity
-            android:name=".calendar.CalendarActivity"
+            android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat">
             <intent-filter>
@@ -63,6 +68,11 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <service android:name="com.amap.api.location.APSService"></service>
+
+
+
     </application>
 
 </manifest>
