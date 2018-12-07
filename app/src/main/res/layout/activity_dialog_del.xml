@@ -34,4 +34,11 @@
         android:layout_height="wrap_content"
         android:text="图片弹出框" />
 
+
+    <Button
+        android:id="@+id/btn_add_new_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="每次点击创建新的dialog" />
+
 </LinearLayout>

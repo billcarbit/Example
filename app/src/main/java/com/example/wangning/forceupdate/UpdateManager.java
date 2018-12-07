@@ -178,6 +178,7 @@ public class UpdateManager {
                     break;
                 case DOWNLOAD_FAILED:
                     Toast.makeText(mContext, "网络断开，请稍候再试", Toast.LENGTH_LONG).show();
+                    // TODO: 2018/12/6  
                     break;
                 default:
                     break;

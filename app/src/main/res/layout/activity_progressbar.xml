@@ -17,8 +17,8 @@
         android:layout_height="14dp"
         android:indeterminate="false"
         android:indeterminateOnly="false"
-        android:max="100"
-        android:progress="30"
+        android:secondaryProgress="80"
+        android:progress="80"
         android:progressDrawable="@drawable/progressbar_special" />
 
 

@@ -22,8 +22,9 @@ public class DialogActivity extends Activity {
     SlideDownDialog slideDownDialog;
     AddPhotoDialog addPhotoDialog;
     ProgressBarDialog mProgressBarDialog;
-    Button btn1, btn2, btn3, btn4,btn_pic;
+    Button btn1, btn2, btn3, btn4, btn_pic;
     ImageDialog imageDialog;
+    Button btn_add_new_dialog;
 
     @Override
 
@@ -42,6 +43,16 @@ public class DialogActivity extends Activity {
         btn3 = (Button) findViewById(R.id.btn3);
         btn4 = (Button) findViewById(R.id.btn4);
         btn_pic = (Button) findViewById(R.id.btn_pic);
+        BaseConfirmDialog aaa = new BaseConfirmDialog(DialogActivity.this);
+        aaa.setContent("111 ");
+        aaa.show();
+        aaa = new BaseConfirmDialog(DialogActivity.this);
+        aaa.setContent("222");
+        aaa.show();
+        aaa = new BaseConfirmDialog(DialogActivity.this);
+        aaa.setContent("333");
+        aaa.show();
+
 
     }
 

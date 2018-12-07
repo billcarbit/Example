@@ -7,6 +7,9 @@ import android.view.View;
 
 import com.example.wangning.R;
 
+/**
+ * 强制更新
+ */
 public class ForceUpdateActivity extends Activity {
 
     @Override

@@ -3,4 +3,7 @@
     <external-path
         name="my_root"
         path="." />
+    <external-path
+        name="ovu_temp"
+        path="./ovu_temp" />
 </paths>
