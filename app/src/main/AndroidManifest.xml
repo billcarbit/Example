@@ -30,6 +30,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
         android:name=".application.MyApplication"
@@ -43,10 +44,10 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="c024df025881963eba21fb9f4bfb0ab5"/>
-
+        BallCurveActivity
 
         <activity
-            android:name=".installer.InstallerActivity"
+            android:name=".canvas.progress.BallCurveActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat">
             <intent-filter>

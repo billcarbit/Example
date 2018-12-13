@@ -6,7 +6,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.ViewGroup;
 
 import com.example.wangning.R;
@@ -22,7 +21,7 @@ public class InstrumentBoard extends ViewGroup {
     private Context mContext;
     private float mDensity;
     private final static int LOW = R.color.green_4eeaa6;
-    private final static int MID = R.color.orange_4eeaa6;
+    private final static int MID = R.color.orange_f8b026;
     private final static int HIGH = R.color.red_f3352c;
     private final static int STROKE_WIDTH = 20;
     private final static int RADIUS = 400;
