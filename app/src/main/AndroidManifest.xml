@@ -47,7 +47,7 @@
         BallCurveActivity
 
         <activity
-            android:name=".canvas.progress.BallCurveActivity"
+            android:name=".asynctask.AsyncTaskActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat">
             <intent-filter>

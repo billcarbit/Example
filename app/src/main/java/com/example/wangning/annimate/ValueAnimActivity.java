@@ -58,6 +58,7 @@ public class ValueAnimActivity extends Activity
         tv_value_change = (TextView) findViewById(R.id.tv_value_change);
         tv_jump = (TextView) findViewById(R.id.tv_jump);
         iv_bell = (ImageView) findViewById(R.id.iv_bell);
+        iv_alpha = (ImageView) findViewById(R.id.iv_alpha);
 
         tv_rotate.setOnClickListener(this);
         rl_number.setOnClickListener(this);

@@ -56,12 +56,19 @@ public class AnimateActivity extends Activity implements View.OnClickListener {
                         Animation.RELATIVE_TO_SELF, 1.4f);
                 animation.setDuration(2000);//设置动画持续时间
                 iv_scale.setAnimation(animation);
+                iv_scale.startAnimation(animation);
                 break;
             case R.id.tv_scale:
-                final ScaleAnimation animation1 = new ScaleAnimation(Animation.RELATIVE_TO_SELF, 1.4f,
-                        Animation.RELATIVE_TO_SELF, 1.4f);
+
+                ScaleAnimation animation1 = new ScaleAnimation(
+                        1.0f, 2.0f, 1.0f, 2.0f,
+                        Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f
+                );
+
                 animation1.setDuration(1000);//设置动画持续时间
+                animation1.setRepeatCount(ScaleAnimation.INFINITE);
                 tv_scale.setAnimation(animation1);
+                tv_scale.startAnimation(animation1);
                 break;
             default:
                 break;

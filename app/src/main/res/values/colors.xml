@@ -69,5 +69,6 @@
     <color name="dark">#FF222222</color>
     <color name="light">#FFEEEEEE</color>
     <color name="grey_ffaaaaaa">#ffaaaaaa</color>
-
+    <color name="blue_5c6fd3">#5c6fd3</color>
+    <color name="blue_44f0ff">#44f0ff</color>
 </resources>
