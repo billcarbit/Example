@@ -44,10 +44,9 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="c024df025881963eba21fb9f4bfb0ab5"/>
-        BallCurveActivity
 
         <activity
-            android:name=".asynctask.AsyncTaskActivity"
+            android:name=".canvas.CanvasLabActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat">
             <intent-filter>

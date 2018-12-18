@@ -15,6 +15,15 @@ import android.util.DisplayMetrics;
 import android.widget.LinearLayout;
 
 import com.example.wangning.R;
+import com.example.wangning.canvas.chart.Algorithm;
+import com.example.wangning.canvas.chart.columnar.AColumnar;
+import com.example.wangning.canvas.chart.columnar.Coordinate;
+import com.example.wangning.canvas.chart.columnar.DataX;
+import com.example.wangning.canvas.chart.columnar.DataY;
+import com.example.wangning.canvas.chart.columnar.PathLine;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -32,36 +41,34 @@ public class CanvasLabActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_canvas_lab);
-        LinearLayout mylayout = (LinearLayout) findViewById(R.id.ll);
-        Paint paint = new Paint();
-        paint.setStrokeWidth(5);//笔宽5像素
-        paint.setColor(Color.GREEN);//设置为绿笔
-        paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.STROKE);
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int width = dm.widthPixels;
-        int height = dm.heightPixels;//获取屏幕的宽和高
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888); //设置位图的宽高,bitmap为透明
-        canvas = new Canvas(bitmap);
-        canvas.drawColor(Color.WHITE);//设置为透明，画布也是透明
 
-        int orange_f76b1c = getResources().getColor(R.color.orange_f76b1c);
-        int white_fdf6df = getResources().getColor(R.color.white_fdf6df);
-        LinearGradient gradient = new LinearGradient(0, 0, 0, 600, Color.RED, Color.RED, Shader.TileMode.CLAMP);
-
-        paint.setShader(gradient);
+        PillarView ccv = findViewById(R.id.ccv);
+        final List<DataY> dataYList = new ArrayList<DataY>();
+        for (int i = 0; i < 9; i++) {
+            DataY dataY = new DataY();
+            dataY.setValue(String.valueOf(i * 100));
+            dataYList.add(dataY);
+        }
+        ccv.setYData(dataYList);
 
 
-        Path path = new Path();
-        path.moveTo(0, 0);
-        path.cubicTo(300, 0, 300, 600, 600, 600);
-        path.cubicTo(700, 600, 700, 200, 800, 200);
-        canvas.drawPath(path, paint);
+        List<AColumnar> aColumnarList = new ArrayList<AColumnar>();
+        for (int i = 0; i < 2; i++) {
+            AColumnar columnar = new AColumnar();
+            columnar.setData((i + 1) * 100);
+            aColumnarList.add(columnar);
+        }
+        ccv.setColumnarList(aColumnarList);
 
+        final List<DataX> dataXList = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            DataX dataX = new DataX();
+            dataX.setValue("AA" + i);
+            dataXList.add(dataX);
+        }
+        ccv.setXData(dataXList);
 
-        Drawable drawable = new BitmapDrawable(bitmap);
-        mylayout.setBackgroundDrawable(drawable);
+        ccv.invalidate();
     }
 
 
