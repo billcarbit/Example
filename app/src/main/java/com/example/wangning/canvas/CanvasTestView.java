@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -25,19 +26,25 @@ public class CanvasTestView extends View {
         super.onDraw(canvas);
 
 
+        Path path = new Path();
+        path.lineTo(300,600);
+
+
+
         Paint paint = new Paint();
         paint.setColor(Color.WHITE);
         paint.setStrokeWidth(10);
         paint.setTextSize(AppUtil.dp2px(getContext(), 16));
         canvas.drawLine(0, 400, 400, 400, paint);
 
-        canvas.rotate(45,0,400);
+       // canvas.rotate(45, 0, 400);
 
         canvas.drawText("Hello", 0, 400, paint);
 
+
+        canvas.drawTextOnPath("AAA",path,0,0,paint);
+
     }
-
-
 
 
 }

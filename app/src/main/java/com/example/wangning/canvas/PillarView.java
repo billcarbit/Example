@@ -184,11 +184,13 @@ public class PillarView extends ViewGroup {
         }
 // TODO: 2018/12/18
 
-        float originX = 0.0f;
+        float originX = 0.0f;//每个柱子的绘制起点，矩形左下角顶点
         int spacing = dp2px(mSpacing);
         float columnarWidth = calculateColumnarWidth(columnarList);
-
-        for (int i = 0, length = columnarList.size(); i < length; i++) {
+        int columnNum = columnarList.size();
+        int scaleXNum = scaleXList.size();
+        int minNum = columnNum > scaleXNum ? scaleXNum : columnNum;
+        for (int i = 0, length = minNum; i < length; i++) {
             if (i == 0) {
                 originX = yLine.getPaddingLeft() + yLine.getWidth() / 2 + spacing;
             } else {
@@ -199,7 +201,12 @@ public class PillarView extends ViewGroup {
 
             //canvas.rotate(45,x,getHeight() - xLine.getPaddingBottom() + getTextHeight(data, textPaint));
 
-            canvas.drawText(data, x, getHeight() - xLine.getPaddingBottom() + getTextHeight(data, textPaint), textPaint);
+            Path path = new Path();
+            path.moveTo(x, getHeight() - xLine.getPaddingBottom() + getTextHeight(data, textPaint));//移动至X轴文字中心点
+            path.lineTo(originX + columnarWidth, getHeight());//x:柱子右下角,y:控件最大高度
+            canvas.drawTextOnPath(data, path, 20, 0, textPaint);
+
+            //  canvas.drawText(data, x, getHeight() - xLine.getPaddingBottom() + getTextHeight(data, textPaint), textPaint);
         }
 
 

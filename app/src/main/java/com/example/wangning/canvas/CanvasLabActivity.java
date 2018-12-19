@@ -42,7 +42,7 @@ public class CanvasLabActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_canvas_lab);
 
-        PillarView ccv = findViewById(R.id.ccv);
+       PillarView ccv = findViewById(R.id.ccv);
         final List<DataY> dataYList = new ArrayList<DataY>();
         for (int i = 0; i < 9; i++) {
             DataY dataY = new DataY();
@@ -53,17 +53,17 @@ public class CanvasLabActivity extends Activity {
 
 
         List<AColumnar> aColumnarList = new ArrayList<AColumnar>();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 5; i++) {
             AColumnar columnar = new AColumnar();
-            columnar.setData((i + 1) * 100);
+            columnar.setData((i + 1) * 150);
             aColumnarList.add(columnar);
         }
         ccv.setColumnarList(aColumnarList);
 
         final List<DataX> dataXList = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 5; i++) {
             DataX dataX = new DataX();
-            dataX.setValue("AA" + i);
+            dataX.setValue("AAAADSFASFASFAAA" + i);
             dataXList.add(dataX);
         }
         ccv.setXData(dataXList);
