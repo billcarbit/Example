@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
 
-    <com.example.wangning.canvas.CanvasTestView
+    <com.example.wangning.canvas.chart.pillar.LayerPillarView
         android:id="@+id/ccv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

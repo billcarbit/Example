@@ -1,4 +1,4 @@
-package com.example.wangning.canvas;
+package com.example.wangning.canvas.chart.pillar;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,17 +7,12 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.wangning.R;
 import com.example.wangning.canvas.chart.columnar.AColumnar;
-import com.example.wangning.canvas.chart.columnar.ColumnarChartView;
-import com.example.wangning.canvas.chart.columnar.Coordinate;
 import com.example.wangning.canvas.chart.columnar.DataX;
 import com.example.wangning.canvas.chart.columnar.DataY;
 import com.example.wangning.canvas.chart.columnar.LineX;
@@ -28,7 +23,10 @@ import com.example.wangning.canvas.chart.columnar.ScaleY;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PillarView extends ViewGroup {
+/**
+ * 简单的柱状图
+ */
+public class SimplePillarView extends ViewGroup {
 
     private final float mDensity;
     private Context mContext;
@@ -42,11 +40,11 @@ public class PillarView extends ViewGroup {
     private List<AColumnar> mColumnarList = new ArrayList<AColumnar>();
     private float mSpacing = 10;//柱子间隔
 
-    public PillarView(Context context) {
+    public SimplePillarView(Context context) {
         this(context, null);
     }
 
-    public PillarView(Context context, AttributeSet attrs) {
+    public SimplePillarView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
         mDensity = mContext.getResources().getDisplayMetrics().density;
@@ -85,10 +83,6 @@ public class PillarView extends ViewGroup {
         int lengthY = yLine.getLength();
         float y = getHeight() -
                 (lengthY * value / max + yLine.getPaddingBottom());
-
-        Log.e("AAA", "calculateColumnarHeight: y=" + y + ",maxVal=" + max + ",value=" + value + ",lengthY=" + lengthY);
-
-
         return y;
     }
 
@@ -182,8 +176,6 @@ public class PillarView extends ViewGroup {
         if (scaleXList == null || scaleXList.isEmpty()) {
             return;
         }
-// TODO: 2018/12/18
-
         float originX = 0.0f;//每个柱子的绘制起点，矩形左下角顶点
         int spacing = dp2px(mSpacing);
         float columnarWidth = calculateColumnarWidth(columnarList);
@@ -199,14 +191,10 @@ public class PillarView extends ViewGroup {
             String data = scaleXList.get(i).getDataX().getValue();
             float x = originX + columnarWidth / 2 - getTextWidth(data, textPaint) / 2;
 
-            //canvas.rotate(45,x,getHeight() - xLine.getPaddingBottom() + getTextHeight(data, textPaint));
-
             Path path = new Path();
             path.moveTo(x, getHeight() - xLine.getPaddingBottom() + getTextHeight(data, textPaint));//移动至X轴文字中心点
             path.lineTo(originX + columnarWidth, getHeight());//x:柱子右下角,y:控件最大高度
-            canvas.drawTextOnPath(data, path, 20, 0, textPaint);
-
-            //  canvas.drawText(data, x, getHeight() - xLine.getPaddingBottom() + getTextHeight(data, textPaint), textPaint);
+            canvas.drawTextOnPath(data, path, 20, 0, textPaint);//将字体倾斜
         }
 
 
