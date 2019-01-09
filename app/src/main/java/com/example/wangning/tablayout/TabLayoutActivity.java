@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,27 +57,50 @@ public class TabLayoutActivity extends Activity {
         mViewList.add(view5);
 
         //添加页卡标题
-        mTitleList.add("No:1");
+        mTitleList.add("No:1ASDFGHJKLdasdasdasdsadas");
         mTitleList.add("No:2");
         mTitleList.add("No:3");
         mTitleList.add("No:4");
         mTitleList.add("No:5");
 
 
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);//设置tab模式，当前为系统默认模式
-        mTabLayout.addTab(mTabLayout.newTab().setText(mTitleList.get(0)));//添加tab选项卡
+   /*     TabLayout.Tab tab = mTabLayout.newTab();
+        tab.setCustomView(R.layout.item_tab);
+        mTabLayout.addTab(tab);//添加tab选项卡
         mTabLayout.addTab(mTabLayout.newTab().setText(mTitleList.get(1)));
         mTabLayout.addTab(mTabLayout.newTab().setText(mTitleList.get(2)));
         mTabLayout.addTab(mTabLayout.newTab().setText(mTitleList.get(3)));
-        mTabLayout.addTab(mTabLayout.newTab().setText(mTitleList.get(4)));
+        mTabLayout.addTab(mTabLayout.newTab().setText(mTitleList.get(4)));*/
 
 
         MyPagerAdapter mAdapter = new MyPagerAdapter(mViewList);
         mViewPager.setAdapter(mAdapter);//给ViewPager设置适配器
         mTabLayout.setupWithViewPager(mViewPager);//将TabLayout和ViewPager关联起来。
-        mTabLayout.setTabsFromPagerAdapter(mAdapter);//给Tabs设置适配器
+        mTabLayout.post(new Runnable() {//自适应长度
 
-        setIndicator(mTabLayout,10,10);
+            @Override
+            public void run() {
+                int tabLayoutWidth = mTabLayout.getWidth();
+
+                DisplayMetrics metrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(metrics);
+                int deviceWidth = metrics.widthPixels;
+
+                if (tabLayoutWidth < deviceWidth) {
+                    mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+                    mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+                    ViewGroup.LayoutParams mParams = mTabLayout.getLayoutParams();
+                    mParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                    mTabLayout.setLayoutParams(mParams);
+                } else {
+                    mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+                }
+
+
+            }
+        });
+
+        setIndicator(mTabLayout, 10, 10);
 
 
     }

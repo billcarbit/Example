@@ -37,7 +37,7 @@ public class WebViewActivity extends Activity {
         webView.getSettings().setJavaScriptEnabled(true);
         //webView.addJavascriptInterface(this, "nativeMethod");
         //webView.loadUrl("file:///android_asset/index.html");
-        webView.loadUrl("https://owner.fanjianhome.com/fjuser/");
+        webView.loadUrl("http://admin.ovupark.com/ovu-park-wx/activity-detail.html?activityId=0386d5d2c25a47b498eb5bf0b7ee4990");
         //webView.loadUrl("http://172.16.19.98:9000/ovu-park-wx/activity-detail.html?activityId=8e471bc0dc1a43d19f5e6f46831b6904");
 
         /*        webView.setWebViewClient(new WebViewClient(){

@@ -32,11 +32,28 @@ import java.util.Set;
 public class ExampleUnitTest {
 
     @Test
+    public void aaa() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.YEAR, -3);
+        calendar.set(Calendar.MONTH, 0);
+        calendar.set(Calendar.DAY_OF_MONTH, 31);
+
+        Date date = calendar.getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println(sdf.format(date));
+    }
+
+    @Test
+    public void stringCompare() {
+        String serverVersion = "V3.0.15";
+        String appVersion = "V3.0.2";
+        System.out.println(serverVersion.compareTo(appVersion) > 0);
+    }
+
+
+    @Test
     public void simpleDateFormat() throws Exception {
-
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.ENGLISH);
-
-
         System.out.println("sdf=" + sdf.format(new Date()));
     }
 
