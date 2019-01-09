@@ -46,7 +46,7 @@
             android:value="c024df025881963eba21fb9f4bfb0ab5"/>
 
         <activity
-            android:name=".tablayout.TabLayoutActivity"
+            android:name=".bitmap.BitmapActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat">
             <intent-filter>

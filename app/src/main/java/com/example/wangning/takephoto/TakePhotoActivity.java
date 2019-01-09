@@ -1,6 +1,7 @@
-package com.example.wangning;
+package com.example.wangning.takephoto;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -11,7 +12,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.wangning.R;
+import com.example.wangning.ToastUtils;
+import com.example.wangning.utils.AppUtil;
+
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Administrator on 2018/1/4.
@@ -41,8 +48,7 @@ public class TakePhotoActivity extends Activity {
      */
     public void gallery(View view) {
         // 激活系统图库，选择一张图片
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
+        Intent intent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         // 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_GALLERY
         startActivityForResult(intent, PHOTO_REQUEST_GALLERY);
     }
@@ -51,19 +57,42 @@ public class TakePhotoActivity extends Activity {
      * 从相机获取
      */
     public void camera(View view) {
-        // 激活相机
-        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         // 判断存储卡是否可以用，可用进行存储
         if (hasSdcard()) {
-            tempFile = new File(Environment.getExternalStorageDirectory(),
-                    PHOTO_FILE_NAME);
-            // 从文件中创建uri
-            Uri uri = Uri.fromFile(tempFile);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+           /* tempFile = new File(Environment.getExternalStorageDirectory(),
+                    PHOTO_FILE_NAME);*/
+            tempFile = new File(Environment.getExternalStorageDirectory(), getPhotoFileName());// 给新照的照片文件命名
+
+            try {
+                Intent intent = getTakePickIntent(tempFile);
+                startActivityForResult(intent, PHOTO_REQUEST_CAREMA);
+            } catch (ActivityNotFoundException e) {
+                ToastUtils.show(this, "打开照相机失败");
+            } catch (SecurityException e) {
+                ToastUtils.show(this, "请打开照相机权限");
+            }
+
         }
-        // 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_CAREMA
-        startActivityForResult(intent, PHOTO_REQUEST_CAREMA);
     }
+
+    /**
+     * 用当前时间给取得的图片命名
+     */
+    private String getPhotoFileName() {
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss");
+        return dateFormat.format(date) + ".jpg";
+    }
+
+
+
+    public Intent getTakePickIntent(File f) {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE, null);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, AppUtil.file2Uri(this, f));
+        return intent;
+    }
+
 
     /*
      * 剪切图片
@@ -114,11 +143,8 @@ public class TakePhotoActivity extends Activity {
             // 从相机返回的数据
             if (hasSdcard()) {
                 //crop(Uri.fromFile(tempFile));
-                if (data != null) {
-                    Bitmap bitmap = data.getParcelableExtra("data");
-                    this.iv_image.setImageBitmap(bitmap);
-                }
-
+                Uri takePhotoUri = Uri.fromFile(new File(tempFile.toString()));
+                this.iv_image.setImageURI(takePhotoUri);
             } else {
                 Toast.makeText(TakePhotoActivity.this, "未找到存储卡，无法存储照片！", Toast.LENGTH_SHORT).show();
             }
