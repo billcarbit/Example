@@ -51,6 +51,7 @@ public class RecyclerViewActivity extends Activity implements RecyclerViewOnScro
     }
 
     private void initRecyclerView() {
+        mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerViewAdapter = new RecyclerViewAdapter(this, mList);
         mRecyclerView.addOnScrollListener(new RecyclerViewOnScrollListener(this));
         final CenterLayoutManager linearLayoutManager = new CenterLayoutManager(this);
