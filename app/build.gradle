@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.protobuf'
 
 android {
     compileSdkVersion 26
@@ -14,7 +15,7 @@ android {
 
         ndk {
             //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
-            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","x86_64"
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
         }
 
 
@@ -32,6 +33,14 @@ android {
             java.srcDirs += 'src/main/java'
             assets.srcDirs = ['assets', 'src/main/assets', 'src/main/assets/']
             jniLibs.srcDirs = ['libs']
+
+
+            // 定义proto文件目录
+            proto {
+                srcDir 'src/main/proto'
+                include '**/*.proto'
+            }
+
         }
     }
 
@@ -66,5 +75,29 @@ dependencies {
     implementation 'com.amap.api:location:3.3.0'
     implementation 'com.amap.api:search:5.0.0'
 
+    implementation 'com.google.protobuf:protobuf-java:3.5.1'
+    implementation 'com.google.protobuf:protoc:3.5.1'
 }
+
+
+
+
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.5.1' // 也可以配置本地编译器路径
+    }
+
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                remove java
+            }
+            task.builtins {
+                java {}// 生产java源码
+            }
+        }
+    }
+}
+
+
 
